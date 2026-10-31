@@ -1,0 +1,1293 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#071321">
+  <title>絶対合格！衛生管理者テストアプリ！</title>
+  <style>
+    :root { color-scheme: light; --ink:#18324a; --muted:#60768a; --green:#1678c8; --pale:#e7f4ff; --line:#d6e7f5; --paper:#fff; --bg:#eff8ff; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:system-ui,-apple-system,"Segoe UI",sans-serif; line-height:1.65; }
+    .wrap { width:min(760px, calc(100% - 32px)); margin:0 auto; padding:36px 0 56px; }
+    header { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:28px; }
+    .brand { display:flex; align-items:center; gap:10px; font-size:14px; font-weight:800; color:#176da9; letter-spacing:.02em; }
+    .brand-mark { width:38px; height:38px; flex:none; }
+    .tag { border:1px solid var(--line); border-radius:999px; padding:5px 12px; color:var(--muted); font-size:12px; background:#fff; }
+    h1 { font-size:clamp(27px,5vw,38px); line-height:1.25; margin:0 0 8px; letter-spacing:-.03em; }
+    .intro { margin:0 0 25px; color:var(--muted); }
+    .card { background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:clamp(22px,5vw,36px); box-shadow:0 10px 30px #20312b0a; }
+    .topline { display:flex; justify-content:space-between; align-items:center; gap:12px; color:var(--muted); font-size:14px; margin-bottom:18px; }
+    .meter { height:7px; background:#edf1ec; border-radius:99px; overflow:hidden; margin-bottom:28px; }
+    .meter > span { display:block; height:100%; width:0; background:var(--green); border-radius:inherit; transition:width .25s ease; }
+    .question { font-size:20px; font-weight:700; margin:0 0 20px; }
+    .choices { display:grid; gap:11px; }
+    .choice { width:100%; text-align:left; border:1px solid var(--line); background:#fff; border-radius:12px; padding:14px 16px; color:var(--ink); font:inherit; cursor:pointer; transition:border-color .15s,background .15s,transform .15s; }
+    .choice:hover:not(:disabled) { border-color:var(--green); background:#f7fbf8; transform:translateY(-1px); }
+    .choice:focus-visible, button:focus-visible { outline:3px solid #78b99d; outline-offset:2px; }
+    .choice:disabled { cursor:default; }
+    .choice.selected { border-color:#1678c8; background:#e7f4ff; box-shadow:0 0 0 3px #2587d226; animation: select-pop .22s ease-out; }
+    .choice.correct { border-color:#3b8e69; background:#e9f5ed; }
+    .choice.wrong { border-color:#d27c6a; background:#fff0ec; }
+    .feedback { margin-top:20px; border-radius:12px; padding:15px 17px; background:var(--pale); }
+    .feedback[hidden] { display:none; }
+    .feedback strong { display:block; margin-bottom:4px; }
+    .feedback p { margin:0; color:#40564b; }
+    .feedback .source-link { display:inline-block; margin-top:9px; color:#176da9; font-size:12px; }
+    .actions { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:24px; }
+    .score { color:var(--muted); font-size:14px; }
+    .primary { border:0; border-radius:11px; background:var(--green); color:white; font:inherit; font-weight:700; padding:11px 20px; cursor:pointer; }
+    .primary:hover { background:#1d5f4a; }
+    .primary:disabled { opacity:.45; cursor:not-allowed; }
+    .note { color:var(--muted); font-size:12px; margin:18px 2px 0; }
+    .hero { position:relative; isolation:isolate; overflow:hidden; min-height:440px; display:flex; flex-direction:column; justify-content:center; border:0; border-radius:30px; padding:clamp(30px,7vw,66px); margin:8px 0 28px; color:#fff; background:radial-gradient(circle at 84% 18%,#ffdc58 0 5%,transparent 5.4%),radial-gradient(circle at 91% 72%,#26d8d0 0 9%,transparent 9.5%),radial-gradient(circle at 76% 86%,#ff6b8a 0 5%,transparent 5.5%),linear-gradient(122deg,#143fce 0%,#5836d9 50%,#9b35d3 100%); box-shadow:0 24px 55px #5038c84a; }
+    .hero::before { content:"✦"; position:absolute; right:18%; top:13%; z-index:-1; color:#fff; font-size:clamp(60px,10vw,112px); opacity:.78; transform:rotate(12deg); text-shadow:0 0 28px #ffffff99; }
+    .hero::after { content:"衛生管理者"; position:absolute; right:6%; bottom:12%; color:#fff; font-weight:900; font-size:clamp(16px,3vw,28px); letter-spacing:.08em; opacity:.15; transform:rotate(-12deg); }
+    .hero-kicker { display:inline-flex; align-items:center; gap:7px; align-self:flex-start; color:#4327a8; background:#ffe36b; border:2px solid #fff3af; border-radius:999px; padding:8px 15px; font-size:13px; font-weight:850; margin-bottom:18px; box-shadow:0 6px 18px #21116e55; }
+    .hero h1 { max-width:690px; font-size:clamp(36px,7vw,64px); line-height:1.12; margin:0 0 16px; letter-spacing:-.05em; text-shadow:0 4px 18px #20127455; }
+    .hero h1 .highlight { color:#ffe36b; }
+    .hero-copy { max-width:540px; color:#f0edff; font-size:16px; margin:0 0 26px; }
+    .hero-actions { display:flex; flex-wrap:wrap; gap:13px; align-items:center; }
+    .hero-actions .primary { padding:15px 24px; color:#352096; background:linear-gradient(135deg,#fff17c,#ffc94f); box-shadow:0 9px 22px #1d126655; font-size:15px; }
+    .hero-actions .primary:hover { background:#fff29a; }
+    .secondary { border:2px solid #ffffffa8; border-radius:12px; padding:13px 20px; color:#fff; background:#ffffff1c; font:inherit; font-weight:750; cursor:pointer; backdrop-filter:blur(8px); }
+    .secondary:hover { background:#ffffff35; }
+    .hero-facts { display:flex; flex-wrap:wrap; gap:10px; padding:0; margin:25px 0 0; list-style:none; color:#fff; font-size:12px; }
+    .hero-facts li { padding:7px 11px; background:#ffffff1c; border:1px solid #ffffff45; border-radius:999px; backdrop-filter:blur(6px); }
+    .hero-facts li::before { content:"✦"; color:#ffe36b; font-weight:900; margin-right:7px; }
+    .screen-heading { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:8px 0 17px; }
+    .screen-heading h1 { margin:0; font-size:clamp(24px,4vw,32px); }
+    .mode-intro { color:var(--muted); margin:0 0 18px; }
+    .mode-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }
+    .mode-card { position:relative; display:flex; flex-direction:column; align-items:flex-start; text-align:left; min-height:210px; border:1px solid var(--line); border-radius:18px; padding:20px; color:var(--ink); background:var(--paper); cursor:pointer; box-shadow:0 12px 30px #0002; transition:transform .18s,border-color .18s,box-shadow .18s; }
+    .mode-card:hover { transform:translateY(-5px); border-color:#52d8ff; box-shadow:0 16px 35px #27bbef33; }
+    .mode-icon { display:grid; place-items:center; width:48px; height:48px; border-radius:15px; margin-bottom:15px; font-size:24px; color:#061929; background:linear-gradient(135deg,#8af4ff,#5e9bff); box-shadow:0 0 20px #43cfff44; }
+    .mode-card:nth-child(2) .mode-icon { background:linear-gradient(135deg,#ff91b7,#bc8dff); }
+    .mode-card:nth-child(3) .mode-icon { background:linear-gradient(135deg,#ffe58c,#ffad71); }
+    .mode-card strong { font-size:17px; margin-bottom:5px; }
+    .mode-card small { color:var(--muted); font-size:12px; line-height:1.55; }
+    .mode-arrow { margin-top:auto; padding-top:16px; color:#72e4ff; font-size:13px; font-weight:800; }
+    @media (max-width:760px) { .mode-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (max-width:620px) { .mode-grid { grid-template-columns:1fr; }.mode-card{min-height:0;padding:17px}.mode-icon{margin-bottom:10px}.mode-arrow{padding-top:10px} }
+    @media (max-width:520px) { .hero{min-height:490px;border-radius:23px;padding:27px 22px}.hero::before{right:10%;top:10%;font-size:58px}.hero::after{right:5%;bottom:7%;font-size:15px}.hero-copy{font-size:14px}.hero-actions{align-items:stretch;flex-direction:column}.hero-actions button{width:100%}.hero-facts{gap:7px}.hero-facts li{font-size:11px;padding:6px 9px} }
+    .dashboard { margin:0 0 24px; }
+    .dashboard-head { display:flex; justify-content:space-between; align-items:end; gap:16px; margin-bottom:15px; }
+    .dashboard h2 { font-size:22px; margin:0; }
+    .dashboard-head p { margin:4px 0 0; color:var(--muted); font-size:13px; }
+    .dashboard-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin-bottom:14px; }
+    .stat, .history, .chart, .start-card { background:#fff; border:1px solid var(--line); border-radius:16px; padding:17px 19px; box-shadow:0 9px 26px #24669a0c; }
+    .stat { border-top:3px solid #56a9e8; }
+    .stat:nth-child(2) { border-top-color:#9b7bea; }
+    .stat:nth-child(3) { border-top-color:#51bda5; }
+    .stat-label { display:block; color:var(--muted); font-size:12px; }
+    .stat-value { display:block; color:#116eb8; font-size:26px; font-weight:750; line-height:1.3; }
+    .dashboard-lower { display:grid; grid-template-columns:1.1fr .9fr; gap:14px; }
+    .chart-head { display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:12px; }
+    .chart-head strong { font-size:14px; }
+    .chart-head span { color:var(--muted); font-size:11px; }
+    .bars { height:148px; display:flex; align-items:end; gap:10px; border-bottom:1px solid var(--line); padding:0 6px; }
+    .bar-item { flex:1; height:100%; display:flex; flex-direction:column; justify-content:end; align-items:center; gap:5px; min-width:0; }
+    .bar-rate { font-size:10px; line-height:1; font-weight:750; color:#2876ad; white-space:nowrap; }
+    .bar-rate.is-perfect { color:#a96a00; }
+    .bar { width:min(30px,78%); min-height:4px; border-radius:8px 8px 3px 3px; background:linear-gradient(180deg,#72c5f5,#2587d2); transition:height .3s ease; }
+    .bar.perfect { background:linear-gradient(180deg,#ffd976,#f0a925); box-shadow:0 0 13px #f1bd4c66; animation: perfect-glow 1.3s ease-in-out infinite alternate; }
+    .bar-label { color:var(--muted); font-size:10px; padding-bottom:5px; white-space:nowrap; }
+    .start-card { display:flex; flex-direction:column; justify-content:space-between; gap:18px; background:linear-gradient(140deg,#f3fbff 0%,#e8f4ff 65%,#f5f0ff 100%); }
+    .start-card h3 { margin:0 0 5px; font-size:16px; }
+    .start-card p { color:var(--muted); font-size:13px; margin:0; }
+    .start-card .primary { align-self:flex-start; }
+    .category-panel { background:#fff; border:1px solid var(--line); border-radius:16px; padding:17px 19px; margin-top:14px; box-shadow:0 7px 22px #24669a08; }
+    .category-panel h3 { font-size:14px; margin:0 0 14px; }
+    .category-list { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+    .category-row { min-width:0; }
+    .category-row-top { display:flex; justify-content:space-between; gap:8px; font-size:12px; margin-bottom:7px; }
+    .category-row-top span:first-child { color:var(--ink); }
+    .category-row-top strong { color:#1678c8; white-space:nowrap; }
+    .category-track { height:8px; border-radius:99px; background:#edf3f8; overflow:hidden; }
+    .category-fill { height:100%; border-radius:inherit; background:linear-gradient(90deg,#67bdf5,#2587d2); transition:width .3s ease; }
+    .trend { border:1px solid #cfe7f8; background:linear-gradient(110deg,#f1f9ff,#fff); border-radius:15px; padding:14px 17px; margin:0 0 14px; }
+    .trend-label { display:block; color:#176da9; font-size:12px; font-weight:750; margin-bottom:3px; }
+    .trend-text { margin:0; font-size:14px; }
+    .trend-note { margin:5px 0 0; color:var(--muted); font-size:11px; }
+    .history-title { font-size:13px; font-weight:700; margin:0 0 7px; }
+    .history-list { list-style:none; margin:0; padding:0; }
+    .history-list li { display:flex; justify-content:space-between; gap:12px; padding:7px 0; border-top:1px solid #edf3f8; font-size:13px; }
+    .history-list li:first-child { border-top:0; }
+    .history-empty { color:var(--muted); font-size:13px; margin:0; }
+    .choice.correct { animation: correct-pop .55s ease-out; }
+    .feedback.is-correct { position:relative; overflow:hidden; animation: feedback-arrive .4s ease-out; }
+    .feedback.is-correct::after { content:"✦　✧　✦"; position:absolute; top:8px; right:16px; color:#1682cc; letter-spacing:5px; animation: sparkle-in .7s ease-out both; }
+    button.tap-animate { animation: button-press .28s cubic-bezier(.2,.8,.3,1); }
+    .page-enter { animation: page-in .42s cubic-bezier(.2,.75,.25,1) both; }
+    .back-home { border:0; background:transparent; color:#1678c8; font:inherit; font-size:12px; cursor:pointer; padding:4px 0; }
+    .topline-right { display:flex; align-items:center; gap:13px; }
+    .topline-left { display:flex; align-items:center; gap:9px; }
+    .timer { font-variant-numeric:tabular-nums; color:#176da9; background:#e7f4ff; border-radius:999px; padding:5px 10px; font-size:13px; font-weight:750; white-space:nowrap; }
+    .timer.urgent { color:#a5392b; background:#fff0ec; }
+    #practice-card[hidden] { display:none; }
+    @keyframes select-pop { 0%{transform:scale(1)} 55%{transform:scale(1.018)} 100%{transform:scale(1)} }
+    @keyframes correct-pop { 0%{transform:scale(1)} 38%{transform:scale(1.035);box-shadow:0 0 0 5px #45a8f044} 70%{transform:scale(.99)} 100%{transform:scale(1)} }
+    @keyframes feedback-arrive { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes sparkle-in { 0%{opacity:0;transform:translateY(8px) scale(.7)} 45%{opacity:1;transform:translateY(-3px) scale(1.18)} 100%{opacity:.8;transform:translateY(0) scale(1)} }
+    @keyframes button-press { 0%{transform:scale(1)} 45%{transform:scale(.95)} 100%{transform:scale(1)} }
+    @keyframes page-in { from{opacity:0;transform:translateY(18px) scale(.99);filter:blur(3px)} to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)} }
+    @keyframes perfect-glow { from{filter:saturate(1);box-shadow:0 0 7px #f1bd4c44} to{filter:saturate(1.35);box-shadow:0 0 16px #f1bd4caa} }
+    @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration:.01ms !important; transition-duration:.01ms !important; scroll-behavior:auto !important; } }
+    .result { text-align:center; padding:12px 0; }
+    .result .big { font-size:44px; font-weight:750; color:var(--green); line-height:1.2; margin:10px 0; }
+    .result p { color:var(--muted); }
+    @media (max-width:520px) { .wrap{padding-top:24px}.actions{align-items:flex-end}.question{font-size:18px} }
+    @media (max-width:620px) { .dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.dashboard-lower{grid-template-columns:1fr}.stat,.history,.chart,.start-card,.category-panel{padding:14px}.dashboard h2{font-size:19px}.stat-value{font-size:23px}.bars{height:105px}.category-list{grid-template-columns:1fr;gap:11px} }
+    /* Midnight blue and electric cyan visual direction, inspired by stylish anime game UIs. */
+    :root { color-scheme:dark; --ink:#eaf4ff; --muted:#9bb2c9; --green:#34c8f3; --pale:#102b46; --line:#294561; --paper:#102238; --bg:#050b16; }
+    [hidden], .hero[hidden], .dashboard[hidden], #practice-card[hidden] { display:none !important; }
+    body { background:radial-gradient(ellipse at 15% 4%,#173059 0,transparent 33%),radial-gradient(ellipse at 100% 78%,#171238 0,transparent 32%),#050b16; color:var(--ink); }
+    body::before { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.32; background-image:radial-gradient(#b8e8ff 1px,transparent 1.5px),radial-gradient(#718bb7 1px,transparent 1.5px); background-size:87px 87px,131px 131px; background-position:12px 18px,55px 70px; }
+    .wrap { position:relative; z-index:1; }
+    header { border-bottom:1px solid #4a679055; padding-bottom:15px; }
+    .brand { color:#c6f5ff; text-shadow:0 0 17px #25c8f788; }
+    .brand-mark { filter:drop-shadow(0 0 9px #40cfff88); }
+    .tag { background:#10243a; color:#b4c8dd; border-color:#34516d; }
+    .hero { border:1px solid #59c7f277; background:radial-gradient(circle at 84% 24%,#ffe18b 0 6%,#fff4c4 6.2% 6.6%,transparent 7%),radial-gradient(ellipse at 95% 100%,#183a83 0,transparent 40%),linear-gradient(130deg,#07172b 0%,#0b2d55 48%,#14204a 100%); box-shadow:0 0 0 1px #259ae322,0 28px 80px #02060dcc,inset 0 0 65px #2587d222; }
+    .hero::before { content:"✦"; color:#9deaff; opacity:.82; text-shadow:0 0 12px #44caff,0 0 36px #44caff; }
+    .hero::after { color:#d7efff; opacity:.12; }
+    .hero-kicker { color:#061a2b; background:linear-gradient(100deg,#fff0a7,#65e8fa); border:0; box-shadow:0 0 22px #43cff577; }
+    .hero h1 { text-shadow:0 3px 22px #36bff966; }
+    .hero h1 .highlight { color:#70e6ff; text-shadow:0 0 25px #31c9ff99; }
+    .hero-copy { color:#c2d9ee; }
+    .hero-actions .primary { color:#041829; background:linear-gradient(110deg,#8af4ff,#3bc6f5 55%,#b4a3ff); box-shadow:0 0 26px #33c7f577,0 8px 24px #02060d99; }
+    .hero-actions .primary:hover { background:linear-gradient(110deg,#c3fbff,#7de1ff 55%,#d2c8ff); }
+    .secondary { border-color:#65d8fb99; color:#d8f8ff; background:#0a1f35aa; box-shadow:inset 0 0 18px #34c8f322; }
+    .secondary:hover { background:#16446a; }
+    .hero-facts { color:#d5e9fa; }
+    .hero-facts li { background:#06172a99; border-color:#55c9ef66; }
+    .hero-facts li::before { color:#ffe18b; }
+    .screen-heading h1, .dashboard h2 { color:#e6f4ff; text-shadow:0 0 18px #3aa9ed44; }
+    .stat, .history, .chart, .start-card, .category-panel { background:linear-gradient(145deg,#122a43,#0c1b2e); border-color:#294966; box-shadow:0 12px 30px #0008,inset 0 1px #ffffff0a; }
+    .stat { border-top-color:#46d4fa; }
+    .stat:nth-child(2) { border-top-color:#ae8aff; }
+    .stat:nth-child(3) { border-top-color:#52e0bf; }
+    .stat-value { color:#75e5ff; text-shadow:0 0 16px #43caff44; }
+    .stat:nth-child(2) .stat-value { color:#c4aaff; }
+    .stat:nth-child(3) .stat-value { color:#77f1d2; }
+    .start-card { background:radial-gradient(circle at 92% 18%,#3fc9ef26,transparent 34%),linear-gradient(145deg,#122c49,#121c3a); }
+    .start-card .primary, .primary { color:#041725; background:linear-gradient(110deg,#82edff,#35b9ec); box-shadow:0 0 18px #28bce944; }
+    .primary:hover { background:linear-gradient(110deg,#b5f6ff,#68d5fa); }
+    .primary:disabled { color:#8296a8; background:#344b60; box-shadow:none; }
+    .trend { border-color:#3a8baf; background:linear-gradient(110deg,#102b46,#101b32); box-shadow:inset 0 0 24px #2bb7e811; }
+    .trend-label { color:#73e2ff; }
+    .trend-note { color:#95aac0; }
+    .category-track { background:#071624; }
+    .category-fill { background:linear-gradient(90deg,#55e2fa,#4e9fff,#a68aff); box-shadow:0 0 12px #48c9f655; }
+    .bar { background:linear-gradient(180deg,#8cf0ff,#238bcc); box-shadow:0 0 13px #31b9ea33; }
+    .bar-rate { color:#8beaff; }
+    .bar.perfect { background:linear-gradient(180deg,#fff0a0,#f2b944); box-shadow:0 0 17px #f1bd4c88; }
+    .bar-rate.is-perfect { color:#ffe18b; }
+    .history-list li { border-top-color:#2b4259; }
+    .choice { color:#e7f3ff; background:linear-gradient(110deg,#132c45,#0f2035); border-color:#304d69; }
+    .choice:hover:not(:disabled) { border-color:#4dd9ff; background:#173957; box-shadow:0 0 16px #2fc8f433; }
+    .choice.selected { border-color:#5be2ff; color:#e9fbff; background:#123b59; box-shadow:0 0 0 3px #2587d255,0 0 22px #34c8f344; }
+    .choice.correct { border-color:#55dfc0; background:#103c3b; color:#cffff3; box-shadow:0 0 18px #3fe3bf44; }
+    .choice.wrong { border-color:#ff7e9b; background:#3b2035; color:#ffe5ed; }
+    .feedback { color:#e4f4ff; background:linear-gradient(115deg,#123650,#172847); border:1px solid #3b7795; }
+    .feedback p { color:#bdd4e8; }
+    .feedback .source-link { color:#79e4ff; }
+    .meter { background:#091827; }
+    .meter > span { background:linear-gradient(90deg,#56e3f5,#578eff,#a88bff); box-shadow:0 0 12px #45cdf988; }
+    .timer { color:#a5f2ff; background:#123752; border:1px solid #347397; }
+    .timer.urgent { color:#ffb0bd; background:#492239; border-color:#a94a6a; }
+    .back-home { color:#78e5ff; }
+    .result .big { color:#7be7ff; text-shadow:0 0 22px #40cfff88; }
+    .note { color:#91a9c0; }
+    @media (max-width:520px) { header .tag { display:none; }.brand { font-size:12px; } }
+
+    /* Original high contrast comic poster look: black, red, white and strong diagonals. */
+    :root { color-scheme:light; --ink:#111; --muted:#4b4b4b; --green:#ea1d2d; --pale:#fff2e9; --line:#111; --paper:#fffdfa; --bg:#e7192b; }
+    body { background:#e7192b; color:#111; font-family:Impact, Haettenschweiler, "Arial Narrow Bold", "Yu Gothic", sans-serif; letter-spacing:.02em; }
+    body::before { inset:0; z-index:0; opacity:1; background:linear-gradient(125deg,transparent 0 42%,#fff 42.2% 42.8%,transparent 43% 100%),repeating-linear-gradient(-35deg,#e7192b 0 17px,#cf0d20 17px 18px); }
+    .wrap { width:min(900px,calc(100% - 32px)); padding:18px 0 54px; }
+    header { margin:0 0 16px; padding:9px 14px; border:4px solid #111; background:#fff; box-shadow:7px 7px 0 #111; transform:rotate(-1deg); }
+    .brand { color:#111; font-size:15px; text-shadow:none; }
+    .brand-mark { filter:none; width:34px; height:34px; }
+    .tag { border:2px solid #111; border-radius:0; padding:3px 9px; color:#111; font-weight:800; background:#ffe843; }
+    .hero { min-height:500px; margin:24px 0; padding:clamp(30px,7vw,70px); border:5px solid #111; border-radius:0; color:#111; clip-path:polygon(0 5%,96% 0,100% 88%,4% 100%); background:linear-gradient(108deg,#fffdfa 0 58%,#ee1b2d 58.2% 100%); box-shadow:12px 12px 0 #111; }
+    .hero::before { content:"!"; top:10%; right:14%; z-index:0; color:#111; font-family:Impact, sans-serif; font-size:clamp(150px,24vw,260px); opacity:1; transform:rotate(16deg); text-shadow:8px 8px 0 #ffe843; }
+    .hero::after { content:"READY?"; right:2%; bottom:17%; color:#fff; font-size:clamp(20px,4vw,42px); font-weight:900; opacity:1; transform:rotate(-10deg); }
+    .hero > * { position:relative; z-index:1; }
+    .hero-kicker { color:#fff; background:#111; border:0; border-radius:0; box-shadow:5px 5px 0 #e7192b; padding:7px 13px; }
+    .hero h1 { max-width:630px; color:#111; font-size:clamp(42px,8vw,74px); line-height:.94; letter-spacing:-.05em; text-shadow:4px 4px 0 #e7192b; }
+    .hero h1 .highlight { color:#e7192b; text-shadow:3px 3px 0 #111; }
+    .hero-copy { max-width:480px; color:#111; font-family:system-ui,"Yu Gothic",sans-serif; font-weight:800; font-size:15px; }
+    .hero-actions { gap:14px; }
+    .primary,.hero-actions .primary { border:3px solid #111; border-radius:0; padding:13px 20px; color:#fff; background:#e7192b; box-shadow:5px 5px 0 #111; font-family:inherit; font-size:15px; }
+    .primary:hover,.hero-actions .primary:hover { color:#111; background:#ffe843; transform:translate(2px,2px); box-shadow:3px 3px 0 #111; }
+    .secondary { border:3px solid #111; border-radius:0; padding:11px 17px; color:#111; background:#fff; box-shadow:4px 4px 0 #111; font-family:inherit; }
+    .secondary:hover { background:#ffe843; }
+    .hero-facts li { color:#111; font-family:system-ui,"Yu Gothic",sans-serif; font-weight:800; background:#fff; border:2px solid #111; border-radius:0; }
+    .hero-facts li::before { color:#e7192b; }
+    .screen-heading { padding:12px 16px; background:#111; color:#fff; transform:skewY(-1deg); }
+    .screen-heading h1,.dashboard h2 { color:#fff; text-shadow:3px 3px 0 #e7192b; }
+    .mode-intro { color:#fff; font-family:system-ui,"Yu Gothic",sans-serif; font-weight:800; }
+    .mode-grid { gap:18px; }
+    .mode-card { min-height:245px; border:4px solid #111; border-radius:0; color:#111; background:#fff; box-shadow:8px 8px 0 #111; font-family:system-ui,"Yu Gothic",sans-serif; font-weight:700; clip-path:polygon(0 0,100% 7%,95% 100%,5% 94%); }
+    .mode-card:nth-child(2) { background:#ffe843; }
+    .mode-card:nth-child(3) { background:#f7dbe2; }
+    .mode-card:hover { border-color:#111; box-shadow:12px 12px 0 #111; transform:translate(-3px,-5px) rotate(-1deg); }
+    .mode-icon { border:3px solid #111; border-radius:0; color:#fff; background:#e7192b; box-shadow:4px 4px 0 #111; }
+    .mode-card:nth-child(2) .mode-icon { color:#111; background:#fff; }
+    .mode-card:nth-child(3) .mode-icon { color:#111; background:#ffe843; }
+    .mode-card strong { font-family:Impact, "Yu Gothic", sans-serif; font-size:22px; }
+    .mode-card small { color:#222; font-weight:700; }
+    .mode-arrow { color:#e7192b; font-family:Impact,"Yu Gothic",sans-serif; font-size:15px; }
+    .dashboard { padding:18px; border:4px solid #111; background:#fffdfa; box-shadow:10px 10px 0 #111; }
+    .dashboard-head p,.stat-label,.chart-head span,.history-empty,.trend-note { color:#444; font-family:system-ui,"Yu Gothic",sans-serif; font-weight:700; }
+    .stat,.history,.chart,.start-card,.category-panel { border:3px solid #111; border-radius:0; background:#fff; box-shadow:4px 4px 0 #111; }
+    .stat { border-top:10px solid #e7192b; }
+    .stat:nth-child(2) { border-top-color:#111; }.stat:nth-child(3){border-top-color:#ffe843;}
+    .stat-value { color:#e7192b; text-shadow:none; }
+    .stat:nth-child(2) .stat-value { color:#111; }.stat:nth-child(3) .stat-value { color:#e7192b; }
+    .trend { border:3px solid #111; border-radius:0; background:#ffe843; box-shadow:4px 4px 0 #111; }
+    .trend-label { color:#111; font-family:Impact,"Yu Gothic",sans-serif; font-size:15px; }
+    .trend-text { font-family:system-ui,"Yu Gothic",sans-serif; font-weight:800; }
+    .start-card { background:#111; color:#fff; }.start-card p{color:#fff;font-family:system-ui,"Yu Gothic",sans-serif;font-weight:700;}
+    .category-track { background:#e6e6e6; border:1px solid #111; border-radius:0; }.category-fill{border-radius:0;background:#e7192b;box-shadow:none;}
+    .bar { border:2px solid #111; border-bottom:0; border-radius:0; background:#e7192b; box-shadow:none; }.bar-rate{color:#111;}.bar.perfect{background:#ffe843;box-shadow:none;}.bar-rate.is-perfect{color:#111;}
+    .history-list li{border-top-color:#bbb;font-family:system-ui,"Yu Gothic",sans-serif;font-weight:700;}
+    .card { border:5px solid #111; border-radius:0; background:#fffdfa; box-shadow:11px 11px 0 #111; }.topline{color:#111;font-family:system-ui,"Yu Gothic",sans-serif;font-weight:800;}.meter{background:#111;border-radius:0;}.meter>span{border-radius:0;background:#e7192b;box-shadow:none;}
+    .question { font-size:clamp(22px,4vw,31px); line-height:1.35; }.choice{border:3px solid #111;border-radius:0;color:#111;background:#fff;font-family:system-ui,"Yu Gothic",sans-serif;font-weight:800;box-shadow:4px 4px 0 #111;}.choice:hover:not(:disabled){border-color:#111;background:#ffe843;box-shadow:6px 6px 0 #e7192b;}.choice.selected{border-color:#111;color:#fff;background:#e7192b;box-shadow:5px 5px 0 #111;}.choice.correct{border-color:#111;color:#111;background:#ffe843;box-shadow:6px 6px 0 #111;}.choice.wrong{border-color:#111;color:#fff;background:#111;}
+    .feedback{border:3px solid #111;border-radius:0;color:#111;background:#ffe843;}.feedback p{color:#111;font-family:system-ui,"Yu Gothic",sans-serif;font-weight:700;}.feedback .source-link,.back-home{color:#e7192b;font-weight:900;}.timer{border:2px solid #111;border-radius:0;color:#fff;background:#111;}.timer.urgent{color:#111;background:#ffe843;border-color:#111;}
+    .result .big{color:#e7192b;text-shadow:4px 4px 0 #111;}.note{color:#fff;font-family:system-ui,"Yu Gothic",sans-serif;font-weight:700;}
+    @media (max-width:620px) { .dashboard{padding:12px}.hero{min-height:510px}.hero h1{font-size:45px}.screen-heading{align-items:flex-start;flex-direction:column}.mode-grid{gap:15px}.topline{align-items:flex-start;flex-direction:column}.topline-right{width:100%;justify-content:space-between;gap:6px}.topline-left{width:100%;justify-content:space-between}.hero::after{font-size:18px}.hero::before{right:5%;} }
+
+    /* Original midnight blue interface: quiet, luminous, and time themed. */
+    :root { color-scheme:dark; --ink:#eaf7ff; --muted:#a1bdd2; --green:#74d9f3; --pale:#14335b; --line:#4780a5; --paper:#0b2346; --bg:#061630; }
+    body { background:#061630; color:var(--ink); font-family:"Segoe UI", "Yu Gothic UI", "Yu Gothic", sans-serif; letter-spacing:0; }
+    body::before { opacity:1; background:radial-gradient(ellipse at 14% 5%,#1a5690 0,transparent 36%),radial-gradient(ellipse at 88% 80%,#3a3a7c 0,transparent 38%),linear-gradient(140deg,#061630,#0c2952 55%,#07172e); }
+    body::after { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.24; background-image:radial-gradient(#c9f5ff 1px,transparent 1.6px),radial-gradient(#85b9e3 1px,transparent 1.6px); background-size:91px 91px,139px 139px; background-position:11px 17px,52px 74px; }
+    .wrap { width:min(920px,calc(100% - 32px)); z-index:1; }
+    header { padding:8px 0 16px; border:0; border-bottom:1px solid #85d9f466; background:transparent; box-shadow:none; transform:none; }
+    .brand { gap:13px; color:#e9f9ff; text-shadow:0 0 20px #61d5f466; }
+    .brand-mark { width:62px; height:62px; filter:drop-shadow(0 0 10px #52c7eeaa); }
+    .brand-text { display:flex; flex-direction:column; gap:1px; line-height:1.05; }
+    .brand-top { color:#a2dff4; font-size:9px; letter-spacing:.19em; font-weight:700; }
+    .brand-name { font-size:19px; letter-spacing:.03em; font-weight:300; }
+    .brand-name b { color:#bdf4ff; font-weight:800; text-shadow:0 0 14px #68cef1; }
+    .tag { color:#c8eefa; border:1px solid #75cbe5; border-radius:999px; background:#173a67aa; font-weight:600; }
+    .hero { min-height:510px; margin:22px 0 28px; padding:clamp(34px,7vw,76px); border:1px solid #8ddff455; border-radius:26px; clip-path:none; color:#eefaff; background:radial-gradient(circle at 81% 25%,#d9faff 0 6%,#91ddf5 6.2% 6.7%,transparent 7%),radial-gradient(circle at 78% 28%,#5575bc55 0 18%,transparent 40%),linear-gradient(123deg,#0a2750 0%,#0c315d 52%,#202d65 100%); box-shadow:0 22px 55px #010816bb,inset 0 1px #ffffff22; }
+    .hero::before { content:"☾"; top:7%; right:10%; color:#e2faff; font-family:Georgia,serif; font-size:clamp(150px,22vw,260px); opacity:.22; transform:rotate(-10deg); text-shadow:0 0 42px #81d9f4; }
+    .hero::after { content:"00:00"; right:6%; bottom:9%; color:#d5f5ff; font-family:Georgia,serif; font-size:clamp(22px,4vw,42px); font-weight:400; letter-spacing:.14em; opacity:.44; transform:none; }
+    .hero-kicker { color:#d8f9ff; background:#123c6e; border:1px solid #8ee3f5; border-radius:999px; box-shadow:0 0 18px #66d5f333; padding:7px 13px; font-weight:600; }
+    .hero h1 { max-width:640px; color:#effbff; font-family:Georgia,"Yu Mincho",serif; font-size:clamp(39px,7vw,66px); line-height:1.16; letter-spacing:.02em; text-shadow:0 3px 24px #021126; }
+    .hero h1 .highlight { color:#92e5f7; text-shadow:0 0 24px #74d8f1aa; }
+    .hero-copy { color:#c8dfef; font-size:15px; font-weight:400; line-height:1.85; }
+    .hero-actions { gap:13px; }.primary,.hero-actions .primary { padding:13px 21px; border:1px solid #9aeafa; border-radius:9px; color:#06203d; background:linear-gradient(135deg,#ccf8ff,#69cef1); box-shadow:0 10px 24px #02112688,0 0 18px #78dff244; font-family:inherit; font-weight:800; }.primary:hover,.hero-actions .primary:hover { color:#08203c; background:linear-gradient(135deg,#f1fdff,#a1eafa); transform:translateY(-2px); box-shadow:0 13px 28px #020d2388,0 0 24px #8ce3f499; }
+    .secondary { border:1px solid #89dff3; border-radius:9px; color:#d7f6ff; background:#123d6b99; box-shadow:inset 0 0 18px #7bdcf422; font-family:inherit; font-weight:700; }.secondary:hover{background:#215886;}
+    .hero-facts li { color:#dff7ff; background:#0c284b99; border:1px solid #74cde866; border-radius:999px; font-family:inherit; font-weight:500; }.hero-facts li::before{color:#9beafb;}
+    .screen-heading { padding:4px 0 14px; color:#eaf9ff; background:transparent; transform:none; border-bottom:1px solid #77d5ec77; }.screen-heading h1,.dashboard h2{color:#eaf9ff;text-shadow:0 0 18px #62d4ee55;font-family:Georgia,"Yu Mincho",serif;font-weight:400;}
+    .mode-intro{color:#bdd7e9;font-family:inherit;font-weight:400;}.mode-grid{gap:16px;}.mode-card{min-height:240px;border:1px solid #4e8aae;border-radius:16px;clip-path:none;color:#eaf8ff;background:linear-gradient(145deg,#10345b,#0a2144);box-shadow:0 14px 28px #020b20aa,inset 0 1px #ffffff15;font-family:inherit;font-weight:400;}.mode-card:nth-child(2){background:linear-gradient(145deg,#26366e,#122653);}.mode-card:nth-child(3){background:linear-gradient(145deg,#16475d,#0d2c50);}.mode-card:hover{border-color:#a2edff;box-shadow:0 19px 34px #01091cbb,0 0 17px #5bd1f544;transform:translateY(-4px);}.mode-icon{border:1px solid #9ae9f9;border-radius:50%;color:#092344;background:linear-gradient(135deg,#e2fbff,#72ceeb);box-shadow:0 0 21px #57cfed66;}.mode-card:nth-child(2) .mode-icon{color:#e9faff;background:linear-gradient(135deg,#8eb2e8,#465aaf);}.mode-card:nth-child(3) .mode-icon{color:#073447;background:linear-gradient(135deg,#b7f6ff,#58c4d7);}.mode-card strong{font-family:Georgia,"Yu Mincho",serif;font-size:21px;font-weight:400;}.mode-card small{color:#bcd3e5;font-weight:400;}.mode-arrow{color:#8ce5f8;font-family:inherit;font-size:13px;}
+    .dashboard{padding:0;border:0;background:transparent;box-shadow:none;}.dashboard-head p,.stat-label,.chart-head span,.history-empty,.trend-note{color:#a9c5d9;font-family:inherit;font-weight:400;}.stat,.history,.chart,.start-card,.category-panel{border:1px solid #3e789c;border-radius:14px;background:linear-gradient(145deg,#0f3156,#0b2042);box-shadow:0 13px 27px #020b1daa,inset 0 1px #ffffff12;}.stat{border-top:1px solid #59d1eb;}.stat:nth-child(2){border-top-color:#8b9de7}.stat:nth-child(3){border-top-color:#83e5cf}.stat-value,.stat:nth-child(2) .stat-value,.stat:nth-child(3) .stat-value{color:#a5eafa;text-shadow:0 0 15px #53cdec55;}.trend{border:1px solid #4b98bd;border-radius:13px;background:linear-gradient(105deg,#133a61,#102a50);box-shadow:inset 0 0 30px #7cddf012;}.trend-label{color:#8ee8fa;font-family:inherit;font-size:12px;}.trend-text{font-family:inherit;font-weight:400;}.start-card{background:radial-gradient(circle at 90% 12%,#93e7f42c,transparent 32%),linear-gradient(145deg,#153e6b,#132d5c);}.start-card p{color:#bdd7e8;font-family:inherit;font-weight:400;}.category-track{background:#07182f;border:0;border-radius:999px;}.category-fill{border-radius:999px;background:linear-gradient(90deg,#6bdcf4,#6c91ed);box-shadow:0 0 11px #57ccf466;}.bar{border:0;border-radius:8px 8px 2px 2px;background:linear-gradient(180deg,#a4f0ff,#378fca);box-shadow:0 0 12px #36bce855;}.bar-rate{color:#9ae9fa;}.bar.perfect{background:linear-gradient(180deg,#f8f2ae,#83e3e5);box-shadow:0 0 17px #a7e9e877;}.bar-rate.is-perfect{color:#dfffff;}.history-list li{border-top-color:#2c5576;font-family:inherit;font-weight:400;}
+    .card{border:1px solid #72cbe5;border-radius:20px;background:linear-gradient(145deg,#0e3058,#091f43);box-shadow:0 21px 42px #010817bb,inset 0 1px #ffffff18;}.topline{color:#c7e4f1;font-family:inherit;font-weight:500;}.meter{background:#07172d;border-radius:999px;}.meter>span{border-radius:999px;background:linear-gradient(90deg,#78ddf2,#6c8eed);box-shadow:0 0 12px #45c8ef88;}.question{font-family:Georgia,"Yu Mincho",serif;font-weight:400;}.choice{border:1px solid #477f9f;border-radius:10px;color:#e9f8ff;background:linear-gradient(100deg,#13365b,#0d2648);font-family:inherit;font-weight:500;box-shadow:none;}.choice:hover:not(:disabled){border-color:#a1ecfc;background:#194b70;box-shadow:0 0 16px #45c8f633;}.choice.selected{border-color:#9febfa;color:#edfbff;background:#1a5680;box-shadow:0 0 0 3px #69d9f533,0 0 18px #4acef544;}.choice.correct{border-color:#7fe2d4;color:#dcfff8;background:#164d52;box-shadow:0 0 16px #49d4c544;}.choice.wrong{border-color:#e28aa8;color:#ffe9f1;background:#432743;}.feedback{border:1px solid #5597b9;border-radius:12px;color:#e8f8ff;background:linear-gradient(115deg,#164768,#132f57);}.feedback p{color:#c5deed;font-family:inherit;font-weight:400;}.feedback .source-link,.back-home{color:#8be6fa;font-weight:600;}.timer{border:1px solid #63bdda;border-radius:999px;color:#c8f4ff;background:#123d65;}.timer.urgent{color:#fff0ce;background:#68552a;border-color:#e8cf78;}.result .big{color:#9beafa;text-shadow:0 0 22px #4bc6ea99;}.note{color:#a9c6da;font-family:inherit;font-weight:400;}
+    @media (max-width:620px){.brand-mark{width:52px;height:52px}.brand-name{font-size:15px}.hero{min-height:500px;border-radius:20px}.hero h1{font-size:42px}.screen-heading{align-items:flex-start;flex-direction:column}.mode-grid{gap:15px}.topline{align-items:flex-start;flex-direction:column}.topline-right{width:100%;justify-content:space-between;gap:6px}.topline-left{width:100%;justify-content:space-between}.hero::after{font-size:17px}.hero::before{right:2%;}}
+    /* Final visual system: a calm, premium midnight interface with original moon-and-clock motifs. */
+    :root { --ink:#f4f9ff; --muted:#9ab2c9; --line:rgba(141,207,237,.24); --paper:rgba(12,39,76,.7); --bg:#06132b; --cyan:#8ddff3; --blue:#5379c8; --violet:#8177c7; --surface:#0a2348; }
+    * { -webkit-tap-highlight-color:transparent; }
+    body { min-height:100vh; background:#06132b; color:var(--ink); font-family:Inter,"Hiragino Sans","Yu Gothic UI","Yu Gothic",system-ui,sans-serif; font-weight:400; letter-spacing:.01em; }
+    body::before { position:fixed; inset:0; z-index:0; opacity:1; background:radial-gradient(900px 560px at 12% -10%,#235a8d80 0,transparent 62%),radial-gradient(740px 570px at 100% 90%,#4d46884d 0,transparent 68%),linear-gradient(145deg,#06132b 0%,#0a2550 56%,#07172f 100%); }
+    body::after { content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.24; background-image:radial-gradient(#e5fbff 1px,transparent 1.35px),radial-gradient(#a7cce6 1px,transparent 1.35px); background-size:101px 101px,173px 173px; background-position:17px 11px,69px 53px; }
+    .wrap { width:min(1120px,calc(100% - 44px)); padding:30px 0 70px; }
+    header { height:76px; margin:0 0 28px; padding:0 2px 16px; border:0; border-bottom:1px solid #82d8f044; background:transparent; box-shadow:none; transform:none; }
+    .brand { gap:13px; color:#effaff; text-shadow:none; }
+    .brand-mark { width:55px; height:55px; filter:drop-shadow(0 8px 15px #01132aaa); }
+    .brand-text { gap:4px; }.brand-top { color:#92cde4; font-size:10px; letter-spacing:.18em; }.brand-name { font-size:18px; font-weight:400; letter-spacing:.04em; }.brand-name b { color:#c6f5ff; text-shadow:0 0 18px #79d6ed88; }
+    .tag { color:#d7f4fb; border:1px solid #77c9e288; border-radius:999px; padding:5px 11px; background:#102d5799; box-shadow:inset 0 1px #ffffff18; }
+    .hero { isolation:isolate; display:flex; align-items:flex-start; justify-content:center; min-height:550px; overflow:hidden; margin:0 0 40px; padding:clamp(42px,7vw,82px); border:1px solid #86d9ef55; border-radius:28px; clip-path:none; background:linear-gradient(118deg,#0d315d 0%,#0c2b56 47%,#1b2b60 100%); box-shadow:0 30px 68px #010914a8,inset 0 1px #ffffff1c; }
+    .hero::before,.hero::after { content:""; display:none; }
+    .hero > :not(.hero-art) { position:relative; z-index:2; max-width:590px; margin-right:auto; }
+    .hero-art { position:absolute; z-index:1; width:480px; height:480px; right:0; top:50%; opacity:.96; transform:translate(12%,-50%); pointer-events:none; }
+    .art-moon { position:absolute; width:300px; height:300px; top:73px; left:72px; border-radius:50%; background:radial-gradient(circle at 34% 30%,#fff 0 2%,#d7f7ff 11%,#a7def0 44%,#547ab8 79%,#304b91 100%); box-shadow:0 0 0 8px #c5f5ff0b,0 0 0 26px #8fd9f20a,0 0 80px #8ce3f46b; }
+    .art-moon::before { content:""; position:absolute; inset:16px; border:1px solid #ffffff66; border-radius:50%; }.art-moon::after { content:""; position:absolute; inset:-30px; border:1px dashed #a6e7f177; border-radius:50%; }
+    .art-orbit { position:absolute; border:1px solid #d8fbff99; border-radius:50%; transform:rotate(-32deg); }.orbit-one { width:460px; height:172px; top:145px; left:-7px; }.orbit-two { width:400px; height:326px; top:72px; left:36px; border-color:#98c4ff55; transform:rotate(45deg); }
+    .art-clock { position:absolute; display:grid; grid-template-columns:1fr 14px 1fr; align-items:center; width:250px; top:202px; left:96px; padding:14px 16px; border:1px solid #e8fcff99; border-radius:10px; color:#fff; background:#0a2855a8; box-shadow:0 14px 28px #06142c8c,inset 0 1px #ffffff3d; backdrop-filter:blur(10px); font-family:Georgia,"Yu Mincho",serif; font-size:42px; letter-spacing:.04em; text-align:center; }.art-clock i { display:block; width:4px; height:22px; margin:auto; border-radius:9px; background:#bdeefa; box-shadow:0 10px 0 #bdeefa; }.art-clock b { font-weight:400; }.art-clock em { grid-column:1/-1; margin-top:4px; color:#a7d9ec; font-family:Inter,sans-serif; font-size:8px; font-style:normal; letter-spacing:.3em; }
+    .art-star { position:absolute; color:#e7fbff; text-shadow:0 0 16px #8adff5; }.star-one{top:24px;left:92px;font-size:27px}.star-two{right:52px;bottom:34px;font-size:38px;color:#aebefc;}
+    .hero-kicker { margin-bottom:24px; color:#d4f4fb; border:1px solid #85dced8f; border-radius:999px; background:#143e7080; box-shadow:none; backdrop-filter:blur(9px); font-size:12px; font-weight:600; }
+    .hero h1 { margin-bottom:18px; color:#f7fcff; font-family:Georgia,"Yu Mincho",serif; font-size:clamp(43px,6vw,70px); font-weight:400; letter-spacing:.01em; line-height:1.16; text-shadow:0 5px 24px #03172d; }.hero h1 .highlight { color:#9ee7f7; text-shadow:0 0 28px #70d4eb99; }
+    .hero-copy { margin-bottom:28px; color:#c4dbe9; font-size:15px; font-weight:400; line-height:1.9; }.hero-actions { gap:12px; }.primary,.hero-actions .primary { min-height:48px; border:1px solid #c7f7ff; border-radius:10px; color:#062040; background:linear-gradient(135deg,#d9faff,#6dcfec); box-shadow:0 12px 25px #01122580,0 0 18px #78d9ee33; font-family:inherit; font-size:14px; font-weight:750; }.primary:hover,.hero-actions .primary:hover { color:#062040; background:linear-gradient(135deg,#f5fdff,#a9eafa); transform:translateY(-2px); box-shadow:0 16px 30px #01122596,0 0 24px #9ce8f577; }.secondary { min-height:48px; border:1px solid #90dcea; border-radius:10px; color:#ddf8ff; background:#123c6980; box-shadow:inset 0 1px #ffffff24; font-family:inherit; font-weight:650; }.secondary:hover { background:#1a507f; }
+    .hero-facts { gap:8px; margin-top:24px; }.hero-facts li { color:#cdeaf5; border:1px solid #83d9ed55; border-radius:999px; background:#081f4288; font-family:inherit; font-size:11px; font-weight:500; }.hero-facts li::before { color:#92e5f5; }
+    .screen-heading { align-items:center; margin:0 0 18px; padding:0 0 16px; border:0; border-bottom:1px solid #88d9ed5c; background:transparent; transform:none; }.screen-heading h1,.dashboard h2 { color:#effaff; font-family:Georgia,"Yu Mincho",serif; font-size:clamp(28px,4vw,38px); font-weight:400; text-shadow:0 0 22px #64d2eb4d; }.mode-intro { margin-bottom:22px; color:#b8d2e3; font-size:14px; font-weight:400; }
+    .mode-grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }.mode-card { min-height:265px; padding:22px; border:1px solid #4f8bab; border-radius:17px; clip-path:none; color:#effaff; background:linear-gradient(150deg,#113b65,#0b2347); box-shadow:0 16px 32px #010c1fb5,inset 0 1px #ffffff13; font-family:inherit; font-weight:400; }.mode-card:nth-child(2){background:linear-gradient(150deg,#283a72,#112550)}.mode-card:nth-child(3){background:linear-gradient(150deg,#155363,#0a2b4c)}.mode-card:nth-child(4){background:linear-gradient(150deg,#203e6c,#131f4c)}.mode-card:hover { border-color:#abedfa; box-shadow:0 20px 38px #010a1bbb,0 0 18px #5bd2ef30; transform:translateY(-5px); }.mode-icon { width:50px; height:50px; margin-bottom:19px; border:1px solid #b4f0fa; border-radius:50%; color:#0b2b4a; background:linear-gradient(135deg,#e5fbff,#79d0e8); box-shadow:0 0 20px #77d7ee55; }.mode-card:nth-child(2) .mode-icon{color:#effaff;background:linear-gradient(135deg,#9bb2e6,#5869b5)}.mode-card:nth-child(3) .mode-icon{color:#073341;background:linear-gradient(135deg,#bcf5f0,#60c9d2)}.mode-card:nth-child(4) .mode-icon{color:#effaff;background:linear-gradient(135deg,#98bdf6,#6b74cf)}.mode-card strong { margin-bottom:8px; font-family:Georgia,"Yu Mincho",serif; font-size:21px; font-weight:400; }.mode-card small{color:#b9d0e0;font-size:12px;font-weight:400;line-height:1.7}.mode-arrow{color:#8fe2f4;font-family:inherit;font-size:12px;font-weight:700;}
+    .dashboard { padding:0; border:0; background:transparent; box-shadow:none; }.dashboard-head p,.stat-label,.chart-head span,.history-empty,.trend-note { color:#9eb9cf; font-family:inherit; font-weight:400; }.stat,.history,.chart,.start-card,.category-panel { border:1px solid #477f9f; border-radius:16px; background:linear-gradient(150deg,#0f3158,#0a1f43); box-shadow:0 15px 30px #010a1caf,inset 0 1px #ffffff12; }.stat { border-top:1px solid #6bd8ed; }.stat:nth-child(2){border-top-color:#9ea4ed}.stat:nth-child(3){border-top-color:#85e0cd}.stat-value,.stat:nth-child(2) .stat-value,.stat:nth-child(3) .stat-value{color:#a7eafa;font-weight:700;text-shadow:0 0 14px #57cce24d}.trend { border:1px solid #4a96b9; border-radius:15px; background:linear-gradient(110deg,#123c62,#102750); box-shadow:inset 0 1px #ffffff18; }.trend-label{color:#a5ecfa;font-family:inherit;font-size:12px;font-weight:700}.trend-text{font-family:inherit;font-weight:400}.start-card{background:radial-gradient(circle at 90% 15%,#a2ebf426,transparent 34%),linear-gradient(150deg,#183d6c,#142b58)}.start-card p{color:#bad4e5;font-family:inherit;font-weight:400}.category-track{border:0;border-radius:999px;background:#06172d}.category-fill{border-radius:999px;background:linear-gradient(90deg,#76dbef,#638ee8);box-shadow:0 0 11px #5ccdea66}.bar{border:0;border-radius:8px 8px 2px 2px;background:linear-gradient(180deg,#a7f1ff,#398fca);box-shadow:0 0 13px #35bdea55}.bar-rate{color:#9eeafa}.bar.perfect{background:linear-gradient(180deg,#eff5bc,#85e3e0);box-shadow:0 0 17px #a9e9e677}.bar-rate.is-perfect{color:#dfffff}.history-list li{border-top-color:#2b5272;font-family:inherit;font-weight:400;}
+    .card { border:1px solid #78cfe7; border-radius:20px; background:linear-gradient(150deg,#0e315a,#091e42); box-shadow:0 24px 48px #010815c2,inset 0 1px #ffffff18; }.topline{color:#c4dfec;font-family:inherit;font-weight:500}.meter{border-radius:999px;background:#06162c}.meter>span{border-radius:999px;background:linear-gradient(90deg,#7bdef1,#6d8de9);box-shadow:0 0 12px #48cbed88}.question{font-family:Georgia,"Yu Mincho",serif;font-weight:400;line-height:1.52}.choice{border:1px solid #4c83a3;border-radius:11px;color:#edf9ff;background:linear-gradient(100deg,#12385e,#0d2649);font-family:inherit;font-weight:500;box-shadow:none}.choice:hover:not(:disabled){border-color:#a6ecfa;background:#1a4d73;box-shadow:0 0 17px #45c8f533}.choice.selected{border-color:#a6ecfa;color:#effcff;background:#1a557e;box-shadow:0 0 0 3px #6ddaf433,0 0 19px #4acef544}.choice.correct{border-color:#84e5d6;color:#e2fff9;background:#155153;box-shadow:0 0 17px #54d4c544}.choice.wrong{border-color:#e090ac;color:#ffeaf2;background:#452842}.feedback{border:1px solid #5798b8;border-radius:13px;color:#e9f9ff;background:linear-gradient(115deg,#174b6a,#12315a)}.feedback p{color:#c5deec;font-family:inherit;font-weight:400}.feedback .source-link,.back-home{color:#91e6fa;font-weight:600}.timer{border:1px solid #6fc8df;border-radius:999px;color:#d3f6ff;background:#133e66}.timer.urgent{color:#fff3d3;background:#6b562c;border-color:#ebd880}.result .big{color:#a2eaf9;text-shadow:0 0 22px #4ec9ea8c}.note{color:#a9c5d7;font-family:inherit;font-weight:400}
+    @media (max-width:900px){.mode-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-art{right:-10%;opacity:.64}.hero>:not(.hero-art){max-width:530px}}@media(max-width:620px){.wrap{width:min(100% - 28px,1120px);padding-top:17px}.brand-mark{width:49px;height:49px}.brand-top{font-size:8px}.brand-name{font-size:14px}.hero{min-height:560px;padding:32px 25px;border-radius:22px}.hero-art{width:350px;height:350px;right:-27%;top:72%;opacity:.42}.art-moon{width:230px;height:230px;top:42px;left:58px}.art-orbit{display:none}.art-clock{width:190px;top:148px;left:72px;font-size:31px}.hero h1{font-size:42px}.hero-copy{font-size:14px}.hero-actions{align-items:stretch;flex-direction:column}.hero-actions button{width:100%}.screen-heading{align-items:flex-start;flex-direction:column}.mode-grid{grid-template-columns:1fr}.mode-card{min-height:205px}.dashboard-grid{grid-template-columns:1fr}.topline{align-items:flex-start;flex-direction:column}.topline-right{width:100%;justify-content:space-between;gap:6px}.topline-left{width:100%;justify-content:space-between}.hero-facts{gap:6px}}
+    /* Blue editorial treatment: original moon, orbit and angular typography. */
+    body::before { background:radial-gradient(780px 660px at 86% -12%,#3f8dc960,transparent 68%),linear-gradient(122deg,transparent 0 64%,#12386b44 64% 72%,transparent 72%),linear-gradient(152deg,#041127,#082850 54%,#061932); }
+    body::after { opacity:.16; background-image:linear-gradient(#b7efff 1px,transparent 1px),linear-gradient(90deg,#b7efff 1px,transparent 1px); background-size:58px 58px; mask-image:linear-gradient(90deg,transparent,#000 66%); }
+    .wrap { width:min(1180px,calc(100% - 48px)); }
+    header { border-bottom:1px solid #8de5f367; }
+    .brand-name { font-family:Inter,"Hiragino Sans","Yu Gothic UI",sans-serif; font-weight:850; letter-spacing:-.03em; }
+    .brand-top { font-weight:800; letter-spacing:.22em; }
+    .hero { min-height:600px; border-radius:22px 54px 22px 22px; background:radial-gradient(circle at 80% 46%,#2c75ae88,transparent 35%),linear-gradient(115deg,#0b3265,#0c3971 52%,#102654); box-shadow:0 28px 65px #000b1eaa,inset 0 0 0 1px #c5efff22; }
+    .hero::before { display:block; position:absolute; z-index:0; top:-21%; right:9%; width:78px; height:150%; transform:rotate(23deg); background:linear-gradient(90deg,transparent,#9eeaff38 44%,#d4fcff70 50%,#9eeaff38 56%,transparent); }
+    .hero::after { content:"03"; display:block; position:absolute; z-index:0; right:4%; bottom:-16%; color:#ffffff0b; font-family:Inter,system-ui,sans-serif; font-size:410px; font-weight:900; line-height:1; letter-spacing:-.12em; }
+    .hero-art { right:1%; transform:translate(6%,-50%) rotate(-8deg); }
+    .art-moon { box-shadow:0 0 0 12px #c5f5ff10,0 0 0 44px #8fd9f20c,0 0 100px #8ce3f489; }
+    .art-clock { transform:rotate(8deg); border-radius:3px 16px 3px 16px; background:#092552de; }
+    .hero-kicker { border-radius:3px 12px 3px 12px; padding:8px 16px; color:#e7fdff; background:#3c9ad044; font-size:11px; letter-spacing:.14em; }
+    .hero h1 { max-width:700px; font-family:Inter,"Hiragino Sans","Yu Gothic UI",sans-serif; font-size:clamp(43px,6vw,75px); font-weight:900; letter-spacing:-.065em; line-height:1.14; text-shadow:0 7px 26px #041a3a77; }
+    .hero h1 .highlight { color:#b2f6ff; text-shadow:0 0 38px #5ed4f499; }
+    .hero-copy { max-width:490px; font-weight:550; }
+    .primary,.hero-actions .primary { border-radius:4px 13px 4px 13px; box-shadow:5px 6px 0 #062449,0 0 24px #72d9f344; }
+    .primary:hover,.hero-actions .primary:hover { transform:translate(3px,3px); box-shadow:2px 3px 0 #062449,0 0 27px #9aeafa88; }
+    .secondary { border-radius:4px 13px 4px 13px; }
+    .screen-heading h1,.dashboard h2 { font-family:Inter,"Hiragino Sans","Yu Gothic UI",sans-serif; font-weight:850; letter-spacing:-.06em; }
+    .screen-heading h1::before { content:"◢"; margin-right:11px; color:#78e6fa; font-size:.65em; vertical-align:middle; }
+    .mode-card { position:relative; overflow:hidden; border-radius:4px 24px 4px 24px; box-shadow:0 17px 30px #010d27aa,inset 0 4px #99edfa33; }
+    .mode-card::before { content:"01"; position:absolute; top:-24px; right:9px; color:#d4f6ff15; font-family:Inter,system-ui,sans-serif; font-size:112px; font-weight:900; line-height:1; }
+    .mode-card:nth-child(2)::before { content:"02"; }.mode-card:nth-child(3)::before { content:"03"; }.mode-card:nth-child(4)::before { content:"04"; }
+    .mode-card strong { position:relative; font-family:Inter,"Hiragino Sans","Yu Gothic UI",sans-serif; font-size:21px; font-weight:850; letter-spacing:-.045em; }
+    .mode-card small,.mode-arrow,.mode-icon { position:relative; }
+    .mode-icon { border-radius:4px 13px 4px 13px; }
+    .mode-arrow { border-top:1px solid #a3e5f444; padding-top:11px; }
+    .exam-notice { display:flex; gap:14px; margin:24px 0 0; padding:20px 24px; border:1px solid #7acbe481; border-left:4px solid #8ce8f8; border-radius:4px 18px 4px 18px; color:#e8f9ff; background:#0c2a52d9; box-shadow:0 12px 27px #010d24a1; }
+    .exam-notice .notice-icon { flex:0 0 28px; display:grid; place-items:center; width:28px; height:28px; border-radius:50%; color:#062848; background:#9eeef9; font-weight:900; }
+    .exam-notice strong { font-size:14px; letter-spacing:.04em; }.exam-notice p { margin:5px 0 0; color:#bcd9e9; font-size:12px; line-height:1.8; }.exam-notice a,.trend-note a,.review-item a { color:#a5eefa; text-decoration:underline; text-underline-offset:3px; }
+    .stat,.history,.chart,.start-card,.category-panel { border-radius:4px 18px 4px 18px; }
+    .subject-title { display:flex; align-items:center; gap:7px; min-width:0; font-weight:700; }
+    .subject-rank { display:inline-flex; align-items:center; justify-content:center; min-width:27px; height:27px; border:1px solid #8ccee4; border-radius:4px 9px 4px 9px; color:#dff9ff; background:#174c79; font-size:16px; font-weight:900; line-height:1; }
+    .subject-rank.rank-s { color:#fff7c4; border-color:#f1d783; background:#67582b; box-shadow:0 0 14px #f5d97c55; }
+    .subject-rank.rank-a { color:#c9fcff; border-color:#8ceef3; background:#18566b; }
+    .subject-rank.rank-b { color:#d6e7ff; border-color:#9db6ef; background:#33497d; }
+    .subject-rank.rank-c { color:#f5ddea; border-color:#d7a1c5; background:#533650; }
+    .subject-rank.rank-none { color:#adc8da; border-color:#66879e; background:#1c3955; }
+    .subject-grade-guide { margin:8px 0 15px; color:#b9d6e7; font-size:12px; line-height:1.7; }
+    .exam-date { margin-top:22px; padding:14px 16px; border:1px solid #88dcef77; border-radius:4px 14px 4px 14px; background:#071d40b3; }
+    .exam-date strong { display:block; color:#d9f9ff; margin-bottom:8px; }.exam-date label { color:#c2e0ef; font-size:12px; }
+    .exam-date input { max-width:100%; margin:5px 8px 5px 0; padding:8px; border:1px solid #8ed6e9; border-radius:6px; color:#09264b; background:#f1fcff; font:inherit; }
+    .exam-date button { min-height:38px; padding:7px 12px; }.exam-date .date-message { margin:4px 0 0; color:#c8e8f3; font-size:12px; }
+    .extra-modes { margin-top:22px; padding:20px; border:1px solid #4f8bab; border-radius:4px 18px; background:#0b284d; }.extra-modes h2{margin:0 0 8px;font-size:18px}.extra-modes p{color:#b9d4e4;font-size:13px;line-height:1.7}.extra-mode-buttons{display:flex;flex-wrap:wrap;gap:9px}.extra-mode-buttons button{padding:9px 15px}.extra-message{min-height:1.5em;margin:8px 0 0}
+    .bookmark-button { margin:10px 0 6px; padding:8px 13px; min-height:40px; }.review-item .bookmark-button { display:block; margin-top:10px; }
+    .stat { border-top:3px solid #78dff2; }.stat:nth-child(2) { border-top:3px solid #9d9af0; }.stat:nth-child(3) { border-top:3px solid #8ce6ce; }
+    .stat-value { font-family:Inter,system-ui,sans-serif; letter-spacing:-.05em; }
+    .trend { border-radius:4px 18px 4px 18px; border-left:4px solid #8be4f5; }.trend-note { line-height:1.7; }
+    .card { border-radius:4px 26px 4px 26px; }
+    .question { font-family:Inter,"Hiragino Sans","Yu Gothic UI",sans-serif; font-weight:800; letter-spacing:-.04em; }
+    .choice { border-radius:4px 13px 4px 13px; }
+    .result-detail { max-width:780px; margin:23px auto 28px; text-align:left; }
+    .benchmark { margin:0 0 6px; padding:13px 16px; border-left:4px solid #9deaf8; background:#163d68; font-weight:800; }.benchmark-note { margin:0 0 18px; color:#b7d6e7; font-size:12px; line-height:1.7; }
+    .exam-group-list { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:20px; }.exam-group-list>div { padding:12px 13px; border:1px solid #6aabc9; border-radius:4px 12px 4px 12px; background:#0b2e56; font-size:12px; }
+    .exam-verdict { padding:18px; margin:0 0 12px; border:1px solid #79d7e6; border-left:4px solid #7be3ce; border-radius:4px 16px; background:#123d55; }
+    .exam-verdict.needs-work { border-left-color:#f0b48a; background:#3c3348; }.exam-verdict strong { display:block; font-size:20px; color:#eaffff; }.exam-verdict p { margin:7px 0 0; font-size:13px; color:#d5e9f2; line-height:1.6; }
+    .exam-score-card { display:flex; flex-direction:column; gap:6px; }.exam-score-card strong { color:#f4fbff; font-size:19px; }.exam-score-card .score-condition { color:#b8d8e8; line-height:1.5; }.exam-score-card .score-pass { color:#a2f3da; font-weight:700; }.exam-score-card .score-fail { color:#ffcfaa; font-weight:700; }
+    .exam-total { margin:0 0 14px; padding:14px; border:1px solid #6aabc9; border-radius:4px 12px; background:#0b2e56; color:#eafaff; }.exam-total strong { font-size:20px; }.exam-total span { display:block; margin-top:5px; color:#bdddec; font-size:12px; }
+    .review-list { border:1px solid #579dbd; border-radius:4px 14px 4px 14px; background:#0a294e; }.review-list summary { padding:16px; color:#c9f4fc; cursor:pointer; font-weight:800; }.review-item { padding:15px 17px; border-top:1px solid #477da0; }.review-item.review-wrong { border-left:3px solid #ea98bd; }.review-item strong { display:block; font-size:13px; line-height:1.6; }.review-item p { margin:8px 0; color:#c4ddec; font-size:12px; line-height:1.7; }.review-item a { font-size:12px; }
+    @media(max-width:900px){.hero-art{right:-10%;opacity:.58}.hero::after{font-size:320px}.hero>:not(.hero-art){max-width:570px}}
+    @media(max-width:620px){.wrap{width:min(100% - 28px,1180px)}.hero{min-height:570px;border-radius:13px 32px 13px 13px;padding:31px 24px}.hero-art{right:-25%;opacity:.3}.hero::before{right:0}.hero::after{right:-1%;bottom:-7%;font-size:230px}.hero h1{font-size:clamp(38px,11vw,49px)}.mode-card{min-height:205px}.exam-notice{padding:16px}.exam-group-list{grid-template-columns:1fr}}
+    /* Original visual identity: high-contrast blue, light and motion. */
+    :root { --ink:#f7fdff; --muted:#adc8dc; --cyan:#8cf2ff; }
+    body { background:#041020; letter-spacing:.015em; }
+    body::before { background:radial-gradient(ellipse 70% 65% at 82% 2%,#1372a66b,transparent 67%),radial-gradient(ellipse 75% 70% at 0% 100%,#123e7699,transparent 64%),linear-gradient(125deg,#030b1a,#092248 54%,#04132b); }
+    body::after { opacity:.13; background-image:linear-gradient(110deg,transparent 0 47%,#75d9f530 47% 47.2%,transparent 47.2%),linear-gradient(#b7efff 1px,transparent 1px),linear-gradient(90deg,#b7efff 1px,transparent 1px); background-size:100% 100%,72px 72px,72px 72px; mask-image:linear-gradient(0deg,transparent,#000); }
+    .wrap { width:min(1200px,calc(100% - 48px)); padding-top:22px; }
+    header { height:76px; margin-bottom:22px; border-bottom:1px solid #6ad5f75c; }
+    .brand { gap:10px; }.brand-mark { width:56px;height:56px; filter:drop-shadow(0 0 12px #55dbff80); }
+    .brand-top { font-family:Arial,sans-serif; color:#8fdcf4; font-size:9px; letter-spacing:.18em; font-weight:800; }
+    .brand-name { font-weight:950; font-size:18px; letter-spacing:-.07em; font-style:italic; }.brand-name b { color:#9df4ff; }
+    header>.tag { border:1px solid #62d7f6; border-radius:2px 12px; color:#dffaff; background:#0c315e; font-weight:800; letter-spacing:.08em; }
+    .hero { min-height:700px; padding:clamp(36px,6vw,76px); border:1px solid #64d9fb88; border-radius:2px 62px 2px 42px; background:radial-gradient(circle at 82% 40%,#45bbd766,transparent 31%),linear-gradient(120deg,#082c5b 0%,#074c82 55%,#092c5e 100%); box-shadow:0 25px 70px #000b1dc9,inset 0 1px #c5faff66; }
+    .hero::before { top:-28%; right:13%; width:104px; height:165%; transform:rotate(23deg); opacity:.8; background:linear-gradient(90deg,transparent,#a8f5ff22 35%,#c9fbff85 50%,#a8f5ff22 65%,transparent); animation:light-sweep 9s ease-in-out infinite alternate; }
+    .hero::after { content:"02"; right:3%; bottom:-14%; font-size:420px; color:#e8fcff0e; transform:skew(-10deg); }
+    .hero > :not(.hero-art) { max-width:590px; }
+    .hero-kicker { margin:0 0 20px; padding:7px 12px; border:1px solid #a6f5ff96; border-radius:3px 11px 3px 11px; color:#eaffff; background:#042653a8; font-family:Arial,sans-serif; font-size:10px; font-weight:800; letter-spacing:.14em; }
+    .kicker-dot { width:7px;height:7px; display:inline-block; border-radius:50%; background:#a6f9ff; box-shadow:0 0 12px #a6f9ff; animation:beacon 2.8s ease-in-out infinite; }
+    .hero-wordmark { position:relative; width:max-content; max-width:100%; margin:0 0 22px; padding:2px 0 14px; transform:skew(-6deg); filter:drop-shadow(5px 6px 0 #053266); }
+    .wordmark-top { display:block; width:max-content; padding:3px 12px; color:#062451; background:#b8f9ff; font-size:clamp(17px,2.6vw,27px); line-height:1; font-weight:1000; letter-spacing:.04em; }
+    .wordmark-top i { color:#008dd5; font-style:normal; }.wordmark-main { display:block; margin-top:4px; color:#fff; font-size:clamp(39px,5.3vw,70px); line-height:1.05; font-weight:1000; letter-spacing:-.09em; text-shadow:2px 2px 0 #13aee0; }
+    .wordmark-sub { display:block; margin-top:9px; padding-left:5px; color:#adf5ff; font-family:Arial,sans-serif; font-size:11px; font-weight:900; letter-spacing:.25em; }.wordmark-sub b { color:#fff; }
+    .hero-wordmark::after { content:""; position:absolute; left:2px; bottom:0; width:100%; height:3px; background:linear-gradient(90deg,#9af7ff 0 54%,transparent 54% 56%,#9af7ff 56% 70%,transparent 70%); }
+    .hero h1 { margin:0 0 14px; font-size:clamp(29px,3.5vw,47px); font-weight:900; line-height:1.22; letter-spacing:-.055em; }
+    .hero h1 .highlight { color:#a6f8ff; text-shadow:0 0 24px #69e4ff99; }
+    .hero-copy { margin:0 0 22px; color:#d6edf8; font-size:14px; line-height:1.75; }
+    .hero-actions { gap:12px; }.primary,.hero-actions .primary { border-radius:2px 14px 2px 14px; color:#061e3c; background:linear-gradient(100deg,#edffff,#85eaff); box-shadow:5px 6px 0 #05234e,0 0 20px #72d9f344; }
+    .secondary { border-radius:2px 14px 2px 14px; border-color:#9debf7; background:#082e5b9e; }.primary:focus-visible,.secondary:focus-visible,.choice:focus-visible,.back-home:focus-visible { outline:3px solid #fff; outline-offset:4px; }
+    .hero-facts { margin-top:18px; }.hero-facts li { font-size:10px; border-radius:3px 10px; background:#06244eb0; }
+    .exam-date { margin-top:18px; background:#041a3cbf; border-left:3px solid #8cefff; }.exam-date strong { font-size:13px; }.exam-date .back-home { color:#a8f1ff; }
+    .hero-art { width:510px;height:510px;right:0;opacity:.92;transform:translate(7%,-50%) rotate(-8deg); }
+    .art-moon { width:308px;height:308px;top:87px;left:93px; background:radial-gradient(circle at 34% 27%,#fff 0 4%,#d4fbff 15%,#75d8ec 48%,#2372ad 83%,#153d81); box-shadow:0 0 0 12px #d0fbff1a,0 0 0 42px #94e9ff10,0 0 85px #8ff1ff85; animation:moon-breathe 6s ease-in-out infinite alternate; }
+    .art-moon::before { inset:17px;border:1px solid #ffffff99; }.art-moon::after { inset:-32px;border:1px dashed #d2fbff88; animation:orbit-spin 50s linear infinite; }
+    .art-orbit { border-color:#e4ffffb3; }.orbit-one { width:475px;height:165px;top:173px;left:10px; animation:orbit-float 8s ease-in-out infinite alternate; }.orbit-two { width:420px;height:355px;top:71px;left:37px;border-color:#b8edff77; }
+    .art-clock { top:205px;left:126px;width:252px; border-radius:2px 17px 2px 17px; color:#fff;background:#062451e8; font-family:Arial,sans-serif; font-weight:900; font-size:55px; line-height:1; transform:rotate(8deg); box-shadow:9px 10px 0 #063064a8,0 0 32px #d2faff55; }
+    .art-clock b { font-weight:900; }.art-clock i { width:17px;height:3px;background:#aaf6ff;box-shadow:none; transform:rotate(-54deg); }.art-clock em { margin-top:9px; font-weight:700;letter-spacing:.18em; }
+    .art-star { animation:star-pulse 3s ease-in-out infinite alternate; }.star-one { top:37px;left:100px; }.star-two { bottom:38px;right:47px; animation-delay:1s; }
+    .art-cross { position:absolute;color:#d7fdff;font-weight:200;opacity:.7; }.cross-one{right:56px;top:80px;font-size:33px}.cross-two{left:50px;bottom:90px;font-size:23px}.art-caption{position:absolute;right:28px;bottom:110px;color:#d4f9ff;opacity:.75;font:800 10px/1.5 Arial,sans-serif;letter-spacing:.2em;text-align:right;transform:rotate(8deg)}
+    .screen-heading { border-bottom:2px solid #80e5f28a; }.screen-heading h1 { font-weight:950; letter-spacing:-.055em; }.screen-heading h1::before { color:#98f5ff; }
+    .mode-card { border-color:#67b5d1; background:linear-gradient(150deg,#10446d,#0b2046); transition:transform .25s,border-color .25s,box-shadow .25s; }.mode-card:hover { transform:translateY(-7px);border-color:#c2fbff;box-shadow:0 18px 40px #000d25a8,0 0 25px #51d6fa66; }.mode-card strong { color:#f7ffff; }.mode-icon { box-shadow:4px 4px 0 #06254e,0 0 20px #77e7ff66; }
+    .dashboard-grid .stat,.history,.chart,.start-card,.category-panel,.extra-modes { background:linear-gradient(150deg,#103960,#091e42);border-color:#69b8d2; }
+    .stat-value { color:#b4f5ff!important; }.trend { background:linear-gradient(105deg,#125078,#102e59); }
+    .card { border:1px solid #8deaf9; background:linear-gradient(150deg,#0b3964,#071c3d); }.meter>span,.category-fill { background:linear-gradient(90deg,#b2faff,#44c8f3); }
+    .choice { position:relative;border-color:#5aacc8;background:linear-gradient(95deg,#123d67,#0c2b53);transition:transform .2s,border-color .2s,background .2s,box-shadow .2s; }.choice:hover:not(:disabled){transform:translateX(5px);border-color:#d3fcff;background:#185680}.choice.selected{background:#176287;box-shadow:0 0 0 2px #83eeff66,0 0 22px #4acef555}.choice.correct{background:#145b5d;border-color:#9affdd}.choice.wrong{background:#592c4a;border-color:#f3a6c4}
+    .feedback.is-correct::after { color:#b2ffed; text-shadow:0 0 12px #87ffec; }.result .big { color:#bbfaff; }
+    @keyframes light-sweep { from{transform:rotate(23deg) translateX(-15px);opacity:.48} to{transform:rotate(23deg) translateX(20px);opacity:.88} }
+    @keyframes moon-breathe { from{filter:brightness(.96);transform:scale(.98)} to{filter:brightness(1.08);transform:scale(1.025)} }
+    @keyframes orbit-spin { to{transform:rotate(360deg)} }
+    @keyframes orbit-float { from{transform:rotate(-32deg) scale(.98)} to{transform:rotate(-25deg) scale(1.03)} }
+    @keyframes star-pulse { from{opacity:.45;transform:scale(.9)} to{opacity:1;transform:scale(1.18)} }
+    @keyframes beacon { 50%{opacity:.5;box-shadow:0 0 3px #a6f9ff} }
+    @media(max-width:900px){.hero-art{right:-12%;opacity:.57}.hero::after{font-size:300px}}
+    @media(max-width:620px){.wrap{width:calc(100% - 28px);padding-top:14px}header{height:auto;min-height:66px;gap:8px}.brand-mark{width:43px;height:43px}.brand-name{font-size:14px}.brand-top{font-size:7px;letter-spacing:.1em}header>.tag{font-size:10px;padding:5px 7px}.hero{min-height:0;padding:29px 22px 24px;border-radius:2px 36px 2px 24px}.hero-art{width:350px;height:350px;right:-23%;top:34%;opacity:.24}.art-moon{width:210px;height:210px;top:56px;left:65px}.art-clock{width:170px;top:133px;left:86px;font-size:38px}.art-orbit{display:none}.art-caption{display:none}.hero::after{font-size:210px;bottom:-4%}.hero-wordmark{margin-bottom:17px}.wordmark-main{font-size:clamp(36px,10vw,53px)}.wordmark-top{font-size:18px}.wordmark-sub{font-size:9px}.hero h1{font-size:31px}.hero-copy{font-size:13px}.hero-actions{flex-direction:column;align-items:stretch}.hero-actions button{width:100%}.exam-date{width:100%}.actions{flex-wrap:wrap}.mode-card:hover,.choice:hover:not(:disabled){transform:none}}
+    /* Underwater light, drifting bubbles and a calm, readable countdown. */
+    .hero { background:radial-gradient(ellipse at 80% 21%,#91f1f262,transparent 33%),radial-gradient(ellipse at 74% 83%,#026f9f8c,transparent 43%),linear-gradient(145deg,#082955 0%,#085381 57%,#04204d 100%); }
+    .hero::after { content:""; right:-12%; bottom:-27%; width:75%; height:55%; border-radius:50%; transform:rotate(-12deg); background:radial-gradient(ellipse,#8de8f022 0 20%,transparent 22% 29%,#b7f8ff28 30% 31%,transparent 33% 44%,#9eeefa22 45% 46%,transparent 48%); filter:blur(3px); animation:water-glow 8s ease-in-out infinite alternate; }
+    .hero-art { overflow:hidden; border-radius:50%; transform:translate(7%,-50%) rotate(-5deg); }
+    .art-moon { background:radial-gradient(circle at 33% 27%,#efffffbb 0 3%,#a9f7fb9e 15%,#59cce28c 45%,#1476a68c 76%,#072e6288 100%); box-shadow:0 0 0 12px #d0fbff14,0 0 0 42px #94e9ff0c,0 0 85px #8ff1ff70; animation:water-lens 7s ease-in-out infinite alternate; }
+    .art-moon::before { border-color:#e2ffff77; }.art-moon::after { border-style:solid; border-color:#c4fbff66; animation:orbit-spin 45s linear infinite; }
+    .water-ripple { position:absolute; border:1px solid #ddffffaa; border-radius:50%; box-shadow:0 0 14px #9bf8ff77,inset 0 0 18px #b6ffff55; transform:rotate(-17deg); }
+    .ripple-a { width:300px;height:102px;top:215px;left:100px;animation:ripple-drift 6s ease-in-out infinite alternate; }
+    .ripple-b { width:220px;height:70px;top:229px;left:140px;border-color:#e8ffffa8;animation:ripple-drift 5s ease-in-out -2s infinite alternate-reverse; }
+    .water-bubbles { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+    .water-bubbles span { position:absolute; left:var(--x); bottom:3%; width:var(--size); height:var(--size); border:1px solid #d8ffffb3; border-radius:50%; background:radial-gradient(circle at 30% 25%,#ffffffdc 0 6%,#bffbff60 15%,#7ad5eb18 58%,#a8f8ff75 100%); box-shadow:inset -2px -3px 6px #b2f5ff55,0 0 9px #affaff55; animation:bubble-rise var(--duration) ease-in var(--delay) infinite; }
+    .exam-date { position:relative; overflow:hidden; width:min(100%,470px); padding:16px 19px; border:1px solid #9ff2ffad; border-left:4px solid #b1faff; border-radius:3px 22px 3px 22px; background:radial-gradient(ellipse at 85% 0%,#6be5ed42,transparent 45%),linear-gradient(120deg,#072d5fe8,#0b4165ed); box-shadow:0 12px 30px #00112680,inset 0 1px #d3ffff55; }
+    .countdown-eyebrow { color:#b4f6fc; font:800 10px/1.4 Arial,sans-serif; letter-spacing:.18em; }.countdown-eyebrow span{color:#f4ffff}
+    .countdown-display { min-height:53px; display:flex; align-items:baseline; gap:8px; margin:3px 0 4px; color:#e8fdff; font-size:14px; font-weight:800; line-height:1.2; }
+    .countdown-prefix,.countdown-unit { font-size:15px; color:#e3faff; }.countdown-number { display:inline-block; color:#fff; font-family:Arial,sans-serif; font-size:clamp(52px,6vw,72px); font-weight:900; line-height:1; letter-spacing:-.06em; text-shadow:0 0 18px #93f6ffc9,0 5px 0 #17679c; animation:countdown-float 4s ease-in-out infinite; }
+    .exam-date label { display:block; margin-top:3px; color:#c8e8f2; font-size:11px; }.date-controls { display:flex; flex-wrap:wrap; align-items:center; gap:7px; }.date-controls input { margin:0; min-width:150px; }.date-controls button { flex:none; }
+    .exam-date .date-message { min-height:1em; }
+    @keyframes bubble-rise { 0%{opacity:0;transform:translate(0,0) scale(.7)} 12%{opacity:.8} 48%{transform:translate(12px,-190px) scale(1)} 85%{opacity:.7} 100%{opacity:0;transform:translate(-8px,-440px) scale(1.14)} }
+    @keyframes water-lens { 0%{transform:scale(.98) translateY(3px);border-radius:50% 49% 51% 50%} 100%{transform:scale(1.025) translateY(-5px);border-radius:49% 51% 50% 50%} }
+    @keyframes ripple-drift { from{transform:rotate(-17deg) scale(.95);opacity:.5} to{transform:rotate(-12deg) scale(1.08);opacity:1} }
+    @keyframes water-glow { from{transform:rotate(-12deg) translateY(0)} to{transform:rotate(-8deg) translateY(-18px)} }
+    @keyframes countdown-float { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-5px) rotate(1deg)} }
+    @media(max-width:620px){.hero-art{opacity:.37;top:29%}.art-moon{width:210px;height:210px;top:56px;left:65px}.water-ripple.ripple-a{width:210px;height:70px;top:140px;left:65px}.water-ripple.ripple-b{width:155px;height:47px;top:151px;left:93px}.water-bubbles span{animation-name:bubble-rise-small}.countdown-number{font-size:58px}.exam-date{padding:14px}.date-controls input{min-width:0;max-width:100%;flex:1 1 145px}.date-controls button{font-size:12px}.hero::after{width:100%;height:32%;bottom:-10%}}
+    @keyframes bubble-rise-small { 0%{opacity:0;transform:translate(0,0) scale(.7)} 15%{opacity:.8} 60%{transform:translate(8px,-170px)} 100%{opacity:0;transform:translate(-5px,-300px) scale(1.12)} }
+    /* A continuous water surface behind every screen. */
+    body { color:#f4fdff; background:#031b31; }
+    body::before { background:radial-gradient(ellipse at 74% -5%,#75e0e679 0,transparent 35%),radial-gradient(ellipse at 12% 90%,#055783b8 0,transparent 56%),linear-gradient(145deg,#04182e 0%,#073858 45%,#031b32 100%); }
+    body::after { display:none; }
+    .ocean-scene { position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; background:radial-gradient(ellipse at 73% 4%,#9bf7fa33,transparent 34%),radial-gradient(ellipse at 30% 78%,#31b2cf24,transparent 49%); }
+    .ocean-light { position:absolute; inset:-25%; background:conic-gradient(from 160deg at 70% 0%,transparent 0 5%,#b7ffff0f 6% 8%,transparent 9% 14%,#d2ffff18 15% 17%,transparent 18% 25%,#c4ffff0e 26% 29%,transparent 30% 100%); filter:blur(16px); animation:ocean-light-drift 22s ease-in-out infinite alternate; }
+    .ocean-lines { position:absolute; inset:-12%; width:124%; height:124%; opacity:.3; filter:blur(.6px) drop-shadow(0 0 5px #8ef3ff88); }
+    .ocean-lines-a { animation:ocean-flow-a 24s ease-in-out infinite alternate; }.ocean-lines-b { opacity:.2; filter:blur(1.1px); animation:ocean-flow-b 31s ease-in-out infinite alternate; }
+    .wrap { width:min(1240px,calc(100% - 64px)); padding:28px 0 80px; }
+    header { height:auto; min-height:72px; margin-bottom:26px; border-bottom:1px solid #b2f4ff55; }
+    .brand { min-width:0; }.brand-mark{flex:none}.brand-text{min-width:0}.brand-name{font-size:clamp(14px,1.5vw,19px);letter-spacing:-.04em;line-height:1.25}.brand-top{color:#a7e2eb;font-size:9px;letter-spacing:.16em}header>.tag{flex:none;border-radius:99px;background:#0b405575;border-color:#b7f4fb66}
+    .hero { min-height:760px; padding:clamp(38px,5.5vw,76px); border:1px solid #b9f7fd70; border-radius:30px; background:radial-gradient(ellipse at 77% 34%,#69e2e832,transparent 36%),linear-gradient(115deg,#062741e8 0%,#074966c9 58%,#063555a8 100%); box-shadow:0 28px 80px #00101cb3,inset 0 1px #e0ffff66; }
+    .hero::before { width:25%; height:150%; top:-27%; right:7%; background:linear-gradient(100deg,transparent,#c8ffff20 42%,#ecffff55 50%,#b6ffff12 58%,transparent); filter:blur(13px); }
+    .hero::after { opacity:.65; width:95%; height:54%; right:-28%; bottom:-18%; filter:blur(5px); }
+    .hero > :not(.hero-art) { max-width:min(100%,600px); }
+    .hero-kicker { border-radius:99px; border-color:#b8f9fd6b; padding:8px 14px; color:#defcff; background:#0733449c; font-size:10px; letter-spacing:.15em; }
+    .hero-wordmark { transform:none; filter:none; margin-bottom:32px; padding-bottom:19px; }
+    .wordmark-top { border-radius:3px; padding:5px 10px; color:#083953; background:#befaff; font-size:clamp(16px,2vw,23px); letter-spacing:.07em; }
+    .wordmark-main { margin-top:9px; color:#f7ffff; font-size:clamp(40px,5.3vw,68px); font-weight:900; line-height:1.18; letter-spacing:-.075em; text-shadow:0 5px 22px #002a4380; }
+    .wordmark-sub { margin-top:11px; color:#bceff4; font-size:10px; letter-spacing:.22em; }.hero-wordmark::after{height:1px;background:linear-gradient(90deg,#c7fcffad,transparent)}
+    .hero h1 { margin-bottom:18px; font-size:clamp(30px,3.6vw,46px); line-height:1.3; letter-spacing:-.05em; }.hero h1 .highlight{color:#bbfbfa;text-shadow:0 0 24px #8ff8ff75}
+    .hero-copy { margin-bottom:27px; color:#d0edf2; line-height:1.9; }
+    .hero-actions { gap:12px; }.hero-actions .primary,.hero-actions .secondary { min-height:52px; padding:13px 23px; border-radius:12px; }
+    .hero-actions .primary { box-shadow:0 8px 24px #00283f88,0 0 24px #a3faff30; }.hero-actions .primary:hover{transform:translateY(-3px);box-shadow:0 13px 28px #00283fa8,0 0 30px #a3faff66}
+    .hero-facts { margin-top:22px; gap:8px; }.hero-facts li{border-radius:99px;background:#092d44a6;border-color:#b2f3f65c;color:#e1faf9}
+    .hero-art { width:min(48vw,550px); height:min(48vw,550px); right:1%; top:39%; opacity:.82; overflow:visible; border-radius:0; transform:translate(0,-50%); }
+    .art-moon { width:62%;height:62%;top:17%;left:20%; background:radial-gradient(ellipse at 39% 32%,#e8ffffaa 0 3%,#9ff4f780 14%,#5ec9d759 43%,#0b6c9055 73%,transparent 100%); box-shadow:0 0 75px #78e8ed4d; }
+    .art-moon::before { border:1px solid #d4ffff66; }.art-moon::after{border-color:#d4ffff55;}
+    .water-bubbles { overflow:visible; }.water-bubbles span{box-shadow:inset -2px -3px 6px #d3ffff70,0 0 12px #b6ffff66}
+    .water-ripple { border-color:#d5ffffb5; box-shadow:0 0 16px #b5ffff88,inset 0 0 18px #b6ffff44; }
+    .hero > .hero-aside { position:absolute; z-index:3; right:7%; bottom:58px; width:270px; max-width:32%; margin:0; padding:0 0 0 18px; border-left:1px solid #c4f9ff9c; color:#edffff; }
+    .hero-aside span { display:block; margin-bottom:11px; color:#b3eff5; font:700 10px/1.5 Arial,sans-serif; letter-spacing:.19em; }.hero-aside strong{display:block;font-size:clamp(17px,1.8vw,23px);font-weight:600;line-height:1.65;letter-spacing:.04em}.hero-aside i{display:block;width:45px;height:2px;margin-top:16px;background:#bafcff;box-shadow:0 0 12px #98faff}
+    .exam-date { width:min(100%,440px); margin-top:25px; padding:20px 22px; border:1px solid #baf9fba1; border-radius:20px; background:linear-gradient(135deg,#0d566eac,#062d49dc); box-shadow:0 14px 35px #00192480,inset 0 1px #e6ffff66; }
+    .countdown-eyebrow { color:#bceff3; letter-spacing:.18em; }.countdown-number { color:#faffff; font-size:clamp(58px,6.5vw,80px); text-shadow:0 5px 22px #91f7ff9c; }.date-controls input{border-radius:9px}.date-controls .secondary{border-radius:9px;background:#0b4c67}
+    .screen-heading { border-bottom:1px solid #a7eff45e; padding-bottom:20px; }.screen-heading h1{font-size:clamp(28px,4vw,42px);letter-spacing:-.04em}.screen-heading h1::before{color:#a6f4f3}
+    .mode-grid { gap:16px; }.mode-card,.extra-modes,.dashboard-grid .stat,.history,.chart,.start-card,.category-panel,.card { border:1px solid #a4e9ef5c; border-radius:20px; background:linear-gradient(145deg,#104d64dc,#092c49ed); box-shadow:0 15px 35px #00111f82,inset 0 1px #e5ffff1c; }
+    .mode-card:nth-child(n) { background:linear-gradient(145deg,#155b70dc,#092e4fed); }.mode-card:hover{border-color:#d8ffff;box-shadow:0 20px 44px #001322a8,0 0 26px #83f9f547}.mode-icon{border-radius:14px;background:linear-gradient(145deg,#e0ffff,#88e8ef);box-shadow:0 5px 18px #55e3e533}.mode-arrow{color:#baf9f5}
+    .trend { border:1px solid #a8f0ee66;border-radius:18px;background:linear-gradient(110deg,#13566ddb,#0b3856ec); }.stat-value{color:#d8ffff!important}.category-fill,.meter>span{background:linear-gradient(90deg,#d1ffff,#64d7dd)}
+    .choice { border:1px solid #a3e7e966; border-radius:13px; background:linear-gradient(100deg,#104c66,#0b354f); }.choice:hover:not(:disabled){background:#14647a}.choice.selected{background:#176b7b;border-color:#d4ffff}.feedback{border-radius:14px}
+    @keyframes ocean-flow-a { from{transform:translate3d(-1%,0,0) scale(1.02)} to{transform:translate3d(2%,-2%,0) scale(1.07)} }
+    @keyframes ocean-flow-b { from{transform:translate3d(1%,1%,0) scale(1.04)} to{transform:translate3d(-2%,-1%,0) scale(1.09)} }
+    @keyframes ocean-light-drift { from{transform:rotate(-2deg) scale(1)} to{transform:rotate(4deg) scale(1.08)} }
+    @media(max-width:900px){.hero-art{right:-7%;width:48vw;height:48vw;opacity:.58}.hero > .hero-aside{right:5%;bottom:45px;max-width:28%;width:225px}.hero-aside strong{font-size:16px}}
+    @media(max-width:620px){.wrap{width:calc(100% - 28px);padding:16px 0 48px}header{align-items:center;gap:9px}header>.tag{font-size:9px;white-space:normal;text-align:center;max-width:105px}.brand-name{font-size:13px}.brand-top{font-size:7px}.hero{min-height:0;padding:30px 22px;border-radius:22px}.hero > :not(.hero-art){max-width:100%}.hero-art{width:290px;height:290px;right:-55px;top:220px;opacity:.23}.hero-wordmark{margin-bottom:23px}.wordmark-main{font-size:clamp(32px,9vw,48px);line-height:1.3;letter-spacing:-.07em}.wordmark-top{font-size:16px}.hero h1{font-size:clamp(27px,7.5vw,34px)}.hero-copy{font-size:13px}.hero-actions{flex-direction:column;align-items:stretch}.hero-actions button{width:100%}.exam-date{width:100%;padding:17px;border-radius:16px}.hero > .hero-aside{position:relative;right:auto;bottom:auto;width:100%;max-width:100%;margin:28px 0 0;padding-left:14px}.hero-aside strong{font-size:15px}.hero-aside span{font-size:9px}.ocean-lines{opacity:.2}.ocean-lines-b{opacity:.13}.mode-card,.extra-modes,.dashboard-grid .stat,.history,.chart,.start-card,.category-panel,.card{border-radius:15px}}
+    /* Ocean editorial: an open composition with a moving water surface. */
+    body { background:#03172d; }
+    body::before { background:radial-gradient(ellipse at 78% 5%,#09738a7a,transparent 45%),linear-gradient(140deg,#03172d 0%,#062c49 55%,#03192e 100%); }
+    .ocean-scene { opacity:.7; }.ocean-lines-a{opacity:.16}.ocean-lines-b{opacity:.1}
+    .wrap { width:min(1280px,calc(100% - 80px)); padding:20px 0 60px; }
+    header { min-height:64px; margin:0; padding:0 0 14px; border-bottom:1px solid #c4faff38; }
+    .brand-mark { width:44px; height:44px; filter:none; }.brand-top { color:#98c6d3; font-size:9px; letter-spacing:.16em; }.brand-name { color:#f3ffff; font-size:15px; font-style:normal; letter-spacing:-.02em; }.brand-name b { color:#d1fbff; }
+    header>.tag { padding:6px 12px; color:#d8f8ff; border-color:#bdeffb4d; background:#07344b61; font-weight:600; }
+    .hero { display:grid; grid-template-columns:minmax(0,1fr) minmax(310px,.82fr); grid-template-rows:repeat(6,max-content); align-content:center; column-gap:32px; min-height:min(740px,calc(100svh - 110px)); margin:0; padding:52px clamp(24px,4vw,60px); border:0; border-radius:0; overflow:hidden; background:linear-gradient(90deg,#03182df2 0%,#04263de8 38%,#04486167 74%,#073a550d 100%); box-shadow:none; }
+    .hero::before,.hero::after { display:none; }
+    .hero > :not(.hero-art) { grid-column:1; max-width:100%; margin-right:0; }
+    .hero-kicker { grid-row:1; margin:0 0 24px; padding:0; border:0; border-radius:0; color:#a7ecf0; background:transparent; font:700 10px/1.4 Arial,"Yu Gothic",sans-serif; letter-spacing:.16em; }
+    .kicker-dot { width:6px; height:6px; background:#bafaff; }
+    .hero-wordmark { grid-row:2; width:auto; margin:0 0 24px; padding:0 0 20px; transform:none; }
+    .wordmark-top { width:auto; padding:0; color:#b9f4f4; background:transparent; font-size:clamp(16px,1.8vw,22px); line-height:1.4; letter-spacing:.07em; }
+    .wordmark-top i { color:#d5ffff; }.wordmark-main { margin-top:5px; font-size:clamp(41px,5.1vw,66px); line-height:1.2; font-weight:850; letter-spacing:-.07em; text-shadow:0 8px 30px #00142082; }
+    .wordmark-sub { margin-top:9px; padding:0; color:#a8d9e3; font:700 9px/1.4 Arial,sans-serif; letter-spacing:.24em; }.hero-wordmark::after{width:min(270px,80%);height:1px;background:linear-gradient(90deg,#c2fdff9e,transparent)}
+    .hero h1 { grid-row:3; margin:0 0 14px; color:#f4ffff; font-size:clamp(25px,3vw,39px); font-weight:650; line-height:1.4; letter-spacing:-.04em; }.hero h1 .highlight{color:#bdfcff;text-shadow:none}
+    .hero-copy { grid-row:4; margin:0 0 24px; color:#c6e3e9; font-size:13px; font-weight:400; line-height:1.9; }
+    .hero-actions { grid-row:5; gap:12px; }.hero-actions .primary,.hero-actions .secondary{min-height:50px;padding:12px 21px;border-radius:9px;font-size:13px}.hero-actions .primary{background:#d7ffff;border:1px solid #efffff;color:#07364d;box-shadow:none}.hero-actions .secondary{border:1px solid #b8f3f5a8;background:#07334e80;color:#efffff;box-shadow:none}.hero-actions .primary:hover,.hero-actions .secondary:hover{transform:translateY(-3px);box-shadow:0 10px 24px #00131d80}
+    .hero-facts { grid-row:6; gap:16px; margin:22px 0 0; }.hero-facts li{padding:0;border:0;background:transparent;box-shadow:none;color:#a8d4dd;font-size:10px;letter-spacing:.03em}.hero-facts li::before{content:"/";color:#83dbdf;margin-right:7px}
+    .hero-art { position:absolute; z-index:0; inset:0 0 0 auto; width:70%; height:100%; opacity:.95; overflow:hidden; border-radius:0; transform:none; mask-image:linear-gradient(90deg,transparent 0%,#000 24%); }
+    .water-art { position:absolute; inset:0; width:100%; height:100%; }
+    .water-current-back { animation:current-back 14s ease-in-out infinite alternate; transform-origin:55% 50%; }.water-current-front{animation:current-front 10s ease-in-out infinite alternate;transform-origin:55% 50%}
+    .water-bubbles { inset:0; overflow:hidden; }.water-bubbles span{opacity:.65;box-shadow:inset -1px -2px 4px #e8ffff55,0 0 8px #b6ffff44}
+    .hero > .exam-date { grid-column:2;grid-row:4 / 7;align-self:end;justify-self:end;width:min(100%,350px);max-width:100%;margin:0;padding:19px 21px;border:1px solid #d0ffff69;border-radius:16px;background:linear-gradient(125deg,#073a54c9,#05243ee8);box-shadow:0 18px 50px #00162199,inset 0 1px #ecffff35;backdrop-filter:blur(14px); }
+    .countdown-eyebrow{color:#b7e9ed;font-size:9px;letter-spacing:.18em}.countdown-display{min-height:52px;margin:7px 0 4px}.countdown-number{font-size:clamp(54px,5.8vw,76px);font-weight:700;letter-spacing:-.06em;text-shadow:0 0 22px #b6ffff75}.countdown-prefix,.countdown-unit{font-size:13px;font-weight:600}
+    .date-controls{gap:6px}.date-controls input{min-width:120px;flex:1 1 130px;padding:7px;font-size:12px}.date-controls button{font-size:11px}.exam-date .date-message:empty{display:none}
+    .mode-card,.extra-modes,.dashboard-grid .stat,.history,.chart,.start-card,.category-panel,.card { border:1px solid #b6f6ff3b; background:linear-gradient(145deg,#0c4059d9,#07263de8);box-shadow:0 18px 45px #0014206b,inset 0 1px #e7ffff1a; }
+    .mode-card:nth-child(n){background:linear-gradient(145deg,#0d4b61df,#08283fe8)}.mode-icon{box-shadow:none}.trend{background:linear-gradient(110deg,#10516bd9,#092e49eb)}.choice{background:linear-gradient(100deg,#0b435c,#092c47);border-color:#a4e8ee55}
+    @keyframes current-back { from{transform:translate3d(-1%,1%,0) scale(1.01)} to{transform:translate3d(2%,-1%,0) scale(1.04)} }
+    @keyframes current-front { from{transform:translate3d(1%,1%,0)} to{transform:translate3d(-2%,-1%,0)} }
+    @media(max-width:900px){.wrap{width:calc(100% - 36px)}.hero{grid-template-columns:minmax(0,1fr) minmax(250px,.8fr);column-gap:14px;padding:45px 26px}.hero-art{inset:0 0 0 auto;width:68%;height:100%;opacity:.72}.hero > .exam-date{grid-column:2;grid-row:4 / 7}.wordmark-main{font-size:clamp(38px,5.3vw,55px)}}
+    @media(max-width:620px){.wrap{width:calc(100% - 28px);padding-top:14px}header{min-height:60px}.brand-mark{width:40px;height:40px}.brand-name{font-size:13px}.hero{display:flex;flex-direction:column;align-items:flex-start;min-height:0;padding:38px 12px 30px;overflow:hidden}.hero-art{inset:0 -20% auto auto;width:120%;height:480px;opacity:.46;mask-image:linear-gradient(90deg,transparent,#000 45%)}.hero > :not(.hero-art){width:auto;max-width:100%}.hero-kicker{margin-bottom:20px}.hero-wordmark{margin-bottom:22px}.wordmark-main{font-size:clamp(34px,10vw,48px)}.hero h1{font-size:clamp(26px,7.6vw,36px)}.hero-copy{font-size:13px}.hero-actions{width:100%!important;flex-direction:column}.hero-actions button{width:100%}.hero-facts{gap:12px;flex-wrap:wrap}.hero > .exam-date{align-self:stretch;width:100%;max-width:100%;margin:28px 0 0}.countdown-number{font-size:62px}.date-controls input{min-width:0;flex:1 1 125px}.ocean-lines{opacity:.13}}
+    .water-reflections { animation:reflection-drift 12s ease-in-out infinite alternate; transform-origin:60% 50%; }
+    @keyframes reflection-drift { from{opacity:.45;transform:translate3d(-1%,0,0)} to{opacity:.8;transform:translate3d(1%,-1%,0)} }
+    button { touch-action:manipulation; }
+    .hero-art { -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 24%); }
+    .date-controls input { color-scheme:light; }
+    @media(max-width:620px){
+      html,body{max-width:100%;overflow-x:hidden;overflow-x:clip}
+      .wrap{width:calc(100% - 32px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px));margin-left:calc(16px + env(safe-area-inset-left, 0px));margin-right:calc(16px + env(safe-area-inset-right, 0px));padding-top:calc(14px + env(safe-area-inset-top, 0px));padding-bottom:calc(40px + env(safe-area-inset-bottom, 0px))}
+      header{min-height:60px}.brand{min-width:0}.brand-text{min-width:0}.brand-name{font-size:clamp(12px,3.4vw,15px);overflow-wrap:anywhere}header>.tag{max-width:100px;flex-shrink:0}
+      .hero{padding:34px 4px 26px}.hero-art{width:130%;height:440px;right:-29%;opacity:.5;-webkit-mask-image:linear-gradient(90deg,transparent 8%,#000 65%);mask-image:linear-gradient(90deg,transparent 8%,#000 65%)}
+      .hero-wordmark{width:100%;max-width:100%}.wordmark-main{font-size:clamp(32px,10vw,46px);line-height:1.3;overflow-wrap:anywhere}.hero h1{line-height:1.4}.hero-copy{font-size:14px;line-height:1.85}
+      .hero-actions{gap:10px}.hero-actions button{min-height:52px;font-size:15px}.hero-facts{gap:8px 14px}.hero-facts li{font-size:11px}
+      .hero > .exam-date{margin-top:24px;padding:16px}.countdown-eyebrow{font-size:10px}.exam-date label{font-size:12px}.date-controls input{font-size:16px;min-height:46px}.date-controls button{min-height:44px;font-size:13px}
+      .screen-heading{gap:10px}.screen-heading h1{font-size:clamp(25px,7vw,34px);line-height:1.3;overflow-wrap:anywhere}.screen-heading button{min-height:44px}
+      .mode-grid{grid-template-columns:1fr;gap:10px}.mode-card{min-height:0;padding:17px 18px}.mode-icon{width:42px;height:42px;margin-bottom:11px;font-size:21px}.mode-card strong{font-size:18px}.mode-card small{font-size:13px;line-height:1.65}.mode-arrow{padding-top:10px;font-size:12px}
+      .extra-modes{padding:17px}.extra-mode-buttons button{min-height:46px;flex:1 1 130px}.extra-modes p,.mode-intro{font-size:13px}
+      .dashboard-grid,.dashboard-lower,.category-list,.exam-group-list{grid-template-columns:1fr}.dashboard-head{align-items:flex-start;flex-wrap:wrap}.stat,.history,.chart,.start-card,.category-panel{padding:16px}.category-row-top{font-size:13px;flex-wrap:wrap}.category-row-top strong{white-space:normal}
+      .card{padding:20px 16px}.topline{flex-direction:column;align-items:stretch;gap:10px}.topline-left,.topline-right{display:flex;flex-wrap:wrap;align-items:center;gap:8px;width:100%}.topline-right{justify-content:flex-start}.topline .back-home{min-height:44px;padding:8px}.timer{font-size:14px}.question{font-size:18px;line-height:1.65;overflow-wrap:anywhere}.choice{min-height:52px;padding:14px;font-size:15px;line-height:1.6;overflow-wrap:anywhere}.bookmark-button{min-height:44px;font-size:13px}
+      .actions{display:flex;flex-wrap:wrap;align-items:stretch;gap:9px}.actions .score{flex-basis:100%;font-size:13px}.actions #previous{min-height:48px;flex:1 1 95px;padding:10px}.actions #next{min-height:48px;flex:2 1 145px;padding:10px}
+      .result > button{display:block;width:100%;min-height:48px;margin:10px 0;padding:11px;font-size:14px}.result-detail{max-width:100%;overflow-wrap:anywhere}.review-list summary{min-height:48px}.review-item a{overflow-wrap:anywhere}.exam-score-card strong,.exam-total strong{font-size:19px}
+      button:active:not(:disabled){filter:brightness(1.12)}
+    }
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+  <div class="ocean-scene" aria-hidden="true">
+    <div class="ocean-light"></div>
+    <svg class="ocean-lines ocean-lines-a" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="waterline" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a3f8ff" stop-opacity="0"/><stop offset=".35" stop-color="#bafaff" stop-opacity=".8"/><stop offset=".72" stop-color="#79e5f7" stop-opacity=".4"/><stop offset="1" stop-color="#b9ffff" stop-opacity="0"/></linearGradient></defs>
+      <g fill="none" stroke="url(#waterline)" stroke-width="1.5"><path d="M-180 300 C80 130 238 425 517 312 S970 113 1200 238 1530 340 1680 180"/><path d="M-230 332 C62 156 235 454 520 340 S970 143 1215 271 1535 374 1690 215"/><path d="M-240 366 C58 190 230 485 518 374 S984 181 1224 306 1540 410 1700 249"/><path d="M-200 554 C60 390 218 681 490 564 S940 350 1202 493 1533 602 1700 427"/><path d="M-220 586 C65 423 211 711 493 596 S944 384 1216 526 1535 637 1700 463"/><path d="M-200 620 C66 459 211 741 499 629 S955 419 1220 560 1535 672 1700 499"/><path d="M-150 760 C129 618 279 870 555 760 S994 592 1238 694 1510 798 1640 692"/></g>
+    </svg>
+    <svg class="ocean-lines ocean-lines-b" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#b3f7ff" stroke-opacity=".55" stroke-width="1"><path d="M-50 175 C240 360 360 79 666 200 S1090 356 1510 130"/><path d="M-80 196 C240 390 364 106 670 224 S1100 385 1520 152"/><path d="M-80 218 C240 419 368 136 675 248 S1110 415 1520 174"/><path d="M-80 650 C240 450 340 760 670 625 S1110 450 1520 680"/><path d="M-80 675 C240 479 345 791 676 649 S1110 481 1520 705"/></g></svg>
+  </div>
+  <main class="wrap">
+    <header>
+      <div class="brand">
+        <svg class="brand-mark" viewBox="0 0 72 72" role="img" aria-label="月とチェックマークのロゴ">
+          <defs>
+            <linearGradient id="moonBlue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e9fbff"/><stop offset=".55" stop-color="#79d7f1"/><stop offset="1" stop-color="#2d6eb8"/></linearGradient>
+            <linearGradient id="orbitBlue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#86e8f7"/><stop offset="1" stop-color="#496ac1"/></linearGradient>
+            <filter id="moonGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <circle cx="36" cy="36" r="31" fill="#071b40" stroke="#8de6fa" stroke-width="1.4"/>
+          <circle cx="36" cy="36" r="26" fill="none" stroke="#73cce8" stroke-width=".8" stroke-dasharray="2.4 3.5" opacity=".75"/>
+          <path d="M48 16.5A20 20 0 1 0 54 47 22 22 0 1 1 48 16.5Z" fill="url(#moonBlue)" filter="url(#moonGlow)"/>
+          <path d="m23.5 38 7.4 7.4L49.5 27" fill="none" stroke="#fff" stroke-width="5.3" stroke-linecap="round" stroke-linejoin="round" filter="url(#moonGlow)"/>
+          <ellipse cx="36" cy="36" rx="33" ry="13" fill="none" stroke="url(#orbitBlue)" stroke-width="1.5" transform="rotate(-27 36 36)"/>
+          <circle cx="56.5" cy="22" r="2.2" fill="#ecfcff"/>
+          <path d="M18 17l1.3 2.8 2.7 1.2-2.7 1.2L18 25l-1.2-2.8-2.8-1.2 2.8-1.2L18 17Z" fill="#b9efff"/>
+        </svg>
+        <span class="brand-text"><span class="brand-top">HYGIENE MANAGER / STUDY SYSTEM</span><span class="brand-name">絶対合格！<b>衛生管理者</b></span></span>
+      </div>
+      <div class="tag">第二種 衛生管理者</div>
+    </header>
+    <section class="hero" id="home-screen" aria-labelledby="hero-title">
+      <div class="hero-art" aria-hidden="true">
+        <svg class="water-art" viewBox="0 0 1000 850" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="water-depth" cx="69%" cy="45%" r="66%"><stop stop-color="#9cfbff" stop-opacity=".72"/><stop offset=".25" stop-color="#20c3df" stop-opacity=".6"/><stop offset=".63" stop-color="#056797" stop-opacity=".42"/><stop offset="1" stop-color="#04234a" stop-opacity="0"/></radialGradient>
+            <linearGradient id="water-bright" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c2ffff" stop-opacity="0"/><stop offset=".38" stop-color="#bffcff" stop-opacity=".82"/><stop offset=".61" stop-color="#66eafa" stop-opacity=".52"/><stop offset="1" stop-color="#0f8dbb" stop-opacity="0"/></linearGradient>
+            <linearGradient id="water-shadow" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#0a9ac0" stop-opacity="0"/><stop offset=".5" stop-color="#063e79" stop-opacity=".52"/><stop offset="1" stop-color="#071831" stop-opacity=".7"/></linearGradient>
+            <filter id="water-blur" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="12"/></filter>
+            <filter id="water-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3"/></filter>
+          </defs>
+          <rect width="1000" height="850" fill="url(#water-depth)"/>
+          <g class="water-current water-current-back"><path d="M-80 345 C110 275 175 315 310 278 S566 156 745 205 1006 284 1120 222 L1120 590 C960 625 821 518 657 547 S322 690 124 585 -48 499 -80 520Z" fill="#31cae3" fill-opacity=".21"/><path d="M-100 515 C135 430 226 510 374 465 S641 314 823 364 1012 450 1110 399 L1110 850 -100 850Z" fill="url(#water-shadow)"/></g>
+          <g class="water-current water-current-front" fill="none" stroke="url(#water-bright)" stroke-linecap="round"><path d="M-100 407 C130 309 236 387 400 320 S690 172 874 251 1030 296 1130 245" stroke-width="48" opacity=".25" filter="url(#water-blur)"/><path d="M-80 405 C112 337 225 377 398 320 S682 190 865 253 1015 298 1110 253" stroke-width="6" opacity=".65" filter="url(#water-soft)"/><path d="M-90 433 C128 354 243 413 414 349 S689 218 865 277 1023 326 1120 284" stroke-width="2" opacity=".82"/><path d="M-70 467 C152 385 254 449 420 383 S697 252 867 311 1022 361 1110 319" stroke-width="1.5" opacity=".7"/><path d="M-80 557 C145 472 265 534 424 476 S699 347 865 404 1020 453 1110 414" stroke-width="25" opacity=".15" filter="url(#water-blur)"/><path d="M-70 565 C146 493 269 547 430 488 S699 369 865 425 1020 472 1110 439" stroke-width="2" opacity=".65"/><path d="M-60 592 C145 523 260 574 435 516 S704 395 867 454 1020 500 1110 466" stroke-width="1" opacity=".7"/></g>
+          <g class="water-reflections" fill="none" stroke="#d9ffff" stroke-linecap="round"><path d="M323 367 C372 365 403 345 458 325" opacity=".65" stroke-width="2"/><path d="M514 301 C567 280 619 268 675 272" opacity=".42" stroke-width="1.5"/><path d="M736 306 C790 314 815 326 854 337" opacity=".5" stroke-width="2"/><path d="M435 511 C489 492 532 471 580 460" opacity=".44" stroke-width="1.5"/><path d="M639 454 C690 448 735 460 772 472" opacity=".42" stroke-width="2"/></g>
+        </svg>
+      </div>
+      <div class="hero-kicker"><span class="kicker-dot"></span> 第二種 衛生管理者試験</div>
+      <div class="hero-wordmark" aria-label="絶対合格！衛生管理者 テストアプリ"><span class="wordmark-top">絶対合格 <i>!</i></span><span class="wordmark-main">衛生管理者</span><span class="wordmark-sub">SECOND CLASS <b>／</b> TEST APP</span></div>
+      <h1 id="hero-title">今日の一問が、<br><span class="highlight">未来を変える。</span></h1>
+      <p class="hero-copy">第二種 衛生管理者試験に向けて。<br>自分のペースで、一歩ずつ合格へ。</p>
+      <div class="hero-actions"><button class="primary" id="hero-start">テストを受ける　→</button><button class="secondary" id="hero-dashboard">学習状況を見る　↗</button></div>
+      <ul class="hero-facts"><li>通常練習は5問</li><li>模擬演習は30問</li><li>参考資料つき</li></ul>
+      <div class="exam-date"><div class="countdown-eyebrow">YOUR EXAM DAY <span>／</span> 試験日まで</div><div id="countdown-text" class="countdown-display" aria-live="polite">試験日を登録すると残り日数を表示します</div><label for="exam-date-input">試験日を選ぶ</label><div class="date-controls"><input type="date" id="exam-date-input"><button type="button" class="secondary" id="exam-date-save">日付を保存</button><button type="button" class="back-home" id="exam-date-clear">日付を消す</button></div><p class="date-message" id="exam-date-message" aria-live="polite"></p></div>
+    </section>
+    <section id="mode-screen" hidden aria-labelledby="mode-heading">
+      <div class="screen-heading"><h1 id="mode-heading">テストモードを選ぶ</h1><button class="secondary" id="modes-home">← トップへ戻る</button></div>
+      <p class="mode-intro">今日の目的に合わせて、出題方法を選びましょう。現在の問題集は基礎確認用です。</p>
+      <div class="mode-grid">
+        <button class="mode-card" id="mode-random"><span class="mode-icon">✦</span><strong>ランダム出題</strong><small>問題集から5問を選んで出題します。</small><span class="mode-arrow">このモードで始める　→</span></button>
+        <button class="mode-card" id="mode-weak"><span class="mode-icon">⚡</span><strong>苦手を克服</strong><small>これまでの正答率が低い問題を優先して出題します。</small><span class="mode-arrow">このモードで始める　→</span></button>
+        <button class="mode-card" id="mode-few"><span class="mode-icon">◷</span><strong>回答数の少ない問題</strong><small>まだ解いていない問題や、回答回数が少ない問題を優先します。</small><span class="mode-arrow">このモードで始める　→</span></button>
+        <button class="mode-card" id="mode-mock"><span class="mode-icon">◒</span><strong>模擬演習</strong><small>五択・30問・3時間。問題を飛ばしたり、戻って回答を直したりできます。</small><span class="mode-arrow">模擬演習を始める　→</span></button>
+      </div>
+      <div class="extra-modes"><h2>科目を選んで練習</h2><p>1科目からランダムに最大5問を出題します。</p><div class="extra-mode-buttons"><button class="secondary" id="subject-law">関係法令</button><button class="secondary" id="subject-hygiene">労働衛生</button><button class="secondary" id="subject-physiology">労働生理</button></div><h2 style="margin-top:20px">保存した問題</h2><p>気になる問題に☆を付けると、ここから最大5問を練習できます。</p><div class="extra-mode-buttons"><button class="secondary" id="mode-bookmarks">保存した問題を解く</button></div><p class="extra-message" id="mode-message" aria-live="polite"></p></div>
+      <div class="exam-notice"><span class="notice-icon">i</span><div><strong>本試験について</strong><p>本試験は五肢択一の30問・3時間。合格には各科目40%以上、合計60%以上が必要です。このアプリは基礎問題が中心で、得点は合格の予測ではありません。受験前に<a href="https://www.exam.or.jp/lckohyo/" target="_blank" rel="noopener noreferrer">公式の公表問題</a>も解いてください。</p></div></div>
+    </section>
+    <section class="dashboard" id="dashboard-screen" aria-labelledby="dashboard-heading" hidden>
+      <div class="screen-heading"><h1 id="dashboard-heading">学習ダッシュボード</h1><button class="secondary" id="dashboard-home">← トップへ戻る</button></div>
+      <div class="dashboard-head"><div><p>学習の進み具合を確認しましょう</p></div><span class="tag">第二種 衛生管理者</span></div>
+      <div class="dashboard-grid">
+        <div class="stat"><span class="stat-label">模擬演習の回数</span><span class="stat-value" id="attempt-count">0 回</span></div>
+        <div class="stat"><span class="stat-label">模擬演習の平均正解率</span><span class="stat-value" id="average-score">—</span></div>
+        <div class="stat"><span class="stat-label">直近3回の平均正解率</span><span class="stat-value" id="recent-three-score">—</span></div>
+      </div>
+      <div class="trend"><span class="trend-label">直近の傾向アドバイス</span><p class="trend-text" id="trend-text">まずは問題を解いて、学習記録を作りましょう。</p><p class="trend-note">※ この正解率は練習結果です。問題は本試験と難度が異なり、過去には四択で出題していました。合格の予測には使えません。<a href="https://www.exam.or.jp/lckohyo/" target="_blank" rel="noopener noreferrer">公式の公表問題を見る ↗</a></p></div>
+      <div class="dashboard-lower">
+        <div class="chart"><div class="chart-head"><strong>模擬演習の正解率</strong><span>日付別・直近7回</span></div><div class="bars" id="score-chart" role="img" aria-label="日付別の模擬演習正解率グラフ"></div></div>
+        <div class="start-card"><div><h3>今日の練習を始めましょう</h3><p>目的に合わせて出題モードを選べます。</p></div><button class="primary" id="start-practice">モードを選ぶ　→</button></div>
+      </div>
+      <div class="category-panel"><h3>試験の3科目・正解率</h3><p class="trend-note">全モードの完了記録を集計。模擬演習では未回答も出題数に含みます。</p><p class="subject-grade-guide">ランクの目安：S 90%以上 / A 80%以上 / B 60%以上 / C 60%未満。回答数が少ない場合は変動しやすく、合否の予測ではありません。</p><div class="category-list" id="subject-list"></div><p class="trend-note" id="subject-history-note" hidden></p></div>
+      <div class="history" style="margin-top:14px"><p class="history-title">模擬演習の過去得点</p><ul class="history-list" id="history-list"></ul><p class="history-empty" id="history-empty">まだ模擬演習の記録はありません。模擬演習を完了すると、ここに得点が残ります。</p></div>
+    </section>
+    <section class="card" id="practice-card" aria-live="polite" hidden>
+      <div id="quiz">
+        <div class="topline"><div class="topline-left"><span id="counter">問題 1 / 5</span><span class="tag" id="mode-label">ランダム出題</span></div><div class="topline-right"><span class="timer" id="timer">残り 05:00</span><button class="back-home" id="back-home">← ホーム</button><span id="category">基礎知識</span></div></div>
+        <div class="meter" aria-label="進み具合"><span id="progress"></span></div>
+        <h2 class="question" id="question"></h2>
+        <button class="secondary bookmark-button" id="bookmark-question" type="button" aria-pressed="false">☆ 気になる問題に保存</button>
+        <div class="choices" id="choices"></div>
+        <div class="feedback" id="feedback" hidden><strong id="feedback-title"></strong><p id="explanation"></p><a class="source-link" id="source-link" target="_blank" rel="noopener noreferrer">参考資料を確認する ↗</a></div>
+        <div class="actions"><span class="score" id="score">正解 0 問</span><button class="secondary" id="previous" hidden>← 前の問題</button><button class="primary" id="next" disabled>選択肢を選んでください</button></div>
+      </div>
+      <div class="result" id="result" hidden>
+        <div class="tag" id="result-label">今回の結果</div><div class="big" id="final-score"></div><p id="result-message"></p>
+        <div id="result-detail" class="result-detail" hidden></div>
+        <button class="primary" id="restart">もう一度解く</button> <button class="secondary" id="retry-wrong" hidden>間違えた問題をもう一度解く</button> <button class="secondary" id="result-dashboard">ダッシュボードを見る</button> <button class="back-home" id="result-home">ホームに戻る</button>
+      </div>
+    </section>
+    <p class="note" id="app-note" hidden>※ この問題集は基礎練習が中心です。本試験の難度・網羅性を保証するものではありません。</p>
+  </main>
+  <script>
+    // 公的な根拠資料を確認して作成したオリジナル練習問題です。
+    const questions = [
+      { id:"weekly-rounds", category:"衛生管理体制", text:"衛生管理者が作業場などを巡視する頻度について、正しいものはどれでしょう？", choices:["少なくとも毎週1回","少なくとも毎月1回","少なくとも半年に1回","決まった頻度はない"], answer:0, explanation:"衛生管理者は少なくとも毎週1回、作業場などを巡視します。設備や作業方法などに健康障害のおそれを認めた場合は、必要な措置を講じます。", source:"厚生労働省「衛生管理者について教えて下さい」", url:"https://www.mhlw.go.jp/seisakunitsuite/bunya/koyou_roudou/roudoukijun/faq/5.html" },
+      { id:"annual-checkup-frequency", category:"健康管理", text:"常時使用する労働者に対する一般的な定期健康診断の頻度として、原則正しいものはどれでしょう？", choices:["6か月以内ごとに1回","1年以内ごとに1回","2年以内ごとに1回","3年以内ごとに1回"], answer:1, explanation:"一般的な定期健康診断は、常時使用する労働者に対して1年以内ごとに1回行います。特定業務に従事する場合など、別の頻度が定められているものもあります。", source:"労働安全衛生規則 第44条（厚生労働省）", url:"https://www.mhlw.go.jp/web/t_doc?dataId=74003000&dataType=0&pageNo=2" },
+      { id:"committee-frequency", category:"衛生管理体制", text:"衛生委員会の開催頻度として、法令上必要なものはどれでしょう？", choices:["毎週1回以上","毎月1回以上","3か月に1回以上","年1回以上"], answer:1, explanation:"衛生委員会は毎月1回以上開催する必要があります。", source:"厚生労働省「安全委員会、衛生委員会について教えてください」", url:"https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/roudoukijun/faq/1.html" },
+      { id:"health-manager-duty", category:"衛生管理体制", text:"衛生管理者の職務として、厚生労働省の案内に挙げられているものはどれでしょう？", choices:["健康診断の実施など、健康の保持増進のための措置","賃金額の決定","採用面接の実施","製品の販売価格の決定"], answer:0, explanation:"衛生管理者は、健康診断の実施など健康の保持増進に関する衛生上の技術的事項を管理します。", source:"厚生労働省「衛生管理者について教えて下さい」", url:"https://www.mhlw.go.jp/seisakunitsuite/bunya/koyou_roudou/roudoukijun/faq/5.html" },
+      { id:"rounds-immediate-action", category:"衛生管理体制", text:"作業場の巡視で、設備や衛生状態に健康障害のおそれを認めた場合の対応として適切なものはどれでしょう？", choices:["次の定期巡視まで何もしない","直ちに健康障害を防止するため必要な措置を講じる","労働者だけで対応するよう伝える","記録を残さず口頭で注意する"], answer:1, explanation:"衛生管理者は、巡視で健康障害のおそれを認めたとき、直ちに必要な措置を講じます。", source:"厚生労働省「衛生管理者について教えて下さい」", url:"https://www.mhlw.go.jp/seisakunitsuite/bunya/koyou_roudou/roudoukijun/faq/5.html" },
+      { id:"annual-checkup-doctor", category:"健康管理", text:"定期健康診断で、事業者が常時使用する労働者に対して行うものとして正しい説明はどれでしょう？", choices:["医師による健康診断を実施する","本人の希望がある場合だけ実施する","採用後は実施しなくてよい","健康診断は労働者が自分で手配する"], answer:0, explanation:"労働安全衛生規則では、事業者が常時使用する労働者に対して医師による定期健康診断を行うことを定めています。", source:"労働安全衛生規則 第44条（厚生労働省）", url:"https://www.mhlw.go.jp/web/t_doc?dataId=74003000&dataType=0&pageNo=2" }
+    ];
+    // 個人用試作品向け。公表問題の出題分野を参考に、表現を作り直した練習問題です。
+    const PERSONAL_PROTOTYPE_SOURCE = "試験協会・2026年4月公表問題（出題分野の参考）";
+    const PERSONAL_PROTOTYPE_URL = "https://www.exam.or.jp/wp-content/uploads/2026/04/%E7%AC%AC%E4%BA%8C%E7%A8%AE%E8%A1%9B%E7%94%9F%E7%AE%A1%E7%90%86%E8%80%85%E5%85%AC%E8%A1%A8%E8%A9%A6%E9%A8%93%E5%95%8F%E9%A1%8C-3.pdf";
+    const addPracticeQuestion = (id, examGroup, category, text, choices, answer, explanation) => questions.push({ id, examGroup, category, text, choices, answer, explanation, source:PERSONAL_PROTOTYPE_SOURCE, url:PERSONAL_PROTOTYPE_URL });
+    addPracticeQuestion("daily-work-hours", "関係法令", "労働時間", "労働基準法の原則的な法定労働時間として正しいものはどれでしょう？", ["1日8時間・1週40時間", "1日8時間・1週48時間", "1日9時間・1週40時間", "1日10時間・1週40時間"], 0, "原則として、法定労働時間は1日8時間、1週40時間です。");
+    addPracticeQuestion("break-time", "関係法令", "労働時間", "労働時間が8時間を超える場合に、途中に与えなければならない休憩時間として正しいものはどれでしょう？", ["少なくとも30分", "少なくとも45分", "少なくとも60分", "少なくとも90分"], 2, "労働時間が8時間を超える場合、少なくとも60分の休憩を途中に与えます。");
+    addPracticeQuestion("paid-leave-start", "関係法令", "労働時間", "週5日以上勤務し、雇入れから6か月継続勤務して全労働日の8割以上出勤した労働者に、新たに与える年次有給休暇の法令上の最低日数は何日でしょう？", ["5日", "7日", "10日", "12日"], 2, "週5日以上勤務など一般の付与日数が適用される場合、法令上の最低日数は10日です。週4日以下・週30時間未満などの場合は比例付与になることがあります。");
+    addPracticeQuestion("overtime-limit", "関係法令", "労働時間", "36協定による時間外労働の原則的な上限として正しい組合せはどれでしょう？", ["1か月45時間・1年360時間", "1か月45時間・1年720時間", "1か月80時間・1年360時間", "1か月100時間・1年720時間"], 0, "変形労働時間制が適用されない労働者では、原則として1か月45時間、1年360時間が上限です。");
+    addPracticeQuestion("co2-standard", "労働衛生", "職場環境", "事務室の空気環境で、二酸化炭素濃度を保つ目安として正しいものはどれでしょう？", ["1,000ppm以下", "2,000ppm以下", "5,000ppm以下", "濃度の目安はない"], 0, "事務室の空気環境では、二酸化炭素濃度を1,000ppm以下に保つことが目安です。");
+    addPracticeQuestion("thermal-elements", "労働衛生", "職場環境", "人が感じる暑さ・寒さに影響する環境要素として適切なものはどれでしょう？", ["気温・湿度・気流・放射熱", "気温・気圧・騒音・照度", "湿度・照度・振動・臭気", "気流・粉じん・騒音・気圧"], 0, "温熱条件では、気温、湿度、気流、放射熱が主な環境要素です。");
+    addPracticeQuestion("wbgt-purpose", "労働衛生", "職場環境", "WBGTが主に評価するものはどれでしょう？", ["暑熱環境による熱ストレス", "騒音による聴力への影響", "照明による目への負担", "粉じんによる呼吸器への負担"], 0, "WBGTは暑熱環境での熱ストレスを評価するための指標です。");
+    addPracticeQuestion("chest-compression", "労働衛生", "救急処置", "成人に対する胸骨圧迫のテンポとして適切なものはどれでしょう？", ["1分間に40～60回", "1分間に70～90回", "1分間に100～120回", "1分間に150～180回"], 2, "胸骨圧迫は、1分間に100～120回を目安に行います。");
+    addPracticeQuestion("aed-after-message", "労働衛生", "救急処置", "AEDが「ショック不要」と判断した後に優先する行動として適切なものはどれでしょう？", ["胸骨圧迫を再開する", "その場を離れる", "水を飲ませる", "座らせて様子を見る"], 0, "AEDの音声案内に従い、ショック不要の場合も胸骨圧迫を再開します。");
+    addPracticeQuestion("food-poisoning", "労働衛生", "健康管理", "食中毒について、誤っている説明はどれでしょう？", ["ボツリヌス菌の毒素は神経毒である", "黄色ブドウ球菌の毒素は熱に強い", "カンピロバクターは毒素型食中毒の代表例である", "ノロウイルス対策には煮沸や塩素系消毒剤が用いられる"], 2, "カンピロバクターは主に感染型食中毒の原因です。ノロウイルスは細菌ではなくウイルスです。");
+    addPracticeQuestion("fracture-first-aid", "労働衛生", "救急処置", "骨折が疑われる部位を副子で固定するときの説明として適切なものはどれでしょう？", ["骨折部の上下の関節まで固定する", "骨折部だけを短く固定する", "痛みがあるため固定しない", "骨折部を動かして確認する"], 0, "副子は、骨折が疑われる部位の上下にある関節まで固定できる長さを用います。");
+    addPracticeQuestion("lighting-aging", "労働衛生", "職場環境", "照明計画で高齢の労働者に配慮する説明として適切なものはどれでしょう？", ["若年者より高い照度が必要になることがある", "照度は低いほど作業しやすい", "照明の配慮は不要である", "まぶしさは年齢と無関係である"], 0, "高齢者では高い照度が必要になることがあり、まぶしさにも配慮します。");
+    addPracticeQuestion("health-promotion", "労働衛生", "健康管理", "職場の健康保持増進対策として適切なものはどれでしょう？", ["労働者の意見も聴き、職場の実態に合う取組を行う", "生活習慣に課題がある人だけを対象にする", "衛生委員会は活用しない", "健康状態の把握には数値を使わない"], 0, "健康保持増進対策では、職場の実態や労働者の意見を踏まえた取組が大切です。");
+    addPracticeQuestion("retina-cells", "労働生理", "感覚器", "網膜の細胞と働きの組合せとして正しいものはどれでしょう？", ["錐体は色、杆体は明暗を感じる", "錐体は明暗、杆体は色を感じる", "錐体と杆体は聴覚を感じる", "錐体と杆体は平衡感覚を感じる"], 0, "網膜の錐体は色覚、杆体は明暗の感覚に主に関わります。");
+    addPracticeQuestion("central-nervous", "労働生理", "神経系", "中枢神経系を構成するものとして正しいものはどれでしょう？", ["脳と脊髄", "脳と心臓", "脊髄と筋肉", "神経節と腎臓"], 0, "中枢神経系は脳と脊髄から成ります。");
+    addPracticeQuestion("myelin-speed", "労働生理", "神経系", "有髄神経線維の特徴として正しいものはどれでしょう？", ["無髄神経線維より伝導速度が速い", "無髄神経線維より伝導速度が遅い", "神経伝導をしない", "感覚には関わらない"], 0, "有髄神経線維は、無髄神経線維より神経伝導速度が速い特徴があります。");
+    addPracticeQuestion("liver-function", "労働生理", "消化器", "肝臓の機能として誤っているものはどれでしょう？", ["コレステロールの合成", "尿素の合成", "ヘモグロビンの合成", "グリコーゲンの合成と分解"], 2, "ヘモグロビンは主に骨髄の赤芽球で合成され、肝臓の機能ではありません。");
+    addPracticeQuestion("kidney-reabsorption", "労働生理", "泌尿器", "腎臓で作られる原尿に関する説明として正しいものはどれでしょう？", ["電解質の多くは尿細管から血中へ再吸収される", "水分の大部分がそのまま尿として排出される", "たんぱく質が通常は大量にろ過される", "老廃物が尿細管からボウマン嚢へ移る"], 0, "原尿中の水分や電解質の多くは、尿細管で再吸収されます。");
+    addPracticeQuestion("blood-components", "労働生理", "血液", "血小板の主な働きとして正しいものはどれでしょう？", ["血液凝固に関わる", "酸素を運ぶ", "抗体を作る", "胆汁を作る"], 0, "血小板は血液凝固に関わります。酸素の運搬は主に赤血球が担います。");
+    addPracticeQuestion("dark-adaptation", "労働生理", "感覚器", "明るい場所から暗い場所へ入った直後に見えにくくなる理由として適切なものはどれでしょう？", ["暗順応に時間がかかるため", "聴覚が低下するため", "血液量が急に減るため", "体温が必ず下がるため"], 0, "暗い場所では、目が暗さに慣れる暗順応により、徐々に見えるようになります。");
+    addPracticeQuestion("thermoregulation-center", "労働生理", "体温調節", "体温調節中枢がある部位として正しいものはどれでしょう？", ["視床下部", "小脳", "延髄", "脊髄"], 0, "体温調節中枢は、間脳の視床下部にあります。");
+    addPracticeQuestion("immunity-antigen", "労働生理", "免疫", "抗原の説明として正しいものはどれでしょう？", ["免疫に関係する細胞が異物として認識する物質", "赤血球だけを指す言葉", "体温を調節するホルモン", "骨を構成する主成分"], 0, "抗原は、免疫に関係する細胞が異物として認識する物質です。");
+    addPracticeQuestion("aging-hearing", "労働生理", "加齢", "加齢による聴力の変化として一般的にみられるものはどれでしょう？", ["高い音域から聞こえにくくなる", "低い音域だけが聞こえなくなる", "年齢と聴力は無関係である", "加齢で必ず聴力が向上する"], 0, "老人性難聴では、一般に高い音域から聞こえにくくなります。");
+    const OCTOBER_EXAM_URL = "https://www.exam.or.jp/wp-content/uploads/2026/10/LC20262115.pdf";
+    const addOctoberTopic = (id, examGroup, category, text, choices, answer, explanation) => questions.push({ id, examGroup, category, text, choices, answer, explanation, source:"試験協会・2026年10月公表問題（出題分野の参考）", url:OCTOBER_EXAM_URL });
+    addOctoberTopic("industrial-physician-count", "関係法令", "衛生管理体制", "原則として、産業医の選任が必要になる事業場の労働者数は常時何人以上でしょう？", ["10人", "30人", "50人", "100人"], 2, "産業医は、常時50人以上の労働者を使用する事業場で選任が必要です。");
+    addOctoberTopic("checkup-notification", "関係法令", "健康管理", "定期健康診断の結果を労働者に知らせる対象はどれでしょう？", ["異常所見のある人だけ", "受診した全員", "希望した人だけ", "産業医だけ"], 1, "事業者は、異常所見の有無にかかわらず、健康診断の結果を遅滞なく本人に通知します。");
+    addOctoberTopic("proportional-leave", "関係法令", "労働時間", "週4日・週25時間勤務の労働者が5年6か月継続勤務し、直前1年間の出勤率が8割以上の場合、新たな年次有給休暇は何日でしょう？", ["10日", "12日", "13日", "16日"], 2, "週4日・週30時間未満の比例付与表では、5年6か月継続勤務した場合は13日です。");
+    addOctoberTopic("ventilation-formula", "労働衛生", "職場環境", "必要換気量を二酸化炭素量から求めるとき、分母に使う濃度差はどれでしょう？", ["室内基準濃度－外気濃度", "室内測定濃度－室内基準濃度", "室内基準濃度＋外気濃度", "外気濃度－室内基準濃度"], 0, "必要換気量は、室内で発生する二酸化炭素量を『室内基準濃度－外気濃度』で割って求めます。濃度をppmで扱う場合は100万倍します。");
+    addOctoberTopic("wbgt-shade", "労働衛生", "職場環境", "日射のない場所のWBGT値を求めるとき、主に組み合わせる測定値はどれでしょう？", ["自然湿球温度と黒球温度", "乾球温度と気圧", "自然湿球温度と騒音レベル", "黒球温度と照度"], 0, "日射のない場所のWBGTは自然湿球温度と黒球温度を用います。乾球温度を加えるのは日射がある場合です。");
+    addOctoberTopic("hdl-cholesterol", "労働衛生", "健康管理", "一般に『善玉コレステロール』と呼ばれるものはどれでしょう？", ["HDLコレステロール", "LDLコレステロール", "中性脂肪", "尿酸"], 0, "HDLコレステロールは、余分なコレステロールの回収に関わり、一般に善玉と呼ばれます。");
+    addOctoberTopic("bile-enzyme", "労働生理", "消化器", "胆汁について正しい説明はどれでしょう？", ["脂肪の消化を助けるが、消化酵素は含まない", "トリプシンを多く含む", "強い酸性である", "胃で作られる"], 0, "胆汁は肝臓で作られ、脂肪の消化吸収を助けますが、消化酵素を含みません。");
+    addOctoberTopic("breathing-center", "労働生理", "呼吸", "呼吸中枢がある主な部位はどれでしょう？", ["延髄", "視床下部", "小脳", "大脳皮質"], 0, "呼吸中枢は主に延髄にあります。視床下部は体温調節中枢などがある部位です。");
+    addOctoberTopic("lymphocyte-kind", "労働生理", "血液", "Bリンパ球とTリンパ球が属する血液の細胞はどれでしょう？", ["白血球", "血小板", "赤血球", "網赤血球"], 0, "リンパ球は白血球の一種で、免疫反応に関わります。血小板ではありません。");
+    // 公式公表問題の出題分野を確認し、文章と選択肢を作り直した追加練習問題（各科目10問）。
+    addOctoberTopic("manager-count-1500", "関係法令", "衛生管理体制", "常時1,500人の労働者を使用する事業場では、衛生管理者を少なくとも何人選任しますか？", ["2人", "3人", "4人", "5人"], 2, "常時1,000人を超え2,000人以下の事業場では、衛生管理者は4人以上必要です。");
+    addOctoberTopic("committee-record-years", "関係法令", "衛生管理体制", "衛生委員会の重要な議事の記録は、何年間保存する必要がありますか？", ["1年間", "2年間", "3年間", "5年間"], 2, "衛生委員会の議事で重要なものなどは記録を作成し、3年間保存します。");
+    addPracticeQuestion("physician-selection-days", "関係法令", "衛生管理体制", "産業医を選任すべき事由が生じた日から、原則として何日以内に選任しますか？", ["7日以内", "14日以内", "30日以内", "60日以内"], 1, "産業医の選任は、選任すべき事由が発生した日から14日以内に行います。");
+    addPracticeQuestion("physician-rounds-condition", "関係法令", "衛生管理体制", "事業者から必要な情報を毎月受けるなどの条件を満たし、事業者の同意があるとき、産業医の職場巡視頻度をどうできますか？", ["毎週から毎月へ", "毎月から2か月に1回へ", "毎月から半年に1回へ", "巡視を完全に省略できる"], 1, "通常は毎月1回以上ですが、所定の情報提供などの要件を満たせば2か月に1回以上にできます。");
+    addPracticeQuestion("interview-record-years", "関係法令", "健康管理", "長時間労働者に対する医師の面接指導結果の記録は、何年間保存しますか？", ["1年間", "2年間", "3年間", "5年間"], 3, "事業者は医師による面接指導結果の記録を作成し、5年間保存します。");
+    addOctoberTopic("checkup-doctor-opinion", "関係法令", "健康管理", "定期健康診断で異常所見があった労働者について、事業者が必要な措置に関する医師の意見を聴く期限は原則いつまでですか？", ["健診日から1か月以内", "健診日から3か月以内", "健診日から1年以内", "期限は定められていない"], 1, "異常所見がある場合、健康診断が行われた日から3か月以内に医師の意見を聴きます。");
+    addOctoberTopic("checkup-report-threshold", "関係法令", "健康管理", "定期健康診断の結果を労働基準監督署長へ報告する必要がある事業場は、常時使用する労働者が何人以上ですか？", ["10人以上", "30人以上", "50人以上", "100人以上"], 2, "常時50人以上の労働者を使用する事業場では、定期健康診断の結果を遅滞なく報告します。");
+    addPracticeQuestion("dedicated-physician-1000", "関係法令", "衛生管理体制", "常時1,000人以上の労働者を使用する事業場で選任する産業医について、原則正しいものはどれですか？", ["その事業場に専属とする", "必ず他事業場と兼務させる", "医師でなくてもよい", "選任の必要がない"], 0, "常時1,000人以上の事業場では、専属の産業医を選任します。");
+    addOctoberTopic("committee-chair", "関係法令", "衛生管理体制", "衛生委員会の議長について、正しい説明はどれですか？", ["総括安全衛生管理者である委員は議長になれない", "総括安全衛生管理者または事業の実施を統括管理する者などが議長になる", "議長は必ず外部の医師とする", "議長を置く必要はない"], 1, "議長は総括安全衛生管理者、または事業の実施を統括管理する者などから選びます。");
+    addOctoberTopic("maternity-definition", "関係法令", "労働時間", "労働基準法の『妊産婦』に含まれるのは、妊娠中の女性と産後どの期間までの女性ですか？", ["8週間を経過しない女性", "6か月を経過しない女性", "1年を経過しない女性", "2年を経過しない女性"], 2, "労働基準法の妊産婦は、妊娠中および産後1年を経過しない女性です。");
+
+    addPracticeQuestion("screening-false-positive", "労働衛生", "健康管理", "スクリーニング検査でいう『偽陽性』はどれですか？", ["病気がある人を陽性とする", "病気がない人を陽性とする", "病気がある人を陰性とする", "病気がない人を陰性とする"], 1, "偽陽性は、実際には疾病がない人を検査で陽性と判定することです。");
+    addPracticeQuestion("screening-false-negative", "労働衛生", "健康管理", "スクリーニング検査でいう『偽陰性』はどれですか？", ["病気がある人を陰性とする", "病気がない人を陽性とする", "病気がある人を陽性とする", "病気がない人を陰性とする"], 0, "偽陰性は、実際には疾病がある人を検査で陰性と判定することです。");
+    addPracticeQuestion("effective-temperature-elements", "労働衛生", "職場環境", "実効温度がまとめて表す温熱条件の組合せはどれですか？", ["気温・湿度・気流", "気温・照度・騒音", "湿度・粉じん・気圧", "気流・振動・臭気"], 0, "実効温度は、気温、湿度、気流の総合効果を人の温熱感に基づく温度目盛りで表します。");
+    addPracticeQuestion("relative-humidity", "労働衛生", "職場環境", "相対湿度の説明として正しいものはどれですか？", ["空気中の酸素の割合", "その温度での飽和水蒸気量に対する実際の水蒸気量の割合", "気温と皮膚温の差", "空気の流れる速さ"], 1, "相対湿度は、その温度で空気が含める最大の水蒸気量に対する、実際の水蒸気量の割合です。");
+    addOctoberTopic("wbgt-above-limit", "労働衛生", "職場環境", "作業内容に応じたWBGT基準値を測定値が超えたとき、どう判断しますか？", ["熱中症のリスクが高まる", "必ず安全である", "照度が不足している", "騒音の影響が高まる"], 0, "WBGT値が基準値を超える場合は、熱中症のリスクが高まっていると判断します。");
+    addOctoberTopic("correlation-causation", "労働衛生", "健康管理", "職場の統計で二つの事象に相関が見つかったとき、正しい解釈はどれですか？", ["必ず一方が他方の原因である", "因果関係があるとは限らない", "データに誤りがあると確定する", "分散を調べる必要がない"], 1, "相関が見られても、別の要因が関係する場合などがあり、因果関係は確定しません。");
+    addOctoberTopic("heart-attack-duration", "労働衛生", "健康管理", "心筋梗塞の胸痛について、狭心症と比べた一般的な特徴はどれですか？", ["数秒で必ず消える", "通常15分以内に必ず治まる", "長く続くことが多い", "痛みは絶対に起こらない"], 2, "心筋梗塞の発作は狭心症より長く続くことが多く、短時間で治まるとは限りません。");
+    addPracticeQuestion("lifting-weight-guideline", "労働衛生", "腰痛予防", "腰痛予防指針で、満18歳以上の男性が人力だけで扱う重量物の目安は、体重のおおむね何%以下ですか？", ["20%", "40%", "60%", "80%"], 1, "重量物取扱いでは、満18歳以上の男性が人力のみで扱う重量は体重のおおむね40%以下が目安です。");
+    addPracticeQuestion("lumbar-belt-individual", "労働衛生", "腰痛予防", "腰痛予防のための腰部保護ベルトについて適切なのはどれですか？", ["全員に一律に使用させる", "個人の状態や作業に応じて使用を検討する", "必ず作業姿勢の改善より優先する", "使用すれば健康診断は不要になる"], 1, "腰部保護ベルトを労働者全員に一律に使用させることは推奨されず、個人の状態や作業に応じて検討します。");
+    addOctoberTopic("prevalence-not-incidence", "労働衛生", "健康管理", "ある時点で、検査対象者のうち所見が見つかった人の割合を表すのはどれですか？", ["有所見率", "発生率", "病休度数率", "平均値"], 0, "ある時点での有所見者の出現割合は有所見率です。一定期間の新たな発生をみる発生率とは区別します。");
+
+    addPracticeQuestion("autonomic-opposite", "労働生理", "神経系", "同じ器官に分布する交感神経と副交感神経の作用について、一般に正しいものはどれですか？", ["ほぼ反対に働く", "必ず同じ方向に働く", "どちらも感覚神経である", "どちらも中枢神経そのものである"], 0, "交感神経と副交感神経は同じ器官に分布していても、作用はほぼ反対になります。");
+    addPracticeQuestion("nerve-nucleus-ganglion", "労働生理", "神経系", "神経細胞の細胞体が集まる場所の呼び方として正しい組合せはどれですか？", ["中枢神経系では神経核、末梢神経系では神経節", "中枢神経系では神経節、末梢神経系では神経核", "どちらも神経節だけ", "どちらも神経核だけ"], 0, "細胞体の集合は中枢神経系では神経核、末梢神経系では神経節と呼びます。");
+    addPracticeQuestion("pepsinogen-activation", "労働生理", "消化器", "胃のペプシノーゲンは何によってペプシンになりますか？", ["胃酸", "胆汁", "インスリン", "唾液"], 0, "ペプシノーゲンは胃酸によってペプシンとなり、たんぱく質の消化に働きます。");
+    addPracticeQuestion("small-intestine-villi", "労働生理", "消化器", "小腸の絨毛が主に役立つ働きはどれですか？", ["栄養素を吸収する面積を広げる", "心拍数を調節する", "音を聞き分ける", "赤血球を作る"], 0, "小腸の絨毛は表面積を広げ、栄養素の吸収効率を高めます。");
+    addPracticeQuestion("bile-alkaline", "労働生理", "消化器", "胆汁の性質として正しいものはどれですか？", ["強い酸性で消化酵素を含む", "アルカリ性で消化酵素を含まない", "中性でペプシンを含む", "強い酸性でトリプシンを含む"], 1, "胆汁はアルカリ性で、消化酵素は含みません。脂肪を乳化し、消化吸収を助けます。");
+    addOctoberTopic("neutrophil-phagocytosis", "労働生理", "免疫", "好中球の主な働きはどれですか？", ["酸素を運ぶ", "細菌などを取り込んで処理する", "胆汁を分泌する", "血糖を下げる"], 1, "好中球は白血球の一種で、細菌などの異物を貪食します。");
+    addPracticeQuestion("humoral-antibodies", "労働生理", "免疫", "抗体を中心に病原体へ対抗する免疫の呼び方はどれですか？", ["細胞性免疫", "体液性免疫", "自然免疫だけ", "免疫寛容"], 1, "Bリンパ球が作る抗体が中心となるのは体液性免疫です。");
+    addPracticeQuestion("cellular-tcells", "労働生理", "免疫", "Tリンパ球などが中心となり、感染細胞などに直接働く免疫はどれですか？", ["体液性免疫", "細胞性免疫", "血液凝固", "暗順応"], 1, "Tリンパ球などが中心となって働くのは細胞性免疫です。");
+    addPracticeQuestion("lens-accommodation", "労働生理", "感覚器", "近くを見るときに厚みが変わってピントを調節する眼の部分はどれですか？", ["水晶体", "硝子体", "網膜", "角膜だけ"], 0, "ピント調節では毛様体筋の働きにより水晶体の厚みが変わります。");
+    addPracticeQuestion("cold-skin-vessels", "労働生理", "体温調節", "寒い環境で皮膚の血管が収縮する主な意味はどれですか？", ["熱の放散を減らす", "熱の放散を増やす", "必ず体温を下げる", "汗を大量に出す"], 0, "寒冷時には皮膚の血流を減らして、体表から逃げる熱を抑えます。");
+    const fifthChoices = {
+      "weekly-rounds":"少なくとも2か月に1回", "annual-checkup-frequency":"5年以内ごとに1回", "committee-frequency":"半年に1回以上", "health-manager-duty":"商品の仕入れ価格の交渉", "rounds-immediate-action":"健康障害の防止は衛生管理者の業務に含まれない", "annual-checkup-doctor":"健康診断の代わりに希望者へアンケートだけ行う",
+      "daily-work-hours":"1日7時間・1週48時間", "break-time":"少なくとも15分", "paid-leave-start":"15日", "overtime-limit":"1か月60時間・1年480時間", "co2-standard":"10,000ppm以下", "thermal-elements":"気温・湿度・騒音・照度", "wbgt-purpose":"気圧による航空機への影響", "chest-compression":"1分間に20～30回", "aed-after-message":"救急車を呼ばずに帰宅させる", "food-poisoning":"サルモネラ菌による食中毒は感染型である", "fracture-first-aid":"骨折部を強くもんで固定する", "lighting-aging":"高齢者は明るさの変化に必ず瞬時に適応する", "health-promotion":"事業場の実態を考慮しない",
+      "retina-cells":"錐体は平衡感覚、杆体は味覚を感じる", "central-nervous":"末梢神経と筋肉", "myelin-speed":"すべての神経線維は髄鞘を持たない", "liver-function":"胆汁の生成", "kidney-reabsorption":"腎臓は血液のろ過を行わない", "blood-components":"胃酸を分泌する", "dark-adaptation":"網膜が音の振動に反応するため", "thermoregulation-center":"大腿骨", "immunity-antigen":"腎臓の尿細管を指す言葉", "aging-hearing":"聴力は必ず低音域だけで低下する",
+      "industrial-physician-count":"200人", "checkup-notification":"事業主以外に通知しない", "proportional-leave":"20日", "ventilation-formula":"室内測定濃度と外気濃度の和", "wbgt-shade":"乾球温度と照度", "hdl-cholesterol":"ヘモグロビン", "bile-enzyme":"胃酸の主成分として胃で分泌される", "breathing-center":"肝臓", "lymphocyte-kind":"血しょう",
+      "manager-count-1500":"6人", "committee-record-years":"10年間", "physician-selection-days":"90日以内", "physician-rounds-condition":"毎月から年1回へ", "interview-record-years":"10年間", "checkup-doctor-opinion":"健診日から5年以内", "checkup-report-threshold":"500人以上", "dedicated-physician-1000":"産業医の代わりに衛生委員会を廃止する", "committee-chair":"議長は労働基準監督官が必ず務める", "maternity-definition":"3年を経過しない女性",
+      "screening-false-positive":"病気の有無に関係なく全員を陽性にすること", "screening-false-negative":"病気の有無に関係なく全員を陰性にすること", "effective-temperature-elements":"気温・放射熱・騒音", "relative-humidity":"空気中の二酸化炭素の割合", "wbgt-above-limit":"感染症の有無を確定する", "correlation-causation":"片方の数値が必ず測定ミスである", "heart-attack-duration":"胸痛が起きると必ず1分以内に治る", "lifting-weight-guideline":"100%", "lumbar-belt-individual":"ベルトを使えば重量物の重量制限を考えなくてよい", "prevalence-not-incidence":"平均休業日数",
+      "autonomic-opposite":"どちらも血液を作る器官である", "nerve-nucleus-ganglion":"中枢では腎小体、末梢では肺胞という", "pepsinogen-activation":"血小板", "small-intestine-villi":"肺胞の換気を行う", "bile-alkaline":"アルカリ性でペプシンを含む", "neutrophil-phagocytosis":"水晶体の厚みを調整する", "humoral-antibodies":"体温調節", "cellular-tcells":"血液型判定", "lens-accommodation":"視神経", "cold-skin-vessels":"肺の酸素交換を止める"
+    };
+    questions.forEach(q => { if (fifthChoices[q.id]) q.choices.push(fifthChoices[q.id]); });
+    const laborLawIds = new Set(["daily-work-hours", "break-time", "paid-leave-start", "overtime-limit", "proportional-leave", "maternity-definition"]);
+    questions.forEach(q => {
+      if (laborLawIds.has(q.id)) { q.source = "厚生労働省・労働基準法"; q.url = "https://www.mhlw.go.jp/web/t_doc?dataId=73022000"; }
+      else if (q.examGroup === "関係法令") { q.source = "厚生労働省・労働安全衛生規則（人数などは関連法令も参照）"; q.url = "https://www.mhlw.go.jp/web/t_doc?dataId=74003000&dataType=0&pageNo=1"; }
+      if (q.id === "co2-standard") { q.source = "厚生労働省・事務所衛生基準規則"; q.url = "https://www.mhlw.go.jp/web/t_doc?dataId=74089000&dataType=0&pageNo=1"; }
+    });
+    // 公的資料の内容をもとに作成した追加の五択問題。
+    const verifiedPractice = (id, examGroup, category, text, choices, answer, explanation, source, url) => questions.push({id, examGroup, category, text, choices, answer, explanation, source, url});
+    const LAW_URL = "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/roudouseisaku/chushoukigyou/joken_kankyou_rule.html";
+    const MANAGER_URL = "https://jsite.mhlw.go.jp/nara-roudoukyoku/content/contents/Health-and-safety-handbook2025_.pdf";
+    const MATERNITY_URL = "https://www.check-roudou.mhlw.go.jp/qa/roudousya/sonota/q14.html";
+    const addLaw = (id, category, text, choices, answer, explanation, url = LAW_URL) => verifiedPractice(id, "関係法令", category, text, choices, answer, explanation, url.includes("exam.or.jp") ? "試験協会・公表問題（関連事項）" : "厚生労働省・労働局の解説", url);
+    addLaw("law-break-7h", "労働時間", "労働時間が7時間の日に、労働基準法上、途中に与える休憩の最低時間は？", ["30分", "45分", "60分", "75分", "90分"], 1, "6時間を超え8時間以下の労働には少なくとも45分の休憩が必要です。");
+    addLaw("law-break-8h-exact", "労働時間", "1日の労働時間がちょうど8時間の場合、法律上最低限必要な休憩は？", ["30分", "45分", "60分", "75分", "90分"], 1, "60分以上が必要なのは8時間を超える場合です。ちょうど8時間なら45分以上です。", "https://www.mhlw.go.jp/bunya/roudoukijun/faq_kijyunhou_13.html");
+    addLaw("law-break-use", "労働時間", "休憩時間中に電話当番として待機を命じられた時間の扱いは？", ["自由に使える休憩である", "指揮命令下にあるため労働時間となる", "必ず休日になる", "年次有給休暇となる", "深夜労働になる"], 1, "電話対応を命じられ、自由に利用できない時間は休憩ではなく労働時間として扱われます。");
+    addLaw("law-weekly-holiday", "労働時間", "法定休日について原則として正しいものは？", ["毎週少なくとも1日", "毎月少なくとも1日", "3か月に少なくとも1日", "毎年少なくとも4日", "休日を与える必要はない"], 0, "原則として毎週少なくとも1日、または4週間を通じて4日以上の休日が必要です。");
+    addLaw("law-four-week-holiday", "労働時間", "変形休日制で休日を与える場合、法定休日の最低日数は原則として？", ["4週間に1日", "4週間に2日", "4週間に3日", "4週間に4日", "4週間に8日"], 3, "毎週1日を与える方法のほか、要件を満たして4週間に4日以上を与える方法があります。");
+    addLaw("law-holiday-premium", "労働時間", "法定休日に労働させた場合の割増賃金率は原則として少なくとも何％？", ["10％", "20％", "25％", "35％", "50％"], 3, "法定休日労働には、原則として35％以上の割増賃金が必要です。法定外休日とは区別します。");
+    addLaw("law-night-premium", "労働時間", "原則として午後10時から午前5時までの深夜労働に必要な割増率は少なくとも？", ["10％", "15％", "20％", "25％", "35％"], 3, "深夜労働には25％以上の割増賃金が必要です。時間外労働と重なる場合はそれぞれの割増しが必要です。");
+    addLaw("law-overtime-night", "労働時間", "法定時間外労働が深夜にも及び、時間外25％・深夜25％の最低割増率が重なる場合、合計の最低割増率は？", ["25％", "35％", "40％", "50％", "60％"], 3, "時間外と深夜の割増しは重なり、例の条件では25％＋25％で50％以上です。");
+    addLaw("law-leave-annual-five", "労働時間", "年次有給休暇が年10日以上付与される労働者について、使用者が時季を指定して取得させる必要がある日数は、原則として年何日？", ["1日", "3日", "5日", "8日", "10日"], 2, "年10日以上付与される労働者には、原則として基準日から1年以内に5日取得させます。本人取得分等は控除されます。");
+    addLaw("law-manager-150", "衛生管理体制", "常時150人の労働者がいる事業場で、衛生管理者の最低選任人数は？", ["0人", "1人", "2人", "3人", "4人"], 1, "常時50人以上200人以下の事業場では衛生管理者を1人以上選任します。", MANAGER_URL);
+    addLaw("law-manager-300", "衛生管理体制", "常時300人の労働者がいる事業場で、衛生管理者の最低選任人数は？", ["1人", "2人", "3人", "4人", "5人"], 1, "常時200人を超え500人以下では、衛生管理者を2人以上選任します。", MANAGER_URL);
+    addLaw("law-manager-750", "衛生管理体制", "常時750人の労働者がいる事業場で、衛生管理者の最低選任人数は？", ["1人", "2人", "3人", "4人", "5人"], 2, "常時500人を超え1,000人以下では、衛生管理者を3人以上選任します。", MANAGER_URL);
+    addLaw("law-manager-2500", "衛生管理体制", "常時2,500人の労働者がいる事業場で、衛生管理者の最低選任人数は？", ["2人", "3人", "4人", "5人", "6人"], 3, "常時2,000人を超え3,000人以下では、衛生管理者を5人以上選任します。", MANAGER_URL);
+    addLaw("law-manager-appointment", "衛生管理体制", "衛生管理者の選任が必要になった場合、原則として何日以内に選任しますか？", ["7日以内", "14日以内", "30日以内", "60日以内", "90日以内"], 1, "選任すべき事由が発生した日から14日以内に選任します。", "https://anzeninfo.mhlw.go.jp/yougo/yougo33_1.html");
+    addLaw("law-manager-report", "衛生管理体制", "衛生管理者を選任した後の届出先として正しいのは？", ["所轄労働基準監督署長", "所轄消防署長", "市区町村長", "ハローワークの窓口", "税務署長"], 0, "選任したときは遅滞なく、所轄労働基準監督署長へ報告します。", "https://anzeninfo.mhlw.go.jp/yougo/yougo33_1.html");
+    addLaw("law-committee-recommendation", "衛生管理体制", "衛生委員会の議長を除く委員の半数の指名について正しいものは？", ["事業者が推薦なしで全員決める", "過半数労組等の推薦に基づき事業者が指名する", "労働基準監督署長が指名する", "外部の医師だけを指名する", "常にくじで決める"], 1, "議長以外の半数は、過半数労働組合、なければ過半数代表者の推薦に基づき事業者が指名します。", "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/roudoukijun/faq/1.html");
+    addLaw("law-committee-doctor", "衛生管理体制", "事業場に専属でない産業医を、その事業場の衛生委員会の委員として指名できるか？", ["産業医であれば専属でなくても指名できる", "専属でなければ必ず禁止される", "産業医は一切委員になれない", "労働者代表の場合だけ可能", "作業環境測定士の資格も必須"], 0, "事業場で選任している産業医は、専属でない場合でも委員に指名できます。", "https://www.exam.or.jp/wp-content/uploads/2026/10/LC20262115.pdf");
+    addLaw("law-exam-prebirth-single", "労働時間", "単胎妊娠の女性が産前休業を請求した場合、予定日の何週間以内から就業させてはならないか？", ["2週間", "4週間", "6週間", "8週間", "14週間"], 2, "単胎は出産予定日まで6週間以内、多胎は14週間以内に請求すると産前休業の対象になります。", MATERNITY_URL);
+    addLaw("law-exam-prebirth-multiple", "労働時間", "多胎妊娠の女性が産前休業を請求した場合、予定日の何週間以内から就業させてはならないか？", ["6週間", "8週間", "10週間", "12週間", "14週間"], 4, "多胎妊娠では、出産予定日まで14週間以内の請求が対象です。", MATERNITY_URL);
+    addLaw("law-postpartum-eight", "労働時間", "産後の就業制限の原則は、出産後何週間を経過するまでか？", ["4週間", "6週間", "8週間", "10週間", "14週間"], 2, "原則として産後8週間は就業できません。産後6週間経過後は本人の請求と医師の判断による例外があります。", MATERNITY_URL);
+    addLaw("law-postpartum-exception", "労働時間", "産後6週間経過後8週間未満で就業できる例外の条件は？", ["事業者が必要と認めるだけ", "本人の請求と、医師が支障なしと認めた業務", "本人が請求しなくても自動的に就業", "医師の判断だけで本人の請求不要", "年次有給休暇が残っていないこと"], 1, "産後6週間経過後、本人が請求し、医師が支障なしと認めた業務には就くことができます。", MATERNITY_URL);
+    addLaw("law-maternity-lightwork", "労働時間", "妊娠中の女性が軽い業務への転換を請求した場合、使用者はどうしますか？", ["他の軽易な業務に転換させる", "必ず解雇する", "残業を増やす", "請求を必ず拒否する", "休憩を廃止する"], 0, "妊娠中の女性が請求したときは、他の軽易な業務に転換させます。", MATERNITY_URL);
+    addLaw("law-menstrual-leave", "労働時間", "生理日に就業することが著しく困難な女性が休暇を請求した場合の対応は？", ["その日に就業させてはならない", "医師の診断書がなければ必ず拒否する", "本人の請求にかかわらず就業させる", "必ず年次有給休暇を消化させる", "休日労働に振り替える"], 0, "生理日の就業が著しく困難な女性が請求した場合、その日に就業させてはなりません。", "https://www.mhlw.go.jp/web/t_doc?dataId=73022000");
+    addLaw("law-6h-break-threshold", "労働時間", "休憩時間の規定で45分以上が必要になるのは、原則として労働時間が何時間を超えた場合か？", ["4時間", "5時間", "6時間", "7時間", "8時間"], 2, "労働時間が6時間を超える場合は少なくとも45分、8時間を超える場合は少なくとも60分の休憩が必要です。", "https://www.mhlw.go.jp/bunya/roudoukijun/faq_kijyunhou_13.html");
+    addLaw("law-leave-parttime-rule", "労働時間", "週4日以下かつ週所定労働時間30時間未満などの労働者の年次有給休暇について正しいものは？", ["条件により所定労働日数に応じて比例付与される", "必ず付与されない", "雇用形態だけで一律20日となる", "出勤率は一切関係しない", "すべて週5日勤務と同じ日数である"], 0, "週の所定労働日数が少ない場合などは、所定労働日数に応じて比例付与されます。", "https://www.check-roudou.mhlw.go.jp/qa/roudousya/yukyu/q1.html");
+    addLaw("law-health-exam-notice", "健康管理", "健診結果を労働者に伝える対象として適切なものは？", ["異常ありの人のみ", "異常なしの人も含む受診者", "会社の役員のみ", "希望を申し出た人のみ", "採用時の受診者を除く"], 1, "受診した労働者には、異常所見の有無を問わず遅滞なく結果を通知します。", "https://www.exam.or.jp/wp-content/uploads/2026/10/LC20262115.pdf");
+    addLaw("law-interview-time-record", "健康管理", "長時間労働による医師面接指導のための労働時間の把握方法は？", ["タイムカードなど客観的方法その他適切な方法", "事業者の印象のみ", "本人の勤務予定だけで必ず確定", "労働時間を把握しない", "毎年1回、予想時間を書くのみ"], 0, "事業者はタイムカードの記録等の客観的方法その他の適切な方法で労働時間の状況を把握します。", "https://www.exam.or.jp/wp-content/uploads/2026/04/%E7%AC%AC%E4%BA%8C%E7%A8%AE%E8%A1%9B%E7%94%9F%E7%AE%A1%E7%90%86%E8%80%85%E5%85%AC%E8%A1%A8%E8%A9%A6%E9%A8%93%E5%95%8F%E9%A1%8C-3.pdf");
+    const PUBLIC_EXAM_URL = "https://www.exam.or.jp/wp-content/uploads/2026/10/LC20262115.pdf";
+    const APRIL_EXAM_URL = PERSONAL_PROTOTYPE_URL;
+    const addHygiene = (id, category, text, choices, answer, explanation, url = PUBLIC_EXAM_URL) => verifiedPractice(id, "労働衛生", category, text, choices, answer, explanation, "試験協会・公表問題（関連事項）", url);
+    addHygiene("hyg-ventilation-calc", "職場環境", "在室者が出す二酸化炭素が毎時0.06m³、室内の基準濃度が1,000ppm、外気が400ppmの場合、必要換気量の目安は？", ["10m³/時", "60m³/時", "100m³/時", "400m³/時", "1,000m³/時"], 2, "濃度差は600ppm＝0.0006。0.06÷0.0006＝100m³/時です。");
+    addHygiene("hyg-ventilation-more-people", "職場環境", "二酸化炭素の基準と外気濃度が同じとき、在室者による発生量が2倍になると必要換気量はどうなる？", ["半分", "変わらない", "2倍", "4倍", "10倍"], 2, "必要換気量は発生量に比例するため、濃度差が同じなら発生量2倍で換気量も2倍です。");
+    addHygiene("hyg-ventilation-gap", "職場環境", "在室者の二酸化炭素発生量が一定のとき、室内基準と外気の濃度差が小さくなると必要換気量は？", ["少なくなる", "変わらない", "多くなる", "必ずゼロになる", "計算できなくなる場合しかない"], 2, "発生量を室内基準と外気の濃度差で割って求めます。差が小さいほど必要換気量は大きくなります。");
+    addHygiene("hyg-wbgt-sun-elements", "職場環境", "日射のある場所でWBGTの計算に使用する温度の組合せは？", ["自然湿球・黒球・乾球", "乾球のみ", "黒球・気圧", "自然湿球・照度", "乾球・騒音"], 0, "日射がある場合は自然湿球温度、黒球温度、乾球温度を用います。");
+    addHygiene("hyg-wbgt-workload", "職場環境", "暑熱順化の条件が同じ場合、身体負荷が大きい作業のWBGT基準値は、負荷が小さい作業と比べて一般にどうなる？", ["小さい", "必ず同じ", "大きい", "湿度の値に等しい", "照度と同じ"], 0, "作業の身体負荷が大きいほど、許容される暑熱の基準値は小さくなります。");
+    addHygiene("hyg-wbgt-acclimation", "職場環境", "作業の身体負荷が同じとき、暑熱順化した人向けのWBGT基準値は非順化者向けと比べて一般に？", ["低い", "高い", "常に0℃", "照度に等しい", "作業負荷で決まらない"], 1, "暑熱順化者向けの基準値は、同じ身体作業強度では非順化者向けより大きく設定されています。");
+    addHygiene("hyg-light-unit", "職場環境", "作業面の照度を表す単位は？", ["ルクス", "デシベル", "パスカル", "ニュートン", "ヘルツ"], 0, "照度にはルクス（lx）を用います。デシベルは騒音など、ヘルツは周波数の単位です。");
+    addHygiene("hyg-light-inspection", "職場環境", "照明設備の維持管理として適切なのは？", ["汚れても点検せず使う", "定期的に点検し、汚れなどに応じ清掃や交換を行う", "作業面だけを暗くする", "まぶしさは一切考慮しない", "照明設備を一度設置したら変更しない"], 1, "照明設備は定期的な点検を行い、必要に応じ清掃・交換して適切な視環境を保ちます。");
+    addHygiene("hyg-light-glare", "職場環境", "照明のまぶしさを防ぐ工夫として適切なのは？", ["光源が直接視界に入らないよう配慮する", "常に作業者の目に光源を向ける", "照明の周囲を必ず真っ黒にする", "作業面の反射は考慮しない", "暗所でのみ作業させる"], 0, "直接目に入る光や作業面での反射によるまぶしさを抑えることが大切です。", APRIL_EXAM_URL);
+    addHygiene("hyg-stats-crosssection", "健康管理", "ある日の検診結果のように、一時点で集めた集団のデータは？", ["静態データ", "動態データ", "実験誤差", "因果効果", "標準偏差"], 0, "ある時点における集団の状態を示すデータは静態データと呼びます。");
+    addHygiene("hyg-stats-period", "健康管理", "一定期間の疾病休業件数のように、期間中の変化を表すものは？", ["静態データ", "動態データ", "視力", "照度", "温熱条件"], 1, "一定期間における発生や変化を表すデータは動態データです。");
+    addHygiene("hyg-stats-dispersion", "健康管理", "2つの集団の平均値が同じ場合、適切な考え方は？", ["必ず分布も同じ", "ばらつきが異なることがある", "個々の数値もすべて同じ", "中央値が必ず0", "人数が必ず同じ"], 1, "平均が同じでも分散などのばらつきが異なれば、集団の特徴は異なることがあります。");
+    addHygiene("hyg-false-positive-calc", "健康管理", "病気のない人200人中、検査で陽性とされた人が20人いた。偽陽性率は？", ["5％", "10％", "20％", "50％", "90％"], 1, "偽陽性率は病気のない人のうち陽性とされた割合。20÷200×100＝10％です。", APRIL_EXAM_URL);
+    addHygiene("hyg-false-negative-calc", "健康管理", "病気のある人40人中、検査で陰性とされた人が8人いた。偽陰性率は？", ["8％", "10％", "20％", "40％", "80％"], 2, "偽陰性率は病気のある人のうち陰性とされた割合。8÷40×100＝20％です。", APRIL_EXAM_URL);
+    addHygiene("hyg-coronary", "健康管理", "虚血性心疾患で不足するものは主に何か？", ["冠動脈から心筋への血液供給", "肺胞から外気への光", "腎臓から骨への神経", "胃から皮膚への胆汁", "小腸から耳への血小板"], 0, "冠動脈から心筋へ十分な血液が届かないことで、心筋の障害が生じます。");
+    addHygiene("hyg-angina-infarct", "健康管理", "狭心症と心筋梗塞の一般的な違いとして適切なのは？", ["狭心症は可逆的な虚血、心筋梗塞は心筋の壊死を伴う", "どちらも必ず脳出血", "狭心症では冠動脈は関係しない", "心筋梗塞は必ず数秒で治る", "心筋梗塞では心筋に異常が起こらない"], 0, "狭心症は一時的な虚血、心筋梗塞は血流途絶などによる不可逆的な心筋の壊死を伴います。", APRIL_EXAM_URL);
+    addHygiene("hyg-cerebral-infarct", "健康管理", "脳梗塞の分類に含まれるものは？", ["脳血栓症と脳塞栓症", "脳出血とくも膜下出血だけ", "狭心症と心筋梗塞", "胃潰瘍と十二指腸潰瘍", "熱中症と低体温症"], 0, "脳梗塞は虚血性の脳血管疾患で、脳血栓症と脳塞栓症などに分けられます。");
+    addHygiene("hyg-cerebral-bleeding", "健康管理", "出血性の脳血管疾患にあたる組合せは？", ["脳出血・くも膜下出血", "脳血栓症・脳塞栓症", "狭心症・糖尿病", "心筋梗塞・腎不全", "肺炎・胃炎"], 0, "脳出血やくも膜下出血は出血性の脳血管疾患です。");
+    addHygiene("hyg-food-staph", "健康管理", "黄色ブドウ球菌の食中毒で、加熱について注意する理由は？", ["毒素が熱に強い", "毒素は常に冷凍でしかできない", "菌はすべてウイルスである", "食品に毒素は作られない", "毒素は必ず数秒の加熱で無毒化される"], 0, "黄色ブドウ球菌が作る毒素は熱に強いため、汚染や増殖を防ぐことが大切です。", APRIL_EXAM_URL);
+    addHygiene("hyg-food-botulinum", "健康管理", "ボツリヌス菌が作る毒素の主な性質は？", ["神経毒", "酸素そのもの", "血糖を下げるホルモン", "照明を発する物質", "睡眠を必ず改善する栄養素"], 0, "ボツリヌス菌の毒素は神経に作用する毒素です。", APRIL_EXAM_URL);
+    addHygiene("hyg-food-vibrio", "健康管理", "腸炎ビブリオの特徴として適切なのは？", ["塩分のある環境を好む細菌", "光合成だけで増える植物", "ウイルスの一種", "温度とは無関係な金属", "食中毒とは関係のないホルモン"], 0, "腸炎ビブリオは好塩性の細菌で、魚介類などが原因食品になることがあります。", APRIL_EXAM_URL);
+    addHygiene("hyg-food-noro", "健康管理", "ノロウイルスに有効な失活化の方法として、適切なものは？", ["煮沸や適切な塩素系消毒剤", "常温で放置するだけ", "塩を少量振るだけ", "照明を暗くする", "乾いた布でなでるだけ"], 0, "公表問題では、煮沸消毒または塩素系消毒剤が失活化に効果的とされています。", APRIL_EXAM_URL);
+    addHygiene("hyg-hba1c", "健康管理", "HbA1cが主に反映する期間は？", ["直前の数分", "直前の1食", "過去2～3か月程度", "過去10年だけ", "生涯すべて"], 2, "HbA1cは過去2～3か月程度の平均的な血糖状態を知る指標です。");
+    addHygiene("hyg-uric-acid", "健康管理", "血液中の尿酸値が高い状態と関連する疾患は？", ["痛風発作", "近視", "骨折の必発", "難聴の必発", "虫歯の必発"], 0, "高尿酸血症は関節の痛風発作などの原因になります。");
+    addHygiene("hyg-rescue-call", "救急処置", "反応がない人を見つけたとき、一次救命処置の初期対応として適切なのは？", ["周囲へ大声で助けを求める", "一人で必ず全て行い他人を呼ばない", "反応を確認せず飲み物を与える", "長時間その場で様子だけ見る", "直ちに歩かせる"], 0, "周囲に応援を求め、119番通報やAEDの手配を依頼します。", APRIL_EXAM_URL);
+    addHygiene("hyg-rescue-airway", "救急処置", "気道確保の方法として適切なのは？", ["額を押さえ、あご先を上げる", "あごを強く胸に押し付ける", "口と鼻を塞ぐ", "立ち上がらせる", "胸部を冷やすだけ"], 0, "頭部後屈あご先挙上法では、額を押さえながらあご先を持ち上げます。", APRIL_EXAM_URL);
+    addHygiene("hyg-lifting-posture", "腰痛予防", "床から荷物を持ち上げるときの腰痛予防として適切なのは？", ["膝を曲げ、腰を落として荷物を抱える", "膝を伸ばし、上体だけ前に倒す", "荷物を体からできるだけ離す", "勢いよく腰をねじる", "重心の偏りは無視する"], 0, "荷物に体を近づけ、膝を曲げて腰を落とし、脚を使って持ち上げます。", APRIL_EXAM_URL);
+    addHygiene("hyg-lifting-center", "腰痛予防", "重心が大きく偏った荷物を扱う際に適切なのは？", ["偏りを分かるように表示する", "重心は知らせない", "必ず片手だけで持つ", "腰をねじって持ち上げる", "荷物の形だけを伝え重心は無視する"], 0, "重量物の重心が著しく偏っている場合、その情報を明示して安全に扱えるようにします。", APRIL_EXAM_URL);
+    const addPhysiology = (id, category, text, choices, answer, explanation, url = PUBLIC_EXAM_URL) => verifiedPractice(id, "労働生理", category, text, choices, answer, explanation, "試験協会・公表問題（関連事項）", url);
+    addPhysiology("phys-blood-plasma", "血液", "血液を血漿と血球などに分けたとき、血漿が占める体積の割合に最も近いのは？", ["約5％", "約20％", "約35％", "約55％", "約90％"], 3, "血液の体積のおよそ55％を血漿が占め、残りは赤血球などの有形成分です。");
+    addPhysiology("phys-plasma-protein", "血液", "血漿に含まれるたんぱく質の組合せとして適切なのは？", ["アルブミン・グロブリン", "ペプシン・アミラーゼだけ", "インスリン・胃酸だけ", "カルシウム・ナトリウムだけ", "酸素・二酸化炭素だけ"], 0, "血漿にはアルブミンやグロブリンなどのたんぱく質が含まれます。", APRIL_EXAM_URL);
+    addPhysiology("phys-clot-fibrin", "血液", "血液の凝固で、フィブリノーゲンから変化して血球などを絡め取るものは？", ["フィブリン", "ヘモグロビン", "グリコーゲン", "ペプシン", "アドレナリン"], 0, "血液凝固では、血漿中のフィブリノーゲンがフィブリンとなり、血球などを絡めます。");
+    addPhysiology("phys-blood-a-antibody", "血液", "ABO式血液型がA型の人の血清に通常含まれる抗体は？", ["抗A抗体", "抗B抗体", "抗A・抗Bの両方", "抗D抗体を全員が必ず持つ", "抗原そのものしか含まれない"], 1, "A型の赤血球はA抗原を持ち、血清には通常、抗B抗体があります。");
+    addPhysiology("phys-platelet-cell", "血液", "血小板について正しいものは？", ["核を持たず止血に関わる", "核を持ち酸素運搬を主とする", "抗体を分泌するリンパ球そのもの", "胆汁を作る器官", "消化酵素の総称"], 0, "血小板は核を持たず、止血や血液凝固に関わります。", APRIL_EXAM_URL);
+    addPhysiology("phys-glucose-portal", "消化器", "小腸で吸収されたブドウ糖が、肝臓へ向かう主な血管は？", ["門脈", "肺静脈", "冠動脈", "気管", "尿管"], 0, "ブドウ糖やアミノ酸は小腸の毛細血管に吸収され、門脈を経て肝臓に運ばれます。");
+    addPhysiology("phys-amino-portal", "消化器", "小腸で吸収されたアミノ酸が最初に多く運ばれる臓器は？", ["肝臓", "肺", "脳", "皮膚", "眼球"], 0, "小腸で吸収されたアミノ酸は門脈を通って肝臓に運ばれます。");
+    addPhysiology("phys-saliva-enzyme", "消化器", "唾液中の消化酵素が主に分解を始める栄養素は？", ["デンプン", "無機塩", "水", "酸素", "ビタミンすべて"], 0, "唾液に含まれるアミラーゼはデンプンをより小さな糖に分解します。", APRIL_EXAM_URL);
+    addPhysiology("phys-pepsin-protein", "消化器", "胃のペプシンが消化する主な栄養素は？", ["たんぱく質", "無機塩", "酸素", "水", "二酸化炭素"], 0, "ペプシンは胃酸によって活性化され、たんぱく質の分解に働きます。", APRIL_EXAM_URL);
+    addPhysiology("phys-pancreatic-alkaline", "消化器", "十二指腸に流れ込む膵液の働きとして適切なのは？", ["酸性の胃内容物を中和する", "胃内容物をさらに強酸にするだけ", "肺のガス交換を行う", "赤血球を骨髄で作る", "胆汁を酸素に変える"], 0, "膵液はアルカリ性で、十二指腸に入る酸性の消化物の中和に役立ちます。");
+    addPhysiology("phys-bile-emulsion", "消化器", "胆汁が脂肪の消化を助ける仕組みは？", ["脂肪を細かい粒に分散させる", "たんぱく質をペプシンで分解する", "酸素をヘモグロビンに結合させる", "赤血球を作る", "水を血小板に変える"], 0, "胆汁は脂肪を乳化し、消化吸収を助けます。胆汁自体には消化酵素が含まれません。", APRIL_EXAM_URL);
+    addPhysiology("phys-liver-ammonia", "消化器", "たんぱく質の代謝で生じたアンモニアを、肝臓は主に何に変えるか？", ["尿素", "酸素", "ヘモグロビン", "胃酸", "インスリン"], 0, "肝臓は有害なアンモニアから尿素を合成し、尿素は腎臓から排出されます。");
+    addPhysiology("phys-liver-glycogen", "消化器", "肝臓が余分なブドウ糖を蓄えるとき、主にどの形に変えるか？", ["グリコーゲン", "フィブリン", "尿素", "ペプシン", "ビリルビン"], 0, "肝臓ではブドウ糖をグリコーゲンとして蓄え、必要に応じて分解します。");
+    addPhysiology("phys-kidney-filter", "泌尿器", "血液がろ過されて原尿ができる部位は？", ["糸球体からボウマン嚢", "尿道から膀胱", "尿管から肝臓", "肺胞から気管", "胆嚢から胃"], 0, "腎臓の糸球体で血液がろ過され、ボウマン嚢に原尿が入ります。", APRIL_EXAM_URL);
+    addPhysiology("phys-kidney-water", "泌尿器", "原尿中の水分は通常どのようになるか？", ["大部分が再吸収される", "大部分がそのまま尿になる", "すべて肺へ直接排出される", "すべて血球になる", "全量が胆汁になる"], 0, "原尿の水分の大部分は尿細管で再吸収され、残りが尿として排出されます。", APRIL_EXAM_URL);
+    addPhysiology("phys-external-respiration", "呼吸", "外呼吸とは主にどこでのガス交換をいうか？", ["肺胞とその周囲の血液の間", "消化管と胆汁の間", "血小板と胃の間", "腎臓と膀胱の間", "網膜と水晶体の間"], 0, "肺胞の空気と周囲の毛細血管の血液の間で行われるガス交換を外呼吸といいます。");
+    addPhysiology("phys-exhaled-gases", "呼吸", "通常の呼気に含まれる酸素と二酸化炭素の割合として近いものは？", ["酸素約16％・二酸化炭素約4％", "酸素約4％・二酸化炭素約16％", "酸素約50％・二酸化炭素約50％", "酸素約0％・二酸化炭素約100％", "酸素約80％・二酸化炭素約20％"], 0, "通常の呼気には酸素が約16％、二酸化炭素が約4％含まれます。");
+    addPhysiology("phys-heat-sweat", "体温調節", "暑い環境で汗の水分が蒸発すると、体温調節にどう役立つか？", ["気化熱を奪って熱を放散する", "気化熱を作って必ず体温を上げる", "血液をすべて汗に変える", "皮膚からの熱放散を必ずゼロにする", "汗が蒸発しても熱の移動はない"], 0, "汗の蒸発に伴い気化熱が奪われ、体から熱が放散されます。");
+    addPhysiology("phys-homeostasis", "体温調節", "体温など身体内部の状態を一定範囲に保とうとする性質を何というか？", ["恒常性", "暗順応", "血液凝固", "乳化", "偽陰性"], 0, "外部環境が変わっても内部環境を一定に保とうとする性質を恒常性（ホメオスタシス）といいます。");
+    addPhysiology("phys-hearing-cochlea", "感覚器", "音の振動が内耳で神経信号に変わる仕組みに関わるものは？", ["蝸牛内の有毛細胞", "腎臓の糸球体", "胃の絨毛", "眼の水晶体", "肝臓の胆管"], 0, "音の振動は蝸牛内の液を介して有毛細胞に伝わり、聴神経を通じて伝えられます。");
+    addPhysiology("phys-equilibrium-inner-ear", "感覚器", "平衡感覚に関係する前庭や半規管は耳のどの部分にあるか？", ["内耳", "外耳だけ", "中耳だけ", "鼓膜の外面だけ", "耳とは関係しない"], 0, "前庭や半規管は内耳にあり、体の傾きや回転などの感覚に関わります。", APRIL_EXAM_URL);
+    addPhysiology("phys-eyes-astigmatism", "感覚器", "角膜などのゆがみにより像が網膜上に正しく結ばれない状態は？", ["乱視", "暗順応", "近聴", "血液凝固", "偽陽性"], 0, "角膜などにゆがみがあると、光が一点に結ばれにくい乱視が生じます。", APRIL_EXAM_URL);
+    addPhysiology("phys-aging-balance", "加齢", "加齢に伴う一般的な変化として適切なのは？", ["平衡感覚が低下して転びやすくなることがある", "必ず平衡感覚が向上する", "転倒の危険は必ずなくなる", "加齢と体温調節機能は無関係", "骨密度は必ず増加する"], 0, "加齢によって平衡感覚が低下し、転倒しやすくなることがあります。", APRIL_EXAM_URL);
+    addPhysiology("phys-aging-bones", "加齢", "加齢に伴う身体機能について、一般に正しい説明は？", ["骨密度や筋力が低下することがある", "すべての人で筋力が必ず増す", "骨折しやすさとは無関係", "動体視力は必ず向上する", "体温調節機能は低下しない"], 0, "加齢では骨密度の減少や筋力の低下がみられることがあります。", APRIL_EXAM_URL);
+    addPhysiology("phys-aging-heat", "加齢", "高齢者の暑熱環境への対応で考慮する一般的な変化は？", ["体温調節機能が低下することがある", "熱中症は起こらない", "発汗は必ず増え続ける", "周囲の温度の影響を受けない", "水分補給は不要になる"], 0, "加齢に伴い体温調節機能が低下し、熱中症が起こりやすくなることがあります。", APRIL_EXAM_URL);
+    addPhysiology("phys-immunity-allergy", "免疫", "抗原に対する免疫反応が、逆に体の組織に障害を与える状態は？", ["アレルギー", "暗順応", "外呼吸", "乳化", "尿の再吸収"], 0, "免疫反応によって体の組織や細胞に障害が生じる状態をアレルギーといいます。", APRIL_EXAM_URL);
+    addPhysiology("phys-neutrophil-white", "免疫", "細菌などを貪食する好中球は何の一種か？", ["白血球", "血小板", "赤血球", "血漿たんぱく質", "消化酵素"], 0, "好中球は白血球の一種で、侵入した細菌などを貪食します。", APRIL_EXAM_URL);
+    const EXAM_GROUP_BY_ID = {
+      "weekly-rounds":"関係法令", "annual-checkup-frequency":"関係法令", "committee-frequency":"関係法令", "health-manager-duty":"関係法令", "rounds-immediate-action":"関係法令", "annual-checkup-doctor":"関係法令"
+    };
+    const examGroupOf = question => question.examGroup || EXAM_GROUP_BY_ID[question.id];
+    let index = 0, correctCount = 0, answered = false, selectedIndex = null, categoryStats = {}, examStats = {}, answerReview = [], mockAnswers = [], remainingSeconds = 300, timerId = null, deadline = null;
+    const QUESTIONS_PER_SESSION = 5;
+    const MOCK_EXAM_SECONDS = 3 * 60 * 60;
+    const MOCK_EXAM_QUESTION_COUNT = 30;
+    let sessionQuestions = questions.slice(0, QUESTIONS_PER_SESSION);
+    const $ = id => document.getElementById(id);
+    const HISTORY_KEY = "eisei-study-history-v1";
+    const QUESTION_STATS_KEY = "eisei-question-stats-v1";
+    const BOOKMARK_KEY = "eisei-bookmarks-v1", EXAM_DATE_KEY = "eisei-exam-date-v1";
+    let currentMode = "random";
+    let selectedSubject = "関係法令", lastWrongQuestions = [], retryQueue = [];
+    const modeNames = { random:"ランダム出題", weak:"苦手を克服", few:"回答数の少ない問題", mock:"模擬演習", subject:"科目別練習", bookmarks:"保存した問題", retry:"間違えた問題の復習" };
+    function readBookmarks() {
+      try { const ids = JSON.parse(localStorage.getItem(BOOKMARK_KEY) || "[]"); return Array.isArray(ids) ? ids.filter(id => typeof id === "string") : []; } catch { return []; }
+    }
+    function updateBookmarkButton(button, id) {
+      const saved = readBookmarks().includes(id); button.textContent = saved ? "★ 保存済み（解除する）" : "☆ 気になる問題に保存"; button.setAttribute("aria-pressed", String(saved));
+    }
+    function toggleBookmark(id, button) {
+      const ids = readBookmarks(), next = ids.includes(id) ? ids.filter(item => item !== id) : [...ids, id];
+      try { localStorage.setItem(BOOKMARK_KEY, JSON.stringify(next)); updateBookmarkButton(button, id); }
+      catch { alert("問題を保存できませんでした。ブラウザの保存設定をご確認ください。"); }
+    }
+    function renderCountdown() {
+      let value = ""; try { value = localStorage.getItem(EXAM_DATE_KEY) || ""; } catch { /* 日付未設定として表示 */ }
+      $("exam-date-input").value = value;
+      const display = $("countdown-text");
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) { display.textContent = "試験日を登録すると残り日数を表示します"; display.setAttribute("aria-label", "試験日を登録すると残り日数を表示します"); return; }
+      const [year, month, day] = value.split("-").map(Number), now = new Date();
+      const remaining = Math.round((Date.UTC(year, month - 1, day) - Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())) / 86400000);
+      if (remaining === 0) { display.textContent = "今日は試験日！"; display.setAttribute("aria-label", "今日は試験日です"); return; }
+      const prefix = document.createElement("span"), number = document.createElement("span"), unit = document.createElement("span");
+      prefix.className = "countdown-prefix"; prefix.textContent = remaining > 0 ? "あと" : "試験日から";
+      number.className = "countdown-number"; number.textContent = String(Math.abs(remaining));
+      unit.className = "countdown-unit"; unit.textContent = remaining > 0 ? "日" : "日経過";
+      display.replaceChildren(prefix, number, unit);
+      display.setAttribute("aria-label", remaining > 0 ? `試験まであと${remaining}日` : `試験日から${-remaining}日経過しました`);
+    }
+    function readHistory() {
+      try { const value = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]"); return Array.isArray(value) ? value : []; }
+      catch { return []; }
+    }
+    function readQuestionStats() {
+      try { const value = JSON.parse(localStorage.getItem(QUESTION_STATS_KEY) || "{}"); return value && typeof value === "object" ? value : {}; }
+      catch { return {}; }
+    }
+    function recordQuestionAnswer(question, isCorrect) {
+      const stats = readQuestionStats();
+      const item = stats[question.id] || { attempts:0, correct:0 };
+      item.attempts++; if (isCorrect) item.correct++;
+      stats[question.id] = item;
+      try { localStorage.setItem(QUESTION_STATS_KEY, JSON.stringify(stats)); } catch { /* 保存できない環境でも出題は続けられます */ }
+    }
+    function renderDashboard() {
+      const allHistory = readHistory();
+      const mockHistory = allHistory.filter(item => item.mode === "mock");
+      const subjectNames = ["関係法令", "労働衛生", "労働生理"];
+      const subjectScores = subjectNames.map(name => {
+        const totals = allHistory.reduce((sum, item) => {
+          const result = item.groups && item.groups[name];
+          if (result && Number.isFinite(result.correct) && Number.isFinite(result.total)) { sum.correct += result.correct; sum.total += result.total; }
+          return sum;
+        }, { correct:0, total:0 });
+        return { name, ...totals, percent:totals.total ? Math.round(totals.correct / totals.total * 100) : null };
+      });
+      $("subject-list").replaceChildren(...subjectScores.map(item => {
+        const row = document.createElement("div"), top = document.createElement("div"), title = document.createElement("div"), label = document.createElement("span"), rank = document.createElement("span"), value = document.createElement("strong"), track = document.createElement("div"), fill = document.createElement("div");
+        row.className = "category-row"; top.className = "category-row-top"; title.className = "subject-title"; label.textContent = item.name;
+        const grade = item.percent === null ? null : item.percent >= 90 ? "S" : item.percent >= 80 ? "A" : item.percent >= 60 ? "B" : "C";
+        rank.className = `subject-rank rank-${grade ? grade.toLowerCase() : "none"}`; rank.textContent = grade || "—";
+        rank.setAttribute("aria-label", grade ? `ランク${grade}` : "ランクなし"); title.append(label, rank);
+        value.textContent = item.percent === null ? "記録なし" : `${item.percent}%（${item.correct} / ${item.total}問）`;
+        track.className = "category-track"; track.setAttribute("aria-label", `${item.name}の正解率 ${item.percent === null ? "記録なし" : item.percent + "%"}`);
+        fill.className = "category-fill"; fill.style.width = `${item.percent || 0}%`;
+        top.append(title, value); track.append(fill); row.append(top, track); return row;
+      }));
+      const oldRecords = allHistory.filter(item => !item.groups || typeof item.groups !== "object").length;
+      $("subject-history-note").hidden = oldRecords === 0;
+      $("subject-history-note").textContent = `以前の記録${oldRecords}回分は科目別の内訳が保存されていないため、この3科目の集計には含まれていません。`;
+      const weakSubjects = subjectScores.filter(item => item.total > 0).sort((a, b) => a.percent - b.percent);
+      $("attempt-count").textContent = `${mockHistory.length} 回`;
+      const average = mockHistory.length ? Math.round(mockHistory.reduce((sum, item) => sum + item.percent, 0) / mockHistory.length) : null;
+      $("average-score").textContent = average === null ? "—" : `${average}%`;
+      const lastThree = mockHistory.slice(0, 3);
+      const recentAverage = lastThree.length ? Math.round(lastThree.reduce((sum, item) => sum + item.percent, 0) / lastThree.length) : null;
+      $("recent-three-score").textContent = recentAverage === null ? "—" : `${recentAverage}%`;
+      let trendMessage = "まずは練習問題を解いて、科目ごとの得意・不得意を確認しましょう。";
+      const weakTip = weakSubjects.length ? `記録のある科目で最も正解率が低いのは「${weakSubjects[0].name}」（${weakSubjects[0].percent}%・${weakSubjects[0].total}問）です。` : "";
+      if (lastThree.length > 0 && lastThree.length < 3) {
+        trendMessage = `模擬演習は${lastThree.length}回分です。あと${3 - lastThree.length}回で得点の傾向を表示できます。 ${weakTip}`;
+      } else if (lastThree.length === 3) {
+        const ordered = lastThree.slice().reverse();
+        const change = ordered[2].percent - ordered[0].percent;
+        const direction = change >= 6 ? "直近3回の得点は上向きです。" : change <= -6 ? "直近3回の得点は少し下がっています。" : "直近3回の得点は安定しています。";
+        trendMessage = `${direction} ${weakTip}`;
+      } else if (weakTip) {
+        trendMessage = `${weakTip} 「苦手を克服」モードで重点的に練習しましょう。`;
+      }
+      $("trend-text").textContent = trendMessage;
+      const recent = mockHistory.slice(0, 10);
+      $("history-list").replaceChildren(...recent.map(item => {
+        const li = document.createElement("li"), date = document.createElement("span"), score = document.createElement("strong");
+        date.textContent = new Date(item.date).toLocaleString("ja-JP", { month:"numeric", day:"numeric", hour:"2-digit", minute:"2-digit" });
+        score.textContent = `${item.correct} / ${item.total} 問（${item.percent}%）`;
+        li.append(date, score); return li;
+      }));
+      $("history-empty").hidden = recent.length > 0;
+      const chartItems = mockHistory.slice(0, 7).reverse();
+      const chart = $("score-chart");
+      chart.replaceChildren(...(chartItems.length ? chartItems : [{ percent:0, empty:true }]).map((item, i) => {
+        const group = document.createElement("div"), bar = document.createElement("div"), label = document.createElement("span"), rate = document.createElement("span");
+        group.className = "bar-item"; bar.className = "bar"; bar.style.height = `${item.empty ? 5 : Math.max(item.percent * .72, 8)}%`;
+        rate.className = "bar-rate"; rate.textContent = item.empty ? "" : `${item.percent}%`;
+        if (item.percent === 100 && !item.empty) { bar.classList.add("perfect"); rate.classList.add("is-perfect"); }
+        label.className = "bar-label";
+        const date = item.empty ? null : new Date(item.date);
+        label.textContent = date ? date.toLocaleDateString("ja-JP", { month:"numeric", day:"numeric" }) : "—";
+        group.title = item.empty ? "模擬演習を完了するとグラフが表示されます" : `${date.toLocaleString("ja-JP")} の模擬演習：${item.percent}%${item.percent === 100 ? "・満点！" : ""}`;
+        group.append(rate, bar, label); return group;
+      }));
+    }
+    function render() {
+      const q = sessionQuestions[index]; answered = false; selectedIndex = null;
+      $("counter").textContent = `問題 ${index + 1} / ${sessionQuestions.length}`;
+      const mockIsShort = currentMode === "mock" && sessionQuestions.length < MOCK_EXAM_QUESTION_COUNT;
+      $("mode-label").textContent = mockIsShort ? "模擬演習・短縮版" : currentMode === "subject" ? `${selectedSubject}の練習` : modeNames[currentMode];
+      updateTimerDisplay();
+      $("category").textContent = q.category;
+      $("progress").style.width = `${index / sessionQuestions.length * 100}%`;
+      $("question").textContent = q.text;
+      updateBookmarkButton($("bookmark-question"), q.id);
+      $("choices").replaceChildren(...q.choices.map((label, i) => {
+        const button = document.createElement("button"); button.className = "choice"; button.textContent = `${["A","B","C","D","E"][i]}　${label}`;
+        button.addEventListener("click", () => selectChoice(i)); return button;
+      }));
+      $("feedback").hidden = true; $("feedback").classList.remove("is-correct"); $("source-link").hidden = false;
+      $("previous").hidden = currentMode !== "mock"; $("previous").disabled = index === 0;
+      if (currentMode === "mock") {
+        selectedIndex = mockAnswers[index] ?? null;
+        [...$("choices").children].forEach((button, i) => button.classList.toggle("selected", i === selectedIndex));
+        $("score").textContent = `回答済み ${mockAnswers.filter(value => value !== null).length} / ${sessionQuestions.length} 問`;
+        $("next").disabled = false; $("next").textContent = index === sessionQuestions.length - 1 ? "回答を確認する" : "次の問題へ →";
+      } else { $("score").textContent = `正解 ${correctCount} 問`; $("next").disabled = true; $("next").textContent = "選択肢を選んでください"; }
+    }
+    function selectChoice(selected) {
+      if (answered) return;
+      selectedIndex = selected;
+      [...$("choices").children].forEach((button, i) => button.classList.toggle("selected", i === selected));
+      if (currentMode === "mock") { mockAnswers[index] = selected; $("score").textContent = `回答済み ${mockAnswers.filter(value => value !== null).length} / ${sessionQuestions.length} 問`; return; }
+      $("next").disabled = false; $("next").textContent = "回答する";
+    }
+    function submitAnswer() {
+      if (answered || selectedIndex === null) return;
+      answered = true;
+      const q = sessionQuestions[index], buttons = [...$("choices").children];
+      buttons.forEach((button, i) => { button.disabled = true; if (currentMode !== "mock" && i === q.answer) button.classList.add("correct"); else if (currentMode !== "mock" && i === selectedIndex) button.classList.add("wrong"); });
+      const isCorrect = selectedIndex === q.answer; if (isCorrect) correctCount++;
+      recordQuestionAnswer(q, isCorrect);
+      if (!categoryStats[q.category]) categoryStats[q.category] = { correct:0, total:0 };
+      categoryStats[q.category].total++; if (isCorrect) categoryStats[q.category].correct++;
+      const group = examGroupOf(q);
+      if (!examStats[group]) examStats[group] = { correct:0, total:0 };
+      examStats[group].total++; if (isCorrect) examStats[group].correct++;
+      answerReview.push({ question:q, selected:selectedIndex, isCorrect });
+      $("feedback-title").textContent = currentMode === "mock" ? "回答を記録しました" : isCorrect ? "正解です！" : "今回は不正解です";
+      $("explanation").textContent = currentMode === "mock" ? "正解と解説は、すべて回答した後に確認できます。" : q.explanation;
+      $("source-link").href = q.url; $("source-link").textContent = `参考資料：${q.source} ↗`; $("source-link").hidden = currentMode === "mock"; $("feedback").classList.toggle("is-correct", isCorrect && currentMode !== "mock"); $("feedback").hidden = false;
+      $("score").textContent = currentMode === "mock" ? `回答済み ${index + 1} 問` : `正解 ${correctCount} 問`;
+      $("next").disabled = false; $("next").textContent = index === sessionQuestions.length - 1 ? "結果を見る" : "次の問題へ";
+      $("progress").style.width = `${(index + 1) / sessionQuestions.length * 100}%`;
+    }
+    function updateTimerDisplay() {
+      const minutes = String(Math.floor(remainingSeconds / 60)).padStart(2, "0");
+      const seconds = String(remainingSeconds % 60).padStart(2, "0");
+      $("timer").textContent = `残り ${minutes}:${seconds}`;
+      $("timer").classList.toggle("urgent", remainingSeconds <= 60);
+    }
+    function stopTimer() { if (timerId !== null) { clearInterval(timerId); timerId = null; } }
+    function resumeTimer() {
+      if (timerId !== null || deadline === null) return;
+      remainingSeconds = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+      if (remainingSeconds <= 0) { finishAttempt(true); return; }
+      updateTimerDisplay();
+      timerId = setInterval(() => {
+        remainingSeconds = Math.max(0, Math.ceil((deadline - Date.now()) / 1000)); updateTimerDisplay();
+        if (remainingSeconds <= 0) finishAttempt(true);
+      }, 1000);
+    }
+    function startTimer() { stopTimer(); remainingSeconds = currentMode === "mock" ? MOCK_EXAM_SECONDS : currentMode === "retry" ? Math.max(300, sessionQuestions.length * 60) : 300; deadline = Date.now() + remainingSeconds * 1000; resumeTimer(); }
+    function finishAttempt(timeUp = false, saveRecord = true) {
+      stopTimer();
+      if (currentMode === "mock") {
+        correctCount = 0; categoryStats = {}; examStats = {}; answerReview = [];
+        sessionQuestions.forEach((q, i) => {
+          const selected = mockAnswers[i], isCorrect = selected === q.answer;
+          if (isCorrect) correctCount++;
+          if (saveRecord && selected !== null) recordQuestionAnswer(q, isCorrect);
+          if (!categoryStats[q.category]) categoryStats[q.category] = { correct:0, total:0 };
+          if (selected !== null) { categoryStats[q.category].total++; if (isCorrect) categoryStats[q.category].correct++; }
+          const group = examGroupOf(q); if (!examStats[group]) examStats[group] = { correct:0, total:0 };
+          examStats[group].total++; if (isCorrect) examStats[group].correct++;
+          answerReview.push({ question:q, selected, isCorrect });
+        });
+      }
+      if (saveRecord) {
+        const history = readHistory();
+        history.unshift({ date:new Date().toISOString(), correct:correctCount, total:sessionQuestions.length, percent:Math.round(correctCount / sessionQuestions.length * 100), categories:categoryStats, groups:examStats, timeUp, mode:currentMode });
+        try { localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(0, 50))); } catch { /* 履歴保存が使えない環境でもクイズは続けられます */ }
+      }
+      renderDashboard();
+      $("quiz").hidden = true; $("result").hidden = false;
+      $("result-label").textContent = saveRecord ? "今回の結果" : "結果画面の表示例";
+      $("final-score").textContent = `${correctCount} / ${sessionQuestions.length} 問`;
+      const shortMock = currentMode === "mock" && sessionQuestions.length < MOCK_EXAM_QUESTION_COUNT;
+      $("result-message").textContent = timeUp ? "時間切れです。未回答の問題は正解に含めず記録しました。" : correctCount === sessionQuestions.length ? "全問正解です。すばらしい！" : "解説を振り返って、もう一度挑戦してみましょう。";
+      if (!saveRecord) $("result-message").textContent = "表示例です。合計は基準以上ですが、関係法令が基準に届かない場合です。学習記録には保存されません。";
+      if (shortMock && !timeUp) $("result-message").textContent += " この記録は短縮版の模擬演習として保存しました。";
+      const wrongAnswers = answerReview.filter(item => item.selected !== null && !item.isCorrect);
+      lastWrongQuestions = wrongAnswers.map(item => questions.find(q => q.id === item.question.id)).filter(Boolean);
+      $("retry-wrong").hidden = lastWrongQuestions.length === 0;
+      const detail = $("result-detail"); detail.replaceChildren(); detail.hidden = currentMode !== "mock" && wrongAnswers.length === 0;
+      if (currentMode === "mock") {
+        const groups = ["関係法令", "労働衛生", "労働生理"];
+        const ready = sessionQuestions.length === 30 && groups.every(group => examStats[group]?.total === 10);
+        const meetsBenchmark = ready && correctCount >= 18 && groups.every(group => examStats[group].correct >= 4);
+        const benchmark = document.createElement("div"); benchmark.className = `exam-verdict${meetsBenchmark ? "" : " needs-work"}`;
+        const verdictTitle = document.createElement("strong"), verdictText = document.createElement("p");
+        verdictTitle.textContent = ready ? `参考判定：合格基準 ${meetsBenchmark ? "達成" : "未達成"}` : "参考判定：判定できません";
+        verdictText.textContent = ready ? (meetsBenchmark ? "3科目すべてと合計の基準を満たしました。" : "各科目40点以上、かつ合計180点以上が必要です。") + (timeUp ? " 時間切れのため未回答は0点で計算しています。" : "") : "問題数が本試験と異なるため、判定は行いません。";
+        benchmark.append(verdictTitle, verdictText);
+        const caveat = document.createElement("p"); caveat.className = "benchmark-note"; caveat.textContent = "この判定は基礎練習の目安です。本試験の合否は予測できません。";
+        const groupList = document.createElement("div"); groupList.className = "exam-group-list";
+        groups.forEach(group => {
+          const result = examStats[group] || {correct:0,total:0}, row = document.createElement("div"), name = document.createElement("span"), score = document.createElement("strong"), condition = document.createElement("span"), status = document.createElement("span");
+          row.className = "exam-score-card"; name.textContent = group;
+          score.textContent = ready ? `${result.correct * 10} / 100点` : `${result.correct} / ${result.total}問`;
+          condition.className = "score-condition"; condition.textContent = ready ? `基準：40点以上（4問以上）・正解 ${result.correct} / 10問` : "短縮版のため点数は参考表示しません";
+          status.className = ready && result.correct >= 4 ? "score-pass" : "score-fail";
+          status.textContent = ready ? (result.correct >= 4 ? "✓ 科目の基準を達成" : `あと${4 - result.correct}問で科目の基準`) : "判定対象外";
+          row.append(name, score, condition, status); groupList.append(row);
+        });
+        const total = document.createElement("div"), totalScore = document.createElement("strong"), totalCondition = document.createElement("span"); total.className = "exam-total";
+        totalScore.textContent = ready ? `合計 ${correctCount * 10} / 300点` : `合計 ${correctCount} / ${sessionQuestions.length}問`;
+        totalCondition.textContent = ready ? `合計の基準：180点以上（18問以上）・${correctCount >= 18 ? "基準を達成" : `あと${18 - correctCount}問`}` : "短縮版のため合計の点数判定はありません。"; total.append(totalScore, totalCondition);
+        const link = document.createElement("a"); link.href = "https://www.exam.or.jp/faq/"; link.target = "_blank"; link.rel = "noopener noreferrer"; link.textContent = "試験協会の合格基準を見る ↗"; link.className = "source-link";
+        detail.append(benchmark, caveat, groupList, total, link);
+      }
+      const reviewItems = currentMode === "mock" ? answerReview : wrongAnswers;
+      if (reviewItems.length) {
+        const review = document.createElement("details"); review.className = "review-list";
+        const summary = document.createElement("summary"); summary.textContent = currentMode === "mock" ? `答え合わせを見る（間違い ${wrongAnswers.length}問）` : `間違えた問題と解説を見る（${wrongAnswers.length}問）`; review.append(summary);
+        reviewItems.forEach((item, i) => {
+          const row = document.createElement("div"); row.className = `review-item${item.isCorrect ? "" : " review-wrong"}`;
+          const title = document.createElement("strong"); title.textContent = `${i + 1}. ${item.question.text}`;
+          const chosen = document.createElement("p"); chosen.textContent = `あなたの回答：${item.selected === null ? "未回答" : item.question.choices[item.selected]}　／　正解：${item.question.choices[item.question.answer]}`;
+          const explanation = document.createElement("p"); explanation.textContent = item.question.explanation;
+          const source = document.createElement("a"); source.href = item.question.url; source.target = "_blank"; source.rel = "noopener noreferrer"; source.textContent = `参考資料：${item.question.source} ↗`;
+          const bookmark = document.createElement("button"); bookmark.type = "button"; bookmark.className = "secondary bookmark-button"; updateBookmarkButton(bookmark, item.question.id); bookmark.addEventListener("click", () => toggleBookmark(item.question.id, bookmark));
+          row.append(title, chosen, explanation, source, bookmark); review.append(row);
+        });
+        detail.append(review);
+      }
+    }
+    $("next").addEventListener("click", () => {
+      if (currentMode === "mock") {
+        if (index < sessionQuestions.length - 1) { index++; render(); return; }
+        const missing = mockAnswers.filter(value => value === null).length;
+        if (confirm(missing ? `未回答が${missing}問あります。採点しますか？` : "すべての回答を採点しますか？")) finishAttempt(false);
+        return;
+      }
+      if (!answered) { submitAnswer(); return; }
+      if (index < sessionQuestions.length - 1) { index++; render(); return; }
+      finishAttempt(false);
+    });
+    $("previous").addEventListener("click", () => { if (currentMode === "mock" && index > 0) { index--; render(); } });
+    function shuffledQuestions(limit = QUESTIONS_PER_SESSION) {
+      const set = [...questions];
+      for (let i = set.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [set[i], set[j]] = [set[j], set[i]];
+      }
+      return set.slice(0, Math.min(limit, set.length));
+    }
+    function mockExamQuestions() {
+      const groups = ["関係法令", "労働衛生", "労働生理"];
+      return groups.flatMap(group => {
+        const set = questions.filter(question => examGroupOf(question) === group);
+        for (let i = set.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [set[i], set[j]] = [set[j], set[i]];
+        }
+        return set.slice(0, 10);
+      });
+    }
+    function questionsForMode(mode) {
+      if (mode === "random") return shuffledQuestions();
+      if (mode === "mock") return mockExamQuestions();
+      if (mode === "retry") return [...retryQueue];
+      if (mode === "subject" || mode === "bookmarks") {
+        const saved = new Set(readBookmarks());
+        const eligible = questions.filter(q => mode === "subject" ? examGroupOf(q) === selectedSubject : saved.has(q.id));
+        for (let i = eligible.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [eligible[i], eligible[j]] = [eligible[j], eligible[i]]; }
+        return eligible.slice(0, QUESTIONS_PER_SESSION);
+      }
+      const stats = readQuestionStats();
+      const tieOrder = new Map(questions.map(question => [question.id, Math.random()]));
+      const sorted = [...questions].sort((a, b) => {
+        const aStats = stats[a.id] || { attempts:0, correct:0 };
+        const bStats = stats[b.id] || { attempts:0, correct:0 };
+        if (mode === "few" && aStats.attempts !== bStats.attempts) return aStats.attempts - bStats.attempts;
+        if (mode === "weak") {
+          const aRate = aStats.attempts ? aStats.correct / aStats.attempts : Infinity;
+          const bRate = bStats.attempts ? bStats.correct / bStats.attempts : Infinity;
+          if (aRate !== bRate) return aRate - bRate;
+          if (aStats.attempts !== bStats.attempts) return aStats.attempts - bStats.attempts;
+        }
+        return tieOrder.get(a.id) - tieOrder.get(b.id);
+      });
+      return sorted.slice(0, Math.min(QUESTIONS_PER_SESSION, sorted.length));
+    }
+    $("restart").addEventListener("click", () => showPractice(currentMode));
+    function displayPage(name) {
+      const pages = { home:$('home-screen'), modes:$('mode-screen'), dashboard:$('dashboard-screen'), test:$('practice-card') };
+      Object.entries(pages).forEach(([key, page]) => { page.hidden = key !== name; });
+      const active = pages[name] || pages.home;
+      $('app-note').hidden = name !== "test";
+      if (name === "test") {
+        const shortMock = currentMode === "mock" && sessionQuestions.length < MOCK_EXAM_QUESTION_COUNT;
+        $('app-note').textContent = shortMock
+          ? `※ 本試験は五択・30問・3時間です。現在の問題集から${sessionQuestions.length}問を出題するため、この模擬演習は短縮版です。`
+          : "※ 基礎練習が中心です。本試験とは問題の難度や範囲が異なります。受験前に公式の公表問題も解いてください。";
+      }
+      active.classList.remove("page-enter"); void active.offsetWidth; active.classList.add("page-enter");
+      if (name === "dashboard") renderDashboard();
+      if (name === "home") renderCountdown();
+      window.scrollTo({ top:0, behavior:"smooth" });
+    }
+    function navigatePage(name) {
+      const nextHash = `#${name}`;
+      if (location.hash !== nextHash) location.hash = name;
+      else displayPage(name);
+    }
+    function showModes() { navigatePage("modes"); }
+    function prepareQuestions(list) { return list.map(q => { const options = q.choices.map((text, i) => ({ text, correct:i === q.answer })); for (let i = options.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [options[i], options[j]] = [options[j], options[i]]; } return { ...q, choices:options.map(option => option.text), answer:options.findIndex(option => option.correct) }; }); }
+    function showPractice(mode = "random") {
+      const selected = questionsForMode(mode);
+      if (!selected.length) { $("mode-message").textContent = mode === "bookmarks" ? "保存した問題はまだありません。問題画面の☆から保存できます。" : "練習できる問題がありません。"; if (location.hash !== "#modes") navigatePage("modes"); return; }
+      $("mode-message").textContent = ""; currentMode = mode; index = 0; correctCount = 0; categoryStats = {}; examStats = {}; answerReview = []; sessionQuestions = prepareQuestions(selected); mockAnswers = Array(sessionQuestions.length).fill(null); render(); $("quiz").hidden = false; $("result").hidden = true; startTimer(); navigatePage("test");
+    }
+    function showHome() { stopTimer(); navigatePage("home"); }
+    function showDashboard() { stopTimer(); navigatePage("dashboard"); }
+    function restorePageFromAddress() {
+      const page = location.hash.slice(1);
+      if (page === "test") { displayPage("test"); if ($("result").hidden) resumeTimer(); }
+      else { stopTimer(); displayPage(["dashboard","modes"].includes(page) ? page : "home"); }
+    }
+    window.addEventListener("hashchange", restorePageFromAddress);
+    document.addEventListener("click", event => {
+      const button = event.target.closest("button");
+      if (!button || button.disabled) return;
+      button.classList.remove("tap-animate"); void button.offsetWidth; button.classList.add("tap-animate");
+      button.addEventListener("animationend", () => button.classList.remove("tap-animate"), { once:true });
+    }, true);
+    $("start-practice").addEventListener("click", showModes);
+    $("hero-start").addEventListener("click", showModes);
+    $("hero-dashboard").addEventListener("click", showDashboard);
+    $("modes-home").addEventListener("click", showHome);
+    $("mode-random").addEventListener("click", () => showPractice("random"));
+    $("mode-weak").addEventListener("click", () => showPractice("weak"));
+    $("mode-few").addEventListener("click", () => showPractice("few"));
+    $("mode-mock").addEventListener("click", () => showPractice("mock"));
+    $("subject-law").addEventListener("click", () => { selectedSubject = "関係法令"; showPractice("subject"); });
+    $("subject-hygiene").addEventListener("click", () => { selectedSubject = "労働衛生"; showPractice("subject"); });
+    $("subject-physiology").addEventListener("click", () => { selectedSubject = "労働生理"; showPractice("subject"); });
+    $("mode-bookmarks").addEventListener("click", () => showPractice("bookmarks"));
+    $("bookmark-question").addEventListener("click", () => toggleBookmark(sessionQuestions[index].id, $("bookmark-question")));
+    $("retry-wrong").addEventListener("click", () => { retryQueue = [...lastWrongQuestions]; showPractice("retry"); });
+    $("exam-date-save").addEventListener("click", () => {
+      const input = $("exam-date-input");
+      if (!input.value || !input.validity.valid) { $("exam-date-message").textContent = "試験日を選んでください。"; return; }
+      try { localStorage.setItem(EXAM_DATE_KEY, input.value); $("exam-date-message").textContent = "試験日を保存しました。"; renderCountdown(); }
+      catch { $("exam-date-message").textContent = "保存できませんでした。ブラウザの設定をご確認ください。"; }
+    });
+    $("exam-date-clear").addEventListener("click", () => {
+      try { localStorage.removeItem(EXAM_DATE_KEY); $("exam-date-message").textContent = "試験日を消しました。"; renderCountdown(); }
+      catch { $("exam-date-message").textContent = "変更できませんでした。ブラウザの設定をご確認ください。"; }
+    });
+    $("dashboard-home").addEventListener("click", showHome);
+    $("back-home").addEventListener("click", showHome);
+    $("result-home").addEventListener("click", showHome);
+    $("result-dashboard").addEventListener("click", showDashboard);
+    function recordDemoAttempts() {
+      const marker = "eisei-demo-10-20261101";
+      try {
+        if (localStorage.getItem(marker)) return true;
+        const history = readHistory(), stats = readQuestionStats(), demos = [];
+        for (let attempt = 0; attempt < 10; attempt++) {
+          const set = mockExamQuestions(), categories = {}, groups = {}, answers = [];
+          let correct = 0;
+          set.forEach(q => {
+            const isCorrect = Math.random() < .55 + attempt * .025;
+            const wrong = q.choices.map((_, i) => i).filter(i => i !== q.answer);
+            const selected = isCorrect ? q.answer : wrong[Math.floor(Math.random() * wrong.length)];
+            const group = examGroupOf(q);
+            categories[q.category] ||= { correct:0, total:0 };
+            groups[group] ||= { correct:0, total:0 };
+            stats[q.id] ||= { attempts:0, correct:0 };
+            categories[q.category].total++; groups[group].total++; stats[q.id].attempts++;
+            if (isCorrect) { correct++; categories[q.category].correct++; groups[group].correct++; stats[q.id].correct++; }
+            answers.push({ questionId:q.id, selected, correct:isCorrect });
+          });
+          demos.unshift({ date:new Date().toISOString(), correct, total:set.length, percent:Math.round(correct / set.length * 100), categories, groups, answers, mode:"mock", demo:true });
+        }
+        localStorage.setItem(HISTORY_KEY, JSON.stringify([...demos, ...history]));
+        localStorage.setItem(QUESTION_STATS_KEY, JSON.stringify(stats));
+        localStorage.setItem(marker, "1");
+        return true;
+      } catch { alert("デモの記録を保存できませんでした。ブラウザの保存設定をご確認ください。"); return false; }
+    }
+    if (location.hash === "#demo10") {
+      if (recordDemoAttempts()) location.hash = "dashboard";
+    }
+    renderDashboard();
+    render();
+    renderCountdown();
+    if (location.hash === "#demo-result") {
+      showPractice("mock");
+      const exampleScores = [3, 7, 8];
+      mockAnswers = sessionQuestions.map((q, i) => i % 10 < exampleScores[Math.floor(i / 10)] ? q.answer : (q.answer + 1) % q.choices.length);
+      finishAttempt(false, false);
+      displayPage("test");
+    }
+    else if (location.hash === "#dashboard") displayPage("dashboard");
+    else if (location.hash === "#modes") displayPage("modes");
+    else if (location.hash === "#test") { location.hash = "home"; }
+  </script>
+</body>
+</html>
