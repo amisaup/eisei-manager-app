@@ -558,6 +558,13 @@
       button:active:not(:disabled){filter:brightness(1.12)}
     }
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+    .app-info { margin:28px 0 8px; padding:18px 20px; border-top:1px solid #b7efff55; color:#d5f5fb; font-size:13px; line-height:1.8; }
+    .app-info p { margin:0; }
+    .app-info details { margin-top:8px; }
+    .app-info summary { cursor:pointer; color:#a8ecf7; font-weight:700; }
+    .app-info details p { margin:10px 0 0; }
+    .app-info a { color:#a8ecf7; text-decoration:underline; text-underline-offset:3px; }
+    @media(max-width:620px) { .app-info { padding:16px 4px; font-size:12px; } }
   </style>
 </head>
 <body>
@@ -659,6 +666,15 @@
       </div>
     </section>
     <p class="note" id="app-note" hidden>※ この問題集は基礎練習が中心です。本試験の難度・網羅性を保証するものではありません。</p>
+    <footer class="app-info" aria-label="アプリについて">
+      <p>非公式の学習アプリです。名称は合格を応援するもので、合格を保証するものではありません。</p>
+      <details>
+        <summary>このアプリと学習記録について</summary>
+        <p>このアプリは個人が制作したもので、試験実施機関による公式アプリではありません。問題や解説は学習の参考用です。法令や試験制度の変更により内容が最新でない場合があります。受験にあたっては、<a href="https://www.exam.or.jp/" target="_blank" rel="noopener noreferrer">安全衛生技術試験協会のホームページ</a>などで最新情報をご確認ください。</p>
+        <p>学習履歴、保存した問題、試験日は、この端末のブラウザに保存されます。ブラウザのデータを削除すると記録が消える場合があり、別の端末には自動で引き継がれません。</p>
+        <p>このサイトの配信元であるGitHubは、セキュリティのためアクセスした方のIPアドレスを記録すると案内しています。詳しくは<a href="https://docs.github.com/ja/pages/getting-started-with-github-pages/what-is-github-pages#data-collection" target="_blank" rel="noopener noreferrer">GitHubの説明</a>をご覧ください。</p>
+      </details>
+    </footer>
   </main>
   <script>
     // 公的な根拠資料を確認して作成したオリジナル練習問題です。
